@@ -13,17 +13,18 @@ class CrearTablaUsuario extends Migration
      */
     public function up()
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('rut',9);
-            $table->string('nombre',15);
-            $table->string('clave',255);
-            $table->string('telefono',15);
-            $table->string('email',15);
-            $table->string('direccion',255);
-            $table->string('apellido',15);
-            $table->string('segundo_apellido',15);
-            $table->dateTime('fecha_nacimiento');            
+            $table->string('rut',9)->nullable();
+            $table->string('name',15);
+            $table->string('password',255);
+            $table->string('telefono',15)->nullable();
+            $table->string('email',255);
+            $table->string('direccion',255)->nullable();
+            $table->string('apellido',15)->nullable();
+            $table->string('segundo_apellido',15)->nullable();
+            $table->dateTime('fecha_nacimiento')->nullable();          
+            $table->rememberToken();          
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ class CrearTablaUsuario extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuario');
+        Schema::dropIfExists('users');
     }
 }
