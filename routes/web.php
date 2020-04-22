@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('inicio',function(){
+return view('perfilusuario');
+});
+
+
+Route::get('usuariomp',function(){
+return view('modificarperfil');
+});
+
+Route::get('usuarionoti',function(){
+    return view('notificacionus');
+    });
