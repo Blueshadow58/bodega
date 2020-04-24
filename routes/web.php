@@ -17,9 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-<<<<<<< HEAD
 Route::get('/home', 'HomeController@index')-> name('home');
-=======
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('inicio',function(){
@@ -34,4 +33,3 @@ return view('modificarperfil');
 Route::get('usuarionoti',function(){
     return view('notificacionus');
     });
->>>>>>> 0992e5d656aaab85388dfe6e6051f4770126b822
