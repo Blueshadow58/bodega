@@ -19,17 +19,19 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')-> name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Funcionana igual pero todas las rutas del group van a filtarr primero si tiene los permisos
+//Route::get('/bodeguero/confirmarPedido', 'BodegaController@index')-> name('confirmarPedido')->middleware('permiso.confirmar-pedido');
+Route::group(['middleware' => ['permiso:confirmar-pedido']], function () {
+    Route::get('/confirmarPedido', 'BodegaController@index')-> name('confirmarPedido');
+}); 
 
-Route::get('inicio',function(){
-return view('perfilusuario');
+
+
+
+Route::get('perfil',function(){
+return view('perfil');
 });
 
 
-Route::get('usuariomp',function(){
-return view('modificarperfil');
-});
 
-Route::get('usuarionoti',function(){
-    return view('notificacionus');
-    });
+    
