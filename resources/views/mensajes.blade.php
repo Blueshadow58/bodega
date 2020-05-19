@@ -19,7 +19,7 @@
 
         <input name="mensaje" type="text" placeholder="Mensaje">
 
-        <select name="destinatarioId" >
+        <select name="destinatario_id" >
             <option value="">Selecciona el destinatario</option>
 
             @foreach ($users as $user)
@@ -36,21 +36,49 @@
 
 
 
-        <select name="" >
-            <option value="">Selecciona el destinatario</option>
-
-        @foreach ($messages as $message)
-            <option value="{{$message->data}}">{{($message->data)}}</option>
-        @endforeach
-        </select>
-
-        
-
-
     </form>
 
 
-    
+
+
+        @foreach ($mensajes as $mensaje)
+        <table>
+            <thead>
+<tr>
+                <th>                    
+                    nada
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                <td><label for="">{{$mensaje->contenido_mensaje}}</label></td>
+                <tr>
+                <tr>
+                <td>
+
+                    <form action="mensajes.leer/{{$mensaje->id}}" method="post">  
+                        @csrf                                      
+                        <button type="submit" >Leido</button>
+                    </form>
+
+                </td>
+                <tr>
+            </tbody>
+
+        </table>
+
+<label for="">{{
+
+
+$mensajes->count()
+
+}}</label>
+
+        @endforeach
+
+
 
 
 

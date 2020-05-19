@@ -29,11 +29,19 @@ Route::group(['middleware' => ['permiso:confirmar-pedido']], function () {
 
 
 
-Route::get('/mensajes', 'MessageController@index');
+Route::get('/mensajes', 'MensajeController@index');
 
 
 //Crear notificacion
-Route::post('/mensajes.store', 'MessageController@store');
+Route::post('/mensajes.store', 'MensajeController@store');
+
+//leer
+//Route::post('/mensajes.leer', 'MensajeController@read');
+
+//Route::get('/mensajes.leer  ', 'MensajeController@read');
+
+Route::post('mensajes.leer/{id}','MensajeController@read');
+
 
 
 

@@ -15,6 +15,10 @@ class CreateMensajesTable extends Migration
     {
         Schema::create('mensajes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('contenido_mensaje');
+            $table->integer('remitente_id');
+            $table->integer('destinatario_id');
+            $table->boolean('leer')->default(true);
             $table->timestamps();
         });
     }

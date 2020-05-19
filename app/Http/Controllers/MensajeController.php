@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mensaje;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MensajeController extends Controller
 {
@@ -14,7 +16,13 @@ class MensajeController extends Controller
      */
     public function index()
     {
-        //
+        
+        $users = User::where('id','!=',Auth::user()->id)->get();        
+        $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
+
+
+        return  view('mensajes')->with('users',$users)->with('mensajes',$mensajes);
+        
     }
 
     /**
@@ -35,7 +43,27 @@ class MensajeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $users = User::where('id','!=',Auth::user()->id)->get(); 
+        $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->get();
+
+        /*
+        DB::insert([
+            ['contenido_mensaje' => $request->mensaje,
+            'remitente_id' => Auth::user()->id,
+            'destinatario_id' => $request->destinatario_id
+            ],            
+        ])  ;*/
+
+        Mensaje::create(
+            ['contenido_mensaje' => $request->mensaje,
+            'remitente_id' => Auth::user()->id,
+            'destinatario_id' => $request->destinatario_id]
+        ) ;
+        
+        
+        
+            
+        return  view('mensajes')->with('users',$users)->with('mensajes',$mensajes);
     }
 
     /**
@@ -48,6 +76,20 @@ class MensajeController extends Controller
     {
         //
     }
+
+    public function read($id)
+    {
+        
+
+        
+        Mensaje::where('id', $id)
+            ->update(['leer' => false]);
+
+            return view('home');
+        //Mensaje::update('update mensajes set leer = false where id =' [$request->id] );
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.
