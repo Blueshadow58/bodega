@@ -10,16 +10,16 @@
 <body>
 
 
-    BLADE NOTIFICACIONES
+    BLADE Mensajes
 
-    <form method="POST" action="/notificaciones.store">
+    <form method="POST" action="mensajes.store">
         @csrf
 
-        <label for="data">Post Title</label>
+        <label for="texto">Texto</label>
 
-        <input id="data" name="data" type="text" class="@error('data') is-invalid @enderror">
+        <input name="mensaje" type="text" placeholder="Mensaje">
 
-        <select>
+        <select name="destinatarioId" >
             <option value="">Selecciona el destinatario</option>
 
             @foreach ($users as $user)
@@ -28,16 +28,30 @@
 
         </select>
 
-        @error('data')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+       
 
         <button type="submit" class="btn btn-primary">
-        Enviar
-           <!-- {{ __('Crear Notificacion') }} -->
+        Enviar           
         </button>
 
+
+
+        <select name="" >
+            <option value="">Selecciona el destinatario</option>
+
+        @foreach ($messages as $message)
+            <option value="{{$message->data}}">{{($message->data)}}</option>
+        @endforeach
+        </select>
+
+        
+
+
     </form>
+
+
+    
+
 
 
 </body>

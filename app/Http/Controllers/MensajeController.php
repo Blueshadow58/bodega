@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\Notificaciones;
-use App\User;
+use App\Mensaje;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notifiable;
 
-class NotificacionesController extends Controller
+class MensajeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
-        //Traer a todos los usuarios menos el contado en esta sesion
-        $users = User::where('id','!=', auth()->id())->get();
-        return view('notificaciones',compact('users'));
+        //
     }
 
     /**
@@ -46,20 +35,16 @@ class NotificacionesController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $data = $request->input('data');
-        $user = User::find(2);
-        User::find(2)->notify(new Notificaciones);
-        return redirect('notificaciones');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Mensaje  $mensaje
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Mensaje $mensaje)
     {
         //
     }
@@ -67,10 +52,10 @@ class NotificacionesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Mensaje  $mensaje
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Mensaje $mensaje)
     {
         //
     }
@@ -79,10 +64,10 @@ class NotificacionesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Mensaje  $mensaje
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Mensaje $mensaje)
     {
         //
     }
@@ -90,10 +75,10 @@ class NotificacionesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Mensaje  $mensaje
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Mensaje $mensaje)
     {
         //
     }
