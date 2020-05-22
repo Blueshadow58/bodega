@@ -32,6 +32,12 @@ Route::get('perfil',function(){
 return view('perfil');
 });
 
+//Route::get('/herramientas','HerramientasController@index');
+
+//Route::get('/herramientas/create','HerramientasController@create');
+
+Route::resource('herramientas','HerramientasController');
 
 
+Route::resource('materiales','MaterialesController');
     
