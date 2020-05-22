@@ -11,19 +11,36 @@
 |
 */
 
+
+
 Route::get('/', function () {
     return view('index');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')-> name('home');
+Route::get('/home', 'HomeController@index');
 
 //Funcionana igual pero todas las rutas del group van a filtarr primero si tiene los permisos
 //Route::get('/bodeguero/confirmarPedido', 'BodegaController@index')-> name('confirmarPedido')->middleware('permiso.confirmar-pedido');
 Route::group(['middleware' => ['permiso:confirmar-pedido']], function () {
-    Route::get('/confirmarPedido', 'BodegaController@index')-> name('confirmarPedido');
+    Route::get('/confirmarPedido', 'BodegaController@index')->name('confirmarPedido');
 }); 
+
+
+
+Route::get('/mensajes', 'MensajeController@index');
+
+
+//Crear notificacion
+Route::post('/mensajes.store', 'MensajeController@store');
+
+//leer
+//Route::post('/mensajes.leer', 'MensajeController@read');
+
+//Route::get('/mensajes.leer  ', 'MensajeController@read');
+
+Route::post('mensajes.leer/{id}','MensajeController@read');
 
 
 
@@ -34,10 +51,13 @@ return view('perfil');
 
 //Route::get('/herramientas','HerramientasController@index');
 
+<<<<<<< HEAD
 //Route::get('/herramientas/create','HerramientasController@create');
 
 Route::resource('herramientas','HerramientasController');
 
 
 Route::resource('materiales','MaterialesController');
+=======
+>>>>>>> e7eaa972431d667c0e0abe5776f4bbabb412a88a
     

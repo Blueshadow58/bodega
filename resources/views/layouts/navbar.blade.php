@@ -25,7 +25,7 @@
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="#" style="color: #ffffff;">Home</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="#" style="color: #ffffff;">Perfil</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="#" style="color: #ffffff;">Notificaciones</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="#" style="color: #ffffff;">mensajes</a></li>
                         @can('confirmar-pedido')
                         <li class="nav-item" role="presentation"><a class="nav-link" href="#" style="color: #ffffff;">Registro de ordenes</a></li>
                         @endcan
