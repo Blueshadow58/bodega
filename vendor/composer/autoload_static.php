@@ -405,6 +405,9 @@ class ComposerStaticInit975bd91686227e52715e663843a6eb9a
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\HerramientasController' => __DIR__ . '/../..' . '/app/Http/Controllers/HerramientasController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\MaterialesController' => __DIR__ . '/../..' . '/app/Http/Controllers/MaterialesController.php',
+        'App\\Http\\Controllers\\MensajeController' => __DIR__ . '/../..' . '/app/Http/Controllers/MensajeController.php',
+        'App\\Http\\Controllers\\PedidoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PedidoController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -414,11 +417,10 @@ class ComposerStaticInit975bd91686227e52715e663843a6eb9a
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
-<<<<<<< HEAD
         'App\\Materiales' => __DIR__ . '/../..' . '/app/Materiales.php',
-=======
         'App\\Mensaje' => __DIR__ . '/../..' . '/app/Mensaje.php',
->>>>>>> e7eaa972431d667c0e0abe5776f4bbabb412a88a
+        'App\\Pedido' => __DIR__ . '/../..' . '/app/Pedido.php',
+        'App\\PedidoHerramienta' => __DIR__ . '/../..' . '/app/PedidoHerramienta.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

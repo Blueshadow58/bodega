@@ -13,11 +13,12 @@ class CrearTablaPedido extends Migration
      */
     public function up()
     {
-        Schema::create('pedido', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('motivo',255);
-            $table->string('comentario',255);
-            $table->dateTime('fecha_entrega');
+        Schema::create('pedidos', function (Blueprint $table) {
+            $table->bigIncrements('id');            
+            $table->date('fecha_entrega');
+            $table->date('fecha_devolucion');
+            $table->string('estado');
+            $table->integer('id_usuario');
             $table->timestamps();
         });
     }

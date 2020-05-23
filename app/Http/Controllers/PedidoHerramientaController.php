@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Materiales;
+use App\Herramientas;
+use App\PedidoHerramienta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class MaterialesController extends Controller
+class PedidoHerramientaController extends Controller
 {
-    /**
+   /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
-        $datos['materiales']=Materiales::paginate(5);
-        return view('materiales.index',$datos);
+        $datos['herramientas']=Herramientas::paginate(6);
+        return view('pedidoHerramienta',$datos);
+
+        
+
     }
 
     /**
@@ -24,10 +28,10 @@ class MaterialesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function agregar($id)
     {
-        //
-        return view ('materiales.create');
+        
+         
     }
 
     /**
@@ -38,20 +42,16 @@ class MaterialesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-       // $datosMaterial=request()->all();
-        $datosMaterial=request()->except('_token');
-        Materiales::create($datosMaterial);
-        return redirect('materiales');
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Materiales  $materiales
+     * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
-    public function show(Materiales $materiales)
+    public function show(Herramientas $herramientas)
     {
         //
     }
@@ -59,46 +59,42 @@ class MaterialesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Materiales  $materiales
+     * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
-        $material=Materiales::findOrFail($id);
-        return view('materiales.edit',compact('material'));
-        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Materiales  $materiales
+     * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
-        //
-        $datosMaterial=request()->except(['_token','_method']);
-        Materiales::where('id','=',$id)->update($datosMaterial);
-
-        $material=Materiales::findOrFail($id);
-        return view('materiales.edit',compact('material'));
-
+     
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Materiales  $materiales
+     * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        Materiales::destroy($id);
-        return redirect('materiales');
-       
+
+        $herramienta= Herramientas::findOrFail($id);
+
+        if(Storage::delete('public/'.$herramienta->imagen)){
+        Herramientas::destroy($id);
+        }
+
+ 
+        return redirect('pedidoHerramienta')->with('Mensaje','Herramienta eliminada');
     }
 }

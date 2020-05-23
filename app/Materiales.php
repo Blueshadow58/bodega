@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Materiales extends Model
 {
-       /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'material';
+       
+
+    protected $fillable = [
+      'id','nombre','fecha_ingreso'
+  ];
+ 
+  protected $table = 'material';
+  
 }

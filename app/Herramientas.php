@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Herramientas extends Model
 {
-      /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+      
+    protected $fillable = [
+        'id','imagen','descripcion','nombre','stock',
+    ];
+
     protected $table = 'herramienta';
 }

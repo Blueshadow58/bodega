@@ -11,7 +11,7 @@
 |
 */
 
-
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('index');
@@ -49,15 +49,32 @@ Route::get('perfil',function(){
 return view('perfil');
 });
 
+
+Route::get('/pedido', 'PedidoController@index');
+
+Route::post('/pedido.store', 'PedidoController@store');
+
+
+
+Route::get('/pedidoHerramienta', 'PedidoHerramientaController@index');
+
+
+//probando ajax
+Route::get('/getRequest', function(){
+    if(Request::ajax()){
+        return 'getRequest has loaded';    
+    } 
+});
+
+
+
+
 //Route::get('/herramientas','HerramientasController@index');
 
-<<<<<<< HEAD
 //Route::get('/herramientas/create','HerramientasController@create');
 
 Route::resource('herramientas','HerramientasController');
 
 
 Route::resource('materiales','MaterialesController');
-=======
->>>>>>> e7eaa972431d667c0e0abe5776f4bbabb412a88a
     

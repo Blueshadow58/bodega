@@ -39,7 +39,6 @@ class HerramientasController extends Controller
     {
         //
 
-
         $campos=[
             'imagen'=>'required|mimes:jpeg,png,jpg',
             'descripcion'=>'required|string',
@@ -58,7 +57,7 @@ class HerramientasController extends Controller
             $datosHerramienta['imagen']=$request->file('imagen')->store('uploads','public');
         }
 
-        Herramientas::insert($datosHerramienta);
+        Herramientas::create($datosHerramienta);
         //return response()->json($datosHerramienta);
         return redirect('herramientas')->with('Mensaje','Herramienta agregada');
 
