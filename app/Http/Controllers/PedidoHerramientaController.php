@@ -7,6 +7,7 @@ use App\PedidoHerramienta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
 class PedidoHerramientaController extends Controller
 {
    /**
@@ -22,6 +23,22 @@ class PedidoHerramientaController extends Controller
         
 
     }
+
+    public function insert(Request $request){
+
+        $id = $request->id;
+        for($count =0;$count < count($id);$count++){
+            $data = array(
+                'id' => $id[$count],
+            );
+            $insert_data[] = $data;
+        }
+        PedidoHerramienta::create($insert_data);
+        return response()->json([
+            'success' => 'Data Added successfully' 
+        ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

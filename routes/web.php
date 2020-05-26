@@ -56,6 +56,7 @@ Route::post('/pedido.store', 'PedidoController@store');
 
 
 
+
 Route::get('/pedidoHerramienta', 'PedidoHerramientaController@index');
 
 
