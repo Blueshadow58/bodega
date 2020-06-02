@@ -9,20 +9,7 @@
         	<br />
         	<div class="row justify-content-center">
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-        	<ul class="nav nav-tabs">
-        		<li class="nav-item">
-        			<a href="#usuario" class="nav-link active" role="tab" data-toggle="tab">Usuario</a>
-        		</li>
-
-        		<li class="nav-item">
-        			<a href="#profile" class="nav-link" role="tab" data-toggle="tab">Administrador</a>
-        		</li>
-
-        		<li class="nav-item">
-        			<a href="#about" class="nav-link" role="tab" data-toggle="tab">Bodega</a>
-        		</li>
-
-        	</ul>
+        	
             </div>
             </div>
         	<div class="tab-content">

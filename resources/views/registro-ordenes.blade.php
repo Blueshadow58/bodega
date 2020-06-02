@@ -32,31 +32,38 @@
                         <li class="nav-item" role="presentation"><a class="nav-link" href="perfil" style="color: #ffffff;">Perfil</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="notificaciones" style="color: #ffffff;">Notificaciones</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
-                    </ul>
-            </div>
+                    </ul><span class="navbar-text actions"> </span></div>
             </div>
         </nav>
     </header>
     <div class="contact-clean" style="background-color: transparent;">
-        <div class="row no-gutters">
-            <div class="col-xl-2 offset-xl-5 d-md-flex d-lg-flex mx-auto justify-content-xl-center">
-                <ul class="list-group border rounded border-white d-md-flex d-lg-flex mb-auto" style="background-color: #ffffff;">
-                    <li class="list-group-item border-white" style="background-color: #c67e06;color: #eff1f4;"><span>Perfil</span></li>
-                    <li class="list-group-item" style="background-color: #002d47;"><span style="color: rgb(255,255,255);">Modificar Perfil</span></li>
-                </ul>
-            </div>
-            <div class="col-xl-5 offset-xl-1 m-auto">
-                <form class="bg-light border rounded shadow" style="background-color: #c67e06!important;">
-                    <h2 class="text-center" style="padding-top: 20px;color: rgb(255,255,255);">Perfil</h2>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Rut" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Nombre" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Apellido" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Telefono" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Especialidad" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><button class="btn btn-primary border-white d-xl-flex mx-auto" type="submit" style="background-color: #002d47;">Crear&nbsp;</button></div>
-                </form>
-            </div>
-        </div>
+        <div class="container">
+            <div class="form-group">
+                <div class="dropdown"><button class="btn btn-primary dropdown-toggle border rounded border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Solicitudes Pendientes</button>
+                    <div class="dropdown-menu" role="menu"
+                        style="background-color: #002d47;color: rgb(255,255,255);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Solicitudes Registradas</a></div>
+                </div>
+            </div><div class="table-responsive">
+    <table class="table table-striped" style="color:#ffffff;">
+        <thead style="background-color:#c67e06;">
+            <tr>
+                <th><strong>Fecha de envio</strong></th>
+                <th>Nombre</th>
+                <th>Asunto</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>30/7/2020 14:04</td>
+                <td>Juan</td>
+                <td>Solicitud de herramientas</td>
+                <td><a class="btn btn-primary" role="button"
+                       style="background-color: #002d47;border: 1px solid" href="BodegueroConfirmar.html">Ver más</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div></div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

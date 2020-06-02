@@ -32,29 +32,49 @@
                         <li class="nav-item" role="presentation"><a class="nav-link" href="perfil" style="color: #ffffff;">Perfil</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="notificaciones" style="color: #ffffff;">Notificaciones</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
-                    </ul>
-            </div>
+                    </ul><span class="navbar-text actions"> </span></div>
             </div>
         </nav>
     </header>
     <div class="contact-clean" style="background-color: transparent;">
-        <div class="row no-gutters">
-            <div class="col-xl-2 offset-xl-5 d-md-flex d-lg-flex mx-auto justify-content-xl-center">
-                <ul class="list-group border rounded border-white d-md-flex d-lg-flex mb-auto" style="background-color: #ffffff;">
-                    <li class="list-group-item border-white" style="background-color: #c67e06;color: #eff1f4;"><span>Perfil</span></li>
-                    <li class="list-group-item" style="background-color: #002d47;"><span style="color: rgb(255,255,255);">Modificar Perfil</span></li>
-                </ul>
-            </div>
-            <div class="col-xl-5 offset-xl-1 m-auto">
-                <form class="bg-light border rounded shadow" style="background-color: #c67e06!important;">
-                    <h2 class="text-center" style="padding-top: 20px;color: rgb(255,255,255);">Perfil</h2>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Rut" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Nombre" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Apellido" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Telefono" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><input class="border rounded form-control" type="text" placeholder="Especialidad" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                    <div class="form-group"><button class="btn btn-primary border-white d-xl-flex mx-auto" type="submit" style="background-color: #002d47;">Crear&nbsp;</button></div>
-                </form>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form class="border rounded border-white" method="post" style="background-color: #c67e06;">
+                        <h2 class="text-center" style="color: rgb(255,255,255);padding: 15px;">Filtrar</h2>
+                        <div class="form-group"><input class="border rounded form-control" type="text" name="name" placeholder="Buscar" style="background-color: #002d47;color: #ffffff;border-color: #002d47!important;"></div>
+                        <div class="form-group">
+                            <div class="dropdown"><button class="btn btn-primary btn-block dropdown-toggle border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Tipo</button>
+                                <div class="dropdown-menu" role="menu" style="background-color: #002d47;color: rgb(255,255,255);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Herramientas</a><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Materiales</a></div>
+                            </div>
+                        </div>
+                        <div class="form-group"><button class="btn btn-primary btn-block border-white" type="button" style="background-color: #002d47;">Buscar</button></div>
+                    </form>
+                </div>
+                <div class="col"><div class="table-responsive table-striped">
+    <table class="table" style="color:#ffffff">
+        <thead style="background-color: #c67e06;color: #ffffff;">
+            <tr>
+                <th><strong>Nombre</strong></th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Taladro GBM 13 RE 750 W Bosch</td>
+                <td>Taladros eléctricos</td>
+                <td>Nuevo, sin detalles</td>                
+            </tr>
+            <tr>
+                <td>Sierra circular eléctrica 9&quot; 2200 W</td>
+                <td>Sierra Circular</td>
+                <td>Usada, rotura del material protector e...</td>                
+            </tr>
+        </tbody>
+    </table>
+</div></div>
             </div>
         </div>
     </div>

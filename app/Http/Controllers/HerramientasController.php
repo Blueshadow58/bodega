@@ -43,7 +43,7 @@ class HerramientasController extends Controller
             'imagen'=>'required|mimes:jpeg,png,jpg',
             'descripcion'=>'required|string',
             'nombre'=>'required|string',
-            'stock'=>'required|integer',
+            'categoria'=>'required|string',
         ];
         $Mensaje=["required"=>'El:attribute es requerido'];
         $this->validate($request,$campos,$Mensaje);
@@ -102,7 +102,7 @@ class HerramientasController extends Controller
             
             'descripcion'=>'required|string',
             'nombre'=>'required|string',
-            'stock'=>'required|integer',
+            'categoria'=>'required|string',
         ];
         if($request->hasFile('imagen')){
             $campos+=['imagen'=>'required|mimes:jpeg,png,jpg'];

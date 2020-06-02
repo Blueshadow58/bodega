@@ -13,21 +13,24 @@
   max-width: 480px;
   width: 90%;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: #c67e06;
   padding: 40px;
+  padding-bottom: 20px;
+  padding-top: 0px;
   border-radius: 4px;
   color: #505e6c;
-  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  /*box-shadow: 1px 1px 5px rgba(0,0,0,0.1);*/
 }
 
 @media (max-width:767px) {
   .contact-clean form {
     padding: 30px;
+    background-color: #c67e06;
   }
 }
 
 .contact-clean h2 {
-  margin-top: 5px;
+  margin-top: 0px;
   font-weight: bold;
   font-size: 28px;
   margin-bottom: 36px;
@@ -83,7 +86,7 @@
 }
 
 .contact-clean form .btn-primary {
-  background-color: #055ada !important;
+  /*background-color: #055ada !important;*/
   margin-top: 15px;
   color: #fff;
 }

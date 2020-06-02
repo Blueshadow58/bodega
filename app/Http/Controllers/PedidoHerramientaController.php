@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Herramientas;
 use App\PedidoHerramienta;
+use App\table_temporal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -19,24 +21,27 @@ class PedidoHerramientaController extends Controller
     {
         $datos['herramientas']=Herramientas::paginate(6);
         return view('pedidoHerramienta',$datos);
-
+        
         
 
     }
 
     public function insert(Request $request){
 
-        $id = $request->id;
-        for($count =0;$count < count($id);$count++){
-            $data = array(
-                'id' => $id[$count],
-            );
-            $insert_data[] = $data;
-        }
-        PedidoHerramienta::create($insert_data);
-        return response()->json([
-            'success' => 'Data Added successfully' 
-        ]);
+        // $id = $request->id;
+        // for($count =0;$count < count($id);$count++){
+        //     $data = array(
+        //         'id' => $id[$count],
+        //     );
+        //     $insert_data[] = $data;
+        // }
+        // PedidoHerramienta::create($insert_data);
+        // return response()->json([
+        //     'success' => 'Data Added successfully' 
+        // ]);
+
+
+
     }
 
 
@@ -48,7 +53,30 @@ class PedidoHerramientaController extends Controller
     public function agregar($id)
     {
         
+        //$users = DB::table('herramientas')->select('name', 'email as user_email')->get();
+
+        $herramienta = Herramientas::where('id','=',$id)->get();   
+
+         $countH = Herramientas::where('categoria','=','martillos')->count();   
+
          
+
+        table_temporal::create(
+            ['id_producto' => $id,
+            'id_usuario' => Auth::user()->id,            
+            'cantidad' => $countH,
+            'tipo_producto' => $herramienta->categoria,]
+        ) ;
+
+        
+
+        $datos['herramientas']=Herramientas::paginate(6);
+        return view('pedidoHerramienta',$datos);
+        
+
+        
+        
+        
     }
 
     /**
@@ -57,9 +85,10 @@ class PedidoHerramientaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function lista(Request $request)
     {
-        
+        $selecHerramientas = $request->herramientas;
+       return view('registro-ordenes')->with('herramientas',$selecHerramientas);
     }
 
     /**

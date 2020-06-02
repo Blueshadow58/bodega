@@ -8,7 +8,7 @@ class Herramientas extends Model
 {
       
     protected $fillable = [
-        'id','imagen','descripcion','nombre','stock',
+        'id','imagen','descripcion','nombre','categoria',
     ];
 
     protected $table = 'herramienta';

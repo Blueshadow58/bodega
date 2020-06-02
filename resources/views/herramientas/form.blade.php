@@ -21,9 +21,9 @@ value="{{ isset($herramienta->nombre)?$herramienta->nombre:old('nombre')}}">
 </div>
 
 <div class="form-group">
-<label for="stock" class="control-label" >{{'stock'}}</label>
-<input type="text" class="form-control" name="stock" id="stock"
-value="{{ isset($herramienta->stock)?$herramienta->stock:old('stock')}}"> 
+<label for="categoria" class="control-label" >{{'categoria'}}</label>
+<input type="text" class="form-control" name="categoria" id="categoria"
+value="{{ isset($herramienta->categoria)?$herramienta->categoria:old('categoria')}}"> 
 </div>
 
 <input type="submit" class="btn btn-success" value="{{$Modo=='crear'?'Agregar':'Modificar '}}

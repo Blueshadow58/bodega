@@ -14,9 +14,6 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous"></script>
 
-    
- 
-
 </head>
 <body>
     
@@ -30,13 +27,14 @@
     //por defecto
     $(document).ready(function(){
 
-      for (var i = 0; i < 9; i++) {
-        $('#estado_tr2'+i).hide();
-      }
+      // for (var i = 0; i < 9; i++) {
+      //   $('#estado_tr2'+i).hide();
+      // }
         
     });
 
-
+    let lista = [];
+    
     function agregar($id){
         $('#estado_tr'+$id).toggle();
 
@@ -44,12 +42,30 @@
         // $('#mostrar').get(html);
 
         $('#estado_tr2'+$id).toggle();
+          lista.push($id);
+
+        $('#label').text(lista);
 
     }
 
+    function eliminar($id){
+        $('#estado_tr'+$id).toggle();
 
+        // var html = $('#estado_tr'+$id);
+        // $('#mostrar').get(html);
+
+        $('#estado_tr2'+$id).toggle();
+          lista.pop($id);          
+        $('#label').text(lista);
+
+        
+    }
     </script>
 
+
+
+
+<label for="" id="label">000</label>
 
     <br>
     <br>
@@ -76,7 +92,9 @@
         <td>{{$herramienta->nombre}}</td>
     
         <td>
+          <form action="pedidoHerramienta.agregar" method="post">
             <button onclick="agregar({{$herramienta->id}})">Agregar</button>
+          </form>
         </td>
 {{-- 
         <form method="post" action="pedidoHerramienta.agregar/{{$herramienta->id}}">
@@ -103,30 +121,21 @@
            </tr>
         </thead>
         <tbody>
-            
-            @foreach($herramientas as $herramienta)
-      <tr id="estado_tr2{{$herramienta->id}}">
-        <td>{{$herramienta->id}}</td>
-        <td>
-        <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
-        </td>
-        <td>{{$herramienta->descripcion}}</td>
-        <td>{{$herramienta->nombre}}</td>
-    
-        <td>
-            <button onclick="agregar({{$herramienta->id}})">Agregar</button>
-        </td>
-{{-- 
-        <form method="post" action="pedidoHerramienta.agregar/{{$herramienta->id}}">
-         @csrf
-        <button class="btn btn-danger" type="submit">Agregar</button>
-        </form> --}}
-        
-      </tr>
-      @endforeach
+
+
+<form action="pedidoHerramienta.lista" method="post">
+@csrf
+
+  <input type="hidden" id="pot"  name="">
+
+
+
+  <button type="submit">Generar lista</button>
+
+</form>
+
         </tbody>
     </table>
-
 
 
 

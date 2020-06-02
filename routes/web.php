@@ -43,14 +43,23 @@ Route::post('/mensajes.store', 'MensajeController@store');
 Route::post('mensajes.leer/{id}','MensajeController@read');
 
 
-
-
+//---------------------------------------------------------------
+//Ya cuentan con su nueva vista
 Route::get('perfil',function(){
 return view('perfil');
 });
 
+Route::view('registro-ordenes','registro-ordenes');
+
+Route::view('notificaciones','notificaciones');
+
+Route::view('home-bodega','home-bodega');
+
+
+//----------------------------------------------------------------
 
 Route::get('/pedido', 'PedidoController@index');
+
 
 Route::post('/pedido.store', 'PedidoController@store');
 
@@ -58,15 +67,14 @@ Route::post('/pedido.store', 'PedidoController@store');
 
 
 Route::get('/pedidoHerramienta', 'PedidoHerramientaController@index');
+Route::post('/pedidoHerramienta.lista', 'PedidoHerramientaController@lista');
 
 
-//probando ajax
-Route::get('/getRequest', function(){
-    if(Request::ajax()){
-        return 'getRequest has loaded';    
-    } 
-});
+//agregar lista 
+Route::post('/pedidoHerramienta.agregar', 'PedidoHerramientaController@agregar');
 
+
+//Route::view('newlogin','/auth/newlogin');
 
 
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaHerramienta extends Migration
+class CreateTableTemporalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CrearTablaHerramienta extends Migration
      */
     public function up()
     {
-        Schema::create('herramienta', function (Blueprint $table) {
+        Schema::create('table_temporals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('imagen',100);
-            $table->string('descripcion',100);
-            $table->string('nombre',100);
-            $table->string('categoria');
+            $table->bigInteger('id_producto');
+            $table->bigInteger('id_usuario');
+            $table->integer('cantidad');
+            $table->string('tipo_producto');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CrearTablaHerramienta extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('herramienta');
+        Schema::dropIfExists('table_temporals');
     }
 }

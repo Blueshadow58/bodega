@@ -22,7 +22,7 @@
     <th>imagen</th>
     <th>descripcion</th>
     <th>nombre</th>
-    <th>stock</th>
+    <th>categoria</th>
     <th>accion</th>
   </tr>
   </thead>
@@ -36,7 +36,7 @@
     </td>
     <td>{{$herramienta->descripcion}}</td>
     <td>{{$herramienta->nombre}}</td>
-    <td>{{$herramienta->stock}}</td>
+    <td>{{$herramienta->categoria}}</td>
     <td>
 
     <a class="btn btn-warning" href="{{url('/herramientas/'.$herramienta->id.'/edit')}}">
