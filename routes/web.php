@@ -58,6 +58,7 @@ Route::view('home-bodega','home-bodega');
 
 //----------------------------------------------------------------
 
+
 Route::get('/pedido', 'PedidoController@index');
 
 
