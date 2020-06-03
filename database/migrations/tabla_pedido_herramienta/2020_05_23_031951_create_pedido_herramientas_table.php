@@ -17,9 +17,9 @@ class CreatePedidoHerramientasTable extends Migration
             $table->bigIncrements('id');
             $table->integer('id_pedido');
             $table->integer('id_herramienta');
-            $table->dateTime('fecha_devolucion');
-            $table->string('estado_herramienta');
-            $table->timestamps();
+            $table->date('fecha_devolucion')->nullable();
+            $table->string('estado_herramienta')->default('Prestada');
+            $table->timestamps();            
         });
     }
 

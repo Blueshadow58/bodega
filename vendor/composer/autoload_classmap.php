@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Controllers\\MensajeController' => $baseDir . '/app/Http/Controllers/MensajeController.php',
     'App\\Http\\Controllers\\PedidoController' => $baseDir . '/app/Http/Controllers/PedidoController.php',
     'App\\Http\\Controllers\\PedidoHerramientaController' => $baseDir . '/app/Http/Controllers/PedidoHerramientaController.php',
+    'App\\Http\\Controllers\\TableTemporalController' => $baseDir . '/app/Http/Controllers/TableTemporalController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',

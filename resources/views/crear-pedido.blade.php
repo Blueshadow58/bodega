@@ -71,7 +71,7 @@
                     <div class="form-group"><a class="btn btn-primary border rounded border-white" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Enviar Lista</a></div><div class="table-responsive table-striped">
     <table class="table" style="color:white">
         <thead style="background-color: #c67e06;color: #eff1f4;">
-            <tr>
+            <tr >
                 <th><strong>Nombre</strong></th>
                 <th>Tipo</th>
                 <th>Estado</th>
@@ -79,12 +79,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Taladro GBM 13 RE 750 W Bosch</td>
-                <td>Taladros eléctricos</td>
-                <td>Nuevo, sin detalles</td>
-                <td><a class="btn btn-success" style="border: 1px solid" href="BodegueroConfirmar.html">Agregar</a></td>
-            </tr>
+           
             <tr>
                 <td>Sierra circular eléctrica 9&quot; 2200 W</td>
                 <td>Sierra Circular</td>

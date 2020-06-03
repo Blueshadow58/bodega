@@ -409,6 +409,7 @@ class ComposerStaticInit975bd91686227e52715e663843a6eb9a
         'App\\Http\\Controllers\\MensajeController' => __DIR__ . '/../..' . '/app/Http/Controllers/MensajeController.php',
         'App\\Http\\Controllers\\PedidoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PedidoController.php',
         'App\\Http\\Controllers\\PedidoHerramientaController' => __DIR__ . '/../..' . '/app/Http/Controllers/PedidoHerramientaController.php',
+        'App\\Http\\Controllers\\TableTemporalController' => __DIR__ . '/../..' . '/app/Http/Controllers/TableTemporalController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',

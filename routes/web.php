@@ -74,6 +74,20 @@ Route::post('/pedidoHerramienta.lista', 'PedidoHerramientaController@lista');
 Route::post('/pedidoHerramienta.agregar', 'PedidoHerramientaController@agregar');
 
 
+//enviar datos de tabla temporal a tabla detalles solicitud
+Route::post('/pedidoHerramienta.volcar', 'PedidoHerramientaController@volcar');
+
+
+
+
+
+
+
+
+
+
+
+
 //Route::view('newlogin','/auth/newlogin');
 
 

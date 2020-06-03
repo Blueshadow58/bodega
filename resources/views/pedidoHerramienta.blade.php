@@ -22,7 +22,7 @@
      
 
 
-
+{{-- 
     <script> 
     //por defecto
     $(document).ready(function(){
@@ -65,7 +65,7 @@
 
 
 
-<label for="" id="label">000</label>
+<label for="" id="label">000</label> --}}
 
     <br>
     <br>
@@ -75,12 +75,10 @@
         <th>Identificador</th>
         <th>imagen</th>
         <th>descripcion</th>
-        <th>nombre</th>
-      
+        <th>nombre</th>      
         <th>accion</th>
       </tr>
-      </thead>
-    
+      </thead>    
       <tbody>
       @foreach($herramientas as $herramienta)
       <tr id="estado_tr{{$herramienta->id}}">
@@ -89,27 +87,23 @@
         <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
         </td>
         <td>{{$herramienta->descripcion}}</td>
-        <td>{{$herramienta->nombre}}</td>
-    
+        <td>{{$herramienta->nombre}}</td>    
         <td>
           <form action="pedidoHerramienta.agregar" method="post">
-            <button onclick="agregar({{$herramienta->id}})">Agregar</button>
+            @csrf
+            <button name="btnId" value="{{$herramienta->id}}" onclick="agregar({{$herramienta->id}})">Agregar</button>
           </form>
         </td>
 {{-- 
         <form method="post" action="pedidoHerramienta.agregar/{{$herramienta->id}}">
          @csrf
         <button class="btn btn-danger" type="submit">Agregar</button>
-        </form> --}}
-        
+        </form> --}}        
       </tr>
       @endforeach
-      </tbody>
-    
+      </tbody>    
     </table>
-    {{$herramientas->links()}}
-    
-
+    {{$herramientas->links()}}    
     <table>
         <thead>
            <tr>
@@ -122,18 +116,12 @@
         </thead>
         <tbody>
 
-
-<form action="pedidoHerramienta.lista" method="post">
+<form action="pedidoHerramienta.volcar" method="post">
 @csrf
-
-  <input type="hidden" id="pot"  name="">
-
-
-
-  <button type="submit">Generar lista</button>
-
+  <input type="date" name="fechaEntrega" id="">
+  <input type="text" name="asunto" />
+  <button name="idUser" value="{{$usuario}}" type="submit">Generar lista</button>
 </form>
-
         </tbody>
     </table>
 
