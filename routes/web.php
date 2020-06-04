@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
@@ -49,7 +50,7 @@ Route::get('perfil',function(){
 return view('perfil');
 });
 
-Route::view('registro-ordenes','registro-ordenes');
+
 
 Route::view('notificaciones','notificaciones');
 
@@ -61,8 +62,12 @@ Route::view('home-bodega','home-bodega');
 
 Route::get('/pedido', 'PedidoController@index');
 
+Route::post('/pedido.detalle', 'PedidoController@detalle');
+
 
 Route::post('/pedido.store', 'PedidoController@store');
+
+Route::get('/registro-ordenes', 'PedidoController@index');
 
 
 
@@ -73,6 +78,10 @@ Route::post('/pedidoHerramienta.lista', 'PedidoHerramientaController@lista');
 
 //agregar lista 
 Route::post('/pedidoHerramienta.agregar', 'PedidoHerramientaController@agregar');
+
+//agregar lista 
+Route::post('/pedidoHerramienta.eliminar', 'PedidoHerramientaController@eliminar');
+
 
 
 //enviar datos de tabla temporal a tabla detalles solicitud

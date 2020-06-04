@@ -20,7 +20,7 @@ class MensajeController extends Controller
         $users = User::where('id','!=',Auth::user()->id)->get();        
         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
         
-        return  view('mensajes')->with('users',$users)->with('mensajes',$mensajes);
+        return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
         
     }
 
@@ -62,7 +62,9 @@ class MensajeController extends Controller
         
         
             
-        return  view('mensajes')->with('users',$users)->with('mensajes',$mensajes);
+        //return  view('mensajes')->with('users',$users)->with('mensajes',$mensajes);
+
+        return back();
     }
 
     /**

@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+    
     <link rel="stylesheet" href="assets/css/Data-Table-1.css">
     <link rel="stylesheet" href="assets/css/Data-Table.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Footer-Clean.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -38,27 +38,48 @@
     </header>
     <div class="contact-clean" style="background-color: transparent;">
         <div class="container">
-            <div class="form-group">
+
+            {{-- <div class="form-group">
                 <div class="dropdown"><button class="btn btn-primary dropdown-toggle border rounded border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Asunto</button>
                     <div class="dropdown-menu" role="menu" style="background-color: #002d47;color: rgb(198,125,7);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Solicitud de herramientas</a><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Mensaje</a></div>
                 </div>
-            </div><div class="table-responsive">
+            </div><div class="table-responsive"> --}}
+<br>
+                <form class="form-inline" action="mensajes.store" method="post" style="color:white">
+                    @csrf
+                    <div class="form-group">
+                    
+                      <input type="text" placeholder="Mensaje" name="mensaje" class="form-control" id="mensaje">
+                    </div>
+
+                    <select name="destinatario_id" >
+                    <option value="">Selecciona el destinatario</option>
+                    @foreach ($users as $user)
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+
+        </select>
+        <button class="btn-success" type="submit" style="border: 1px solid;" >Enviar</button>
+                    
+                  </form> 
+<br>
     <table class="table table-striped" style="color:#ffffff">
         <thead style="background-color: #c67e06;">
             <tr>
-                <th><strong>Fecha de envio</strong></th>
-                <th>Nombre</th>
-                <th>Asunto</th>
-                <th></th>
+                {{-- <th><strong>Fecha de envio</strong></th> --}}
+                <th>usuario</th>
+                <th>mensaje</th>                
             </tr>
         </thead>
         <tbody>
+
+            @foreach($mensajes as $mensaje)
             <tr>
-                <td>30/7/2020 14:04</td>
-                <td>Juan</td>
-                <td>Solicitud de herramientas</td>
-                <td><a class="btn btn-primary" role="button" style="background-color: #002d47;border: 1px solid" href="BodegueroConfirmar.html">Ver más</a></td>
+                <td>{{$mensaje->remitente_id}}</td>   
+              <td>{{$mensaje->contenido_mensaje}}</td>                                       
             </tr>
+            @endforeach
+
         </tbody>
     </table>
 </div></div>

@@ -101,7 +101,7 @@
                       <li class="nav-item" role="presentation"><a class="nav-link" href="HomeBodega.html" style="color: #ffffff;">Home</a></li>
                       <li class="nav-item" role="presentation"><a class="nav-link" href="Perfil.html" style="color: #ffffff;">Perfil</a></li>
                       <li class="nav-item" role="presentation"><a class="nav-link" href="Notificaciones.html" style="color: #ffffff;">Notificaciones</a></li>
-                      <li class="nav-item" role="presentation"><a class="nav-link" href="Registro%20Ordenes.html" style="color: #ffffff;">Registro de ordenes</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                   </ul><span class="navbar-text actions"> </span></div>
           </div>
       </nav>
@@ -132,41 +132,76 @@
   <table class="table" style="color:white">
       <thead style="background-color: #c67e06;color: #eff1f4;">
           <tr>
-              <th><strong>Nombre</strong></th>
-              <th>Estado</th>
+              <th>Id</th>
+              <th>imagen</th>
+              <th>nombre</th>
+              <th>categoria</th>
               <th></th>
           </tr>
       </thead>
       <tbody>
           <tr>
-              <td>Sierra circular eléctrica 9&quot; 2200 W</td>
-              <td>Usada, rotura del material protector e...</td>
-              <td><a class="btn btn-danger" style="border: 1px solid" href="BodegueroConfirmar.html">Eliminar</a></td>
+
+            @foreach($productos as $producto)
+            <tr>
+              <td>{{$producto->id_producto}}</td>
+              <td>
+              <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
+              </td>
+              <td>{{$producto->nombre}}</td>
+              <td>{{$producto->categoria}}</td>    
+              <td>
+                <form action="pedidoHerramienta.eliminar" method="post" style="background-color: #002d47;padding:10px">
+                  @csrf
+                  <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$producto->id_producto}}"  >Eliminar</button>
+                </form>
+              </td>
+            
+            </tr>
+            @endforeach
+
           </tr>
       </tbody>
   </table>
-</div></div>
+</div>
+</div>
+
+
+
               <div class="col">
                   <div class="form-group">
                    <!-- <a class="btn btn-primary border rounded border-white" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Enviar Lista</a>-->
 
-<form action="pedidoHerramienta.volcar" method="post" style="padding: 20px;background-color: #c67e06;border: 1px solid;color:white">
+<form action="pedidoHerramienta.volcar" class="form-inline" method="post" style="padding: 20px;background-color: #c67e06;border: 1px solid;color:white">
   @csrf
 
-    <input type="date" name="fechaEntrega" id="">
-    <input type="text" name="asunto" placeholder="Asunto" />
-    <button name="idUser" value="{{$usuario}}" type="submit" class="btn btn-primary border rounded border-white" style="background-color: #002d47;">Generar lista</button>
+  <div class="form-group mb2" >    
+    <input type="text" class="form-control" name="asunto" placeholder="Asunto"  style="color:black;border-radius: 5px" />    
+  </div>
+
+  
+  <div class="form-group mb2 mx-sm-3" >
+    <input type="date" name="fechaEntrega" class="from-control" id="">
+  </div>
+
+    
+    <div class="form-group">
+      <button name="idUser" value="{{$usuario}}" type="submit" class="btn btn-primary border rounded border-white btn-block" style="background-color: #002d47;">Generar lista</button>
+    </div>
+
+    
+
   </form>
                   </div>
                   <div class="table-responsive table-striped">
   <table class="table" style="color:white">
       <thead style="background-color: #c67e06;color: #eff1f4;">
           <tr >
-              <th><strong>imagen</strong></th>
+            <th>Id</th>
+              <th>imagen</th>
               <th>nombre</th>
-              <th>descripcion</th>              
-              <th></th>
-          </tr>
+              <th>categoria</th>              
+              <th>        </tr>
       </thead>
       <tbody>
         @foreach($herramientas as $herramienta)

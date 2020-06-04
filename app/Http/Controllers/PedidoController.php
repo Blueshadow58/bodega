@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Herramientas;
 use App\Pedido;
+use App\PedidoHerramienta;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
 {
@@ -19,9 +21,13 @@ class PedidoController extends Controller
     {
         
         //traer a los usuarios menos a mi
-        $users = User::where('id','!=',Auth::user()->id)->get(); 
+        //$users = User::where('id','!=',Auth::user()->id)->get(); 
 
-        return view('pedido')->with('users',$users);
+        
+        $pedidos = DB::table('pedidos')->get();
+
+        //en este caso se llama registro de ordenes
+        return view('registro-ordenes')->with('pedidos',$pedidos);
 
     }
 
@@ -33,6 +39,29 @@ class PedidoController extends Controller
     public function create()
     {
         //
+    }
+
+    public function detalle(Request $request){
+
+        //$pedidoHerramientas = DB::table('pedido_herramientas')->where('id_pedido','=',$request->btnId);
+
+        //$pedidoHerramientas = PedidoHerramienta::select('id_pedido')->where('id_pedido',$request->btnId)->value('id_pedido');
+
+
+        //$pedidoHerramientas = PedidoHerramienta::select('*')->join('herramienta','pedido_herramientas.id_herramienta','=','herramienta_id')->get();
+
+        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido','=',$request->btnId)->get();
+
+
+            // $herramientas = DB::table('herramienta')
+            // ->join('pedido_herramientas', 'herramienta.id', '=', 'pedido_herramienta.id_pedido')            
+            // ->select('*')->where('id_pedido from pedido_herramienta',$request->id)->get();
+
+
+
+        return view('bodegero-confirmar')->with('pedidoHerramientas',$pedidoHerramientas);
+
+
     }
 
     /**

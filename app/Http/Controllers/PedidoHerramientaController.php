@@ -23,7 +23,18 @@ class PedidoHerramientaController extends Controller
     {
         $datos['herramientas']=Herramientas::paginate(6);
         $usuario = Auth::user()->id;
-        return view('pedidoHerramienta',$datos)->with('usuario',$usuario);
+
+        //$productos = DB::table('table_temporals')->select('*')->where('id_usuario','=',Auth::user()->id)->get();
+
+            //$datos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','!=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
+        
+
+
+            $productos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
+
+
+        // return view('pedidoHerramienta')->with('herramientas',$datos)->with('usuario',$usuario)->with('productos',$productos);
+        return view('pedidoHerramienta',$datos)->with('usuario',$usuario)->with('productos',$productos);
         
         
 
@@ -88,6 +99,14 @@ class PedidoHerramientaController extends Controller
     }
 
 
+
+    public function eliminar(Request $request){
+
+        DB::table('table_temporals')->where('id_producto','=',$request->btnId)->delete();
+
+        return back();       
+    }
+
     public function volcar(Request $request){
     
         // ::create(
@@ -124,7 +143,8 @@ class PedidoHerramientaController extends Controller
         table_temporal::destroy('delete * table_temporal where id_usuario','=',Auth::user()->id);
 
 
-        return 'Lista ingresada';
+        
+        return back();
 
     }
 

@@ -30,44 +30,49 @@
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item" role="presentation"><a class="nav-link" href="HomeBodega.html" style="color: #ffffff;">Home</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="Perfil.html" style="color: #ffffff;">Perfil</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="Notificaciones.html" style="color: #ffffff;">Notificaciones</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="Registro%20Ordenes.html" style="color: #ffffff;">Registro de ordenes</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="Notificaciones.html" style="color: #ffffff;">Mensajes</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                     </ul><span class="navbar-text actions"> </span></div>
             </div>
         </nav>
     </header>
     <div class="contact-clean" style="background-color: transparent;">
         <div class="container">
-            <div class="form-group"><a class="btn btn-primary border-light" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Volver</a><a class="btn btn-primary border-light float-right" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Registrar</a></div>
+            <div class="form-group">
+                {{-- <a class="btn btn-primary border-light" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Volver</a><a class="btn btn-primary border-light float-right" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Registrar</a> --}}
+            </div>
             <div
                 class="card">
                 <div class="card-body" style="background-color: #002d47;color: rgb(255,255,255);opacity: 1;">
                     <h4 class="card-title">Asunto</h4>
                     <div class="form-group"><span>Fecha:</span></div>
                     <div class="form-group"><span>Nombre:</span></div>
-                    <div class="form-group"><span>Especialidad:</span></div>
+                    
                     <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
                     <div><div class="table-responsive table-striped">
     <table class="table" style="color: #eff1f4">
         <thead style="background-color: #c67e06;">
             <tr>
-                <th><strong>Nombre</strong></th>
-                <th>Tipo</th>
+                <th><strong>Id herramienta</strong></th>
+                
                 <th>Estado</th>
                 
             </tr>
         </thead>
         <tbody>
+          
+            @foreach($pedidoHerramientas as $pedidoHerramienta)
             <tr>
-                <td>Taladro GBM 13 RE 750 W Bosch</td>
-                <td>Taladros eléctricos</td>
-                <td>Nuevo, sin detalles</td>                
+              <td>{{$pedidoHerramienta->id_herramienta}}</td>
+              {{-- <td>
+              <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
+              </td> --}}
+              
+              <td>{{$pedidoHerramienta->estado_herramienta}}</td>    
+              
+            
             </tr>
-            <tr>
-                <td>Sierra circular eléctrica 9&quot; 2200 W</td>
-                <td>Sierra Circular</td>
-                <td>Usada, rotura del material protector e...</td>                
-            </tr>
+            @endforeach
         </tbody>
     </table>
 </div></div>

@@ -31,7 +31,7 @@
                         <li class="nav-item" role="presentation"><a class="nav-link" href="HomeBodega.html" style="color: #ffffff;">Home</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="Perfil.html" style="color: #ffffff;">Perfil</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="Notificaciones.html" style="color: #ffffff;">Notificaciones</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="Registro%20Ordenes.html" style="color: #ffffff;">Registro de ordenes</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                     </ul><span class="navbar-text actions"> </span></div>
             </div>
         </nav>

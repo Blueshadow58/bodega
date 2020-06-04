@@ -38,29 +38,44 @@
     </header>
     <div class="contact-clean" style="background-color: transparent;">
         <div class="container">
-            <div class="form-group">
+
+            {{-- <div class="form-group">
                 <div class="dropdown"><button class="btn btn-primary dropdown-toggle border rounded border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Solicitudes Pendientes</button>
                     <div class="dropdown-menu" role="menu"
                         style="background-color: #002d47;color: rgb(255,255,255);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Solicitudes Registradas</a></div>
                 </div>
-            </div><div class="table-responsive">
+            </div>
+             --}}
+            <div class="table-responsive">
     <table class="table table-striped" style="color:#ffffff;">
         <thead style="background-color:#c67e06;">
             <tr>
-                <th><strong>Fecha de envio</strong></th>
+                <th>Fecha de envio</th>
                 <th>Nombre</th>
                 <th>Asunto</th>
                 <th></th>
+                
             </tr>
         </thead>
         <tbody>
+
+            @foreach($pedidos as $pedido)
             <tr>
-                <td>30/7/2020 14:04</td>
-                <td>Juan</td>
-                <td>Solicitud de herramientas</td>
-                <td><a class="btn btn-primary" role="button"
-                       style="background-color: #002d47;border: 1px solid" href="BodegueroConfirmar.html">Ver más</a></td>
+                <td>{{$pedido->created_at}}</td>
+              
+                <td>{{$pedido->id_usuario}}</td>
+              
+                <td>{{$pedido->asunto}}</td>              
+              <td>
+                <form action="pedido.detalle" method="post" style="background-color: #002d47;padding:10px">
+                  @csrf
+                  <button class="btn-primary" style="border: 1px solid;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
+                </form>
+              </td>
+            
             </tr>
+            @endforeach
+            
         </tbody>
     </table>
 </div></div>
