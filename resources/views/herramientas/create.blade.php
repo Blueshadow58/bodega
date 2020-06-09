@@ -2,7 +2,7 @@
 
 @section('contenido')
 <br>
-<div class="container">
+<div class="container" style="color: white">
 
 @if(count($errors)>0)
 <div class="alert alert-danger" role="alert">

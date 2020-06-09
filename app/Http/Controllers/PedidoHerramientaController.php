@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Herramientas;
 use App\Pedido;
 use App\PedidoHerramienta;
+use App\stock;
 use App\table_temporal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,23 +22,24 @@ class PedidoHerramientaController extends Controller
      */
     public function index()
     {
-        $datos['herramientas']=Herramientas::paginate(6);
+        //$datos['herramientas']=Herramientas::paginate(6);
+
         $usuario = Auth::user()->id;
 
-        //$productos = DB::table('table_temporals')->select('*')->where('id_usuario','=',Auth::user()->id)->get();
+        //$herramientas = Herramientas::select('*')->get();
 
-            //$datos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','!=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
-        
+        //$herramientas = Herramientas::distinct()->get('nombre');
 
+        $herramientas = Herramientas::select('*')->groupBy('nombre')->get();
 
-            $productos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
+        $productos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
 
+        //$cantidad = stock::select('*')->where('nombre','=',$herramientas->nombre)->get();        
 
         // return view('pedidoHerramienta')->with('herramientas',$datos)->with('usuario',$usuario)->with('productos',$productos);
-        return view('pedidoHerramienta',$datos)->with('usuario',$usuario)->with('productos',$productos);
+        return view('pedidoHerramienta')->with('herramientas',$herramientas)->with('usuario',$usuario)->with('productos',$productos);
         
         
-
     }
 
     public function insert(Request $request){
@@ -80,18 +82,14 @@ class PedidoHerramientaController extends Controller
 
         $categoria = DB::table('herramienta')->select('categoria')->where('id', '=', $request->btnId)->value('categoria');
 
-        // $nombreCategoria = "";
 
-        // foreach ($categoria as $o) {
-        //     $nombreCategoria = $o;
-        // }
-
+         //Agrupar la cantidad   
          $countH = Herramientas::where('categoria','=','martillos')->count();   
 
         table_temporal::create(
             ['id_producto' => $request->btnId,
             'id_usuario' => Auth::user()->id,            
-            'cantidad' => $countH,
+            'cantidad' => $request->cantidad,
             'tipo_producto' => $categoria]
         ) ;
 

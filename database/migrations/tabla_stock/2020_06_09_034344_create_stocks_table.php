@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableTemporalsTable extends Migration
+class CreateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateTableTemporalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('table_temporals', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('id_producto');
-            $table->bigInteger('id_usuario');
-            $table->integer('cantidad');
-            $table->string('tipo_producto');            
+            $table->string('nombre');
+            $table->integer('stock_total');
+            $table->integer('stock_disponible');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -30,6 +30,11 @@ class CreateTableTemporalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_temporals');
+        Schema::dropIfExists('stocks');
     }
+
+    
+
+
+
 }

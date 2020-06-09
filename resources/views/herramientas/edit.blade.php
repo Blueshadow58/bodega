@@ -2,7 +2,7 @@
 
 @section('contenido')
 <br>
-<div class="container">
+<div class="container" style="color: white">
 
 <form action="{{url('/herramientas/'.$herramienta->id)}}" method="post" enctype="multipart/form-data">
 {{csrf_field()}}

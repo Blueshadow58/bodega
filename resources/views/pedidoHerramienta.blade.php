@@ -31,64 +31,6 @@
 
 
 
-{{-- <body>
-    
-    <br>
-    <br>
-    <table class="table table-light table-hover">
-    <thead class="thead-light">
-      <tr>
-        <th>Identificador</th>
-        <th>imagen</th>
-        <th>descripcion</th>
-        <th>nombre</th>      
-        <th>accion</th>
-      </tr>
-      </thead>    
-      <tbody>
-      @foreach($herramientas as $herramienta)
-      <tr id="estado_tr{{$herramienta->id}}">
-        <td>{{$herramienta->id}}</td>
-        <td>
-        <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
-        </td>
-        <td>{{$herramienta->descripcion}}</td>
-        <td>{{$herramienta->nombre}}</td>    
-        <td>
-          <form action="pedidoHerramienta.agregar" method="post">
-            @csrf
-            <button name="btnId" value="{{$herramienta->id}}" onclick="agregar({{$herramienta->id}})">Agregar</button>
-          </form>
-        </td>
-      
-      </tr>
-      @endforeach
-      </tbody>    
-    </table>
-    {{$herramientas->links()}}    
-    <table>
-        <thead>
-           <tr>
-            <th>Identificador</th>
-            <th>imagen</th>
-            <th>descripcion</th>
-            <th>nombre</th>          
-            <th>accion</th>
-           </tr>
-        </thead>
-        <tbody>
-
-<form action="pedidoHerramienta.volcar" method="post">
-@csrf
-  <input type="date" name="fechaEntrega" id="">
-  <input type="text" name="asunto" />
-  <button name="idUser" value="{{$usuario}}" type="submit">Generar lista</button>
-</form>
-        </tbody>
-    </table>
-</body> --}}
-
-
 
 
 <body style="background-color: #002d47;">
@@ -129,13 +71,14 @@
                   <div class="table-responsive table-striped">
 
                     <!-- Tabla elementos seleccionados -->
-  <table class="table" style="color:white">
+  <table class="table-sm " style="color:white">
       <thead style="background-color: #c67e06;color: #eff1f4;">
           <tr>
               <th>Id</th>
               <th>imagen</th>
               <th>nombre</th>
               <th>categoria</th>
+              <th>cantidad</th>
               <th></th>
           </tr>
       </thead>
@@ -150,6 +93,7 @@
               </td>
               <td>{{$producto->nombre}}</td>
               <td>{{$producto->categoria}}</td>    
+              <td>{{$producto->cantidad}}</td>    
               <td>
                 <form action="pedidoHerramienta.eliminar" method="post" style="background-color: #002d47;padding:10px">
                   @csrf
@@ -210,15 +154,16 @@
           <td>
           <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
           </td>
-          <td>{{$herramienta->descripcion}}</td>
-          <td>{{$herramienta->nombre}}</td>    
-          <td>
-            <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
-              @csrf
-              <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>
-            </form>
+          <td>{{$herramienta->nombre}}</td>  
+          <td>{{$herramienta->categoria}}</td>
+          
+          <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
+            @csrf
+          <td> <input type="number" name="cantidad" id="" max="" min="1" value="1"> </td>  
+          <td>                          
+              <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
           </td>
-        
+        </form>
         </tr>
         @endforeach
          

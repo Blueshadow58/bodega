@@ -2,7 +2,7 @@
 
 @section('contenido')
 <br>
-<div class="container">
+<div class="container" >
 
 @if(Session::has('Mensaje'))
 <div class="alert alert-success"role="alert">
@@ -15,7 +15,7 @@
 <a href="{{url('herramientas/create')}}" class="btn btn-success">Agregar Herramienta</a>
 <br>
 <br>
-<table class="table table-light table-hover">
+<table class="table table-hover" style="background-color: #002d47;color:white">
 <thead class="thead-light">
   <tr>
     <th>#</th>

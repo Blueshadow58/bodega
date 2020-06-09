@@ -18,7 +18,7 @@
 
 
 <header style="background-color: #ffffff;color: rgb(255,255,255);">
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="background-color: #055ada;color: rgb(255,255,255);">
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="background-color: #c67e06;color: rgb(255,255,255);">
             <div class="container"><a class="navbar-brand" href="#">Nombre</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="background-color: #ffffff;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div
                     class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,255,255);">
@@ -36,7 +36,7 @@
         </nav>
     </header>
 
-<body>
+<body style="background-color: #002d47">
 
     <div class="container">
         @yield('contenido')
