@@ -22,41 +22,24 @@ class PedidoHerramientaController extends Controller
      */
     public function index()
     {
-        //$datos['herramientas']=Herramientas::paginate(6);
-
+        //seleccionar usuario actual
         $usuario = Auth::user()->id;
 
-        //$herramientas = Herramientas::select('*')->get();
-
-        //$herramientas = Herramientas::distinct()->get('nombre');
-
+        //seleccionar herramientas por grupo nombre sin repetir
         $herramientas = Herramientas::select('*')->groupBy('nombre')->get();
+    
+        $stockHerramientas = stock::select('*')->get();
 
+        //llamar todos los productos
         $productos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
 
-        //$cantidad = stock::select('*')->where('nombre','=',$herramientas->nombre)->get();        
 
-        // return view('pedidoHerramienta')->with('herramientas',$datos)->with('usuario',$usuario)->with('productos',$productos);
-        return view('pedidoHerramienta')->with('herramientas',$herramientas)->with('usuario',$usuario)->with('productos',$productos);
+        return view('pedidoHerramienta')->with('herramientas',$herramientas)->with('usuario',$usuario)->with('productos',$productos)->with('stockHerramientas',$stockHerramientas);
         
         
     }
 
     public function insert(Request $request){
-
-        // $id = $request->id;
-        // for($count =0;$count < count($id);$count++){
-        //     $data = array(
-        //         'id' => $id[$count],
-        //     );
-        //     $insert_data[] = $data;
-        // }
-        // PedidoHerramienta::create($insert_data);
-        // return response()->json([
-        //     'success' => 'Data Added successfully' 
-        // ]);
-
-
 
     }
 
@@ -69,29 +52,57 @@ class PedidoHerramientaController extends Controller
     public function agregar(Request $request)
     {
         
-        //$users = DB::table('herramientas')->select('name', 'email as user_email')->get();
-
-         $herramienta = Herramientas::where('id','=',$request->btnId)->get();   
-
-         
-        //$categoria = Herramientas::table('   where id = ',$request->id)->get();   
-
-        //$categoria = Herramientas::select('categoria')->where('id', '=', $request->id)->get();
+        
 
 
 
+        $herramienta = Herramientas::where('id','=',$request->btnId)->get();   
+        
         $categoria = DB::table('herramienta')->select('categoria')->where('id', '=', $request->btnId)->value('categoria');
 
 
-         //Agrupar la cantidad   
-         $countH = Herramientas::where('categoria','=','martillos')->count();   
+//Disminuir Stock-------------------------------------------------------------------------------------
+        
+        //capturar el nombre de la herramienta por la id del item seleccionado por el boton
+        $herramientaNombre = Herramientas::select('nombre')->where('id','=',$request->btnId)->value('nombre') ; 
 
-        table_temporal::create(
-            ['id_producto' => $request->btnId,
-            'id_usuario' => Auth::user()->id,            
-            'cantidad' => $request->cantidad,
-            'tipo_producto' => $categoria]
-        ) ;
+        //seleccionar el stock dependiendo de su nombre 
+        $stockDisponible = stock::select('stock_disponible')->where('nombre','=',$herramientaNombre)->value('stock_disponible');
+
+        
+        // stock de la herramienta seleccionada menos la cantidad que seleccionamos
+        stock::where('nombre','=',$herramientaNombre)->update(['stock_disponible'=> $stockDisponible - $request->cantidad]);
+
+//
+
+
+//Aumentar stock-----------------------------------------------------------------------------------------
+         //Agrupar la cantidad   
+        $countH = Herramientas::where('categoria','=','martillos')->count();   
+
+        //verificar si la herramienta que hemos agregado a nuestro pedido existe, sino aumentar la cantidad
+        if (table_temporal::where('id_producto','=',$request->btnId)->exists()) {
+            //Si existe
+            //Herramientas::select('id')->where('')
+
+            //cantidad de ese producto
+            $cantidadTableTemporal = table_temporal::select('cantidad')->where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->value('cantidad');
+            //actulizar cantidad en table_temporal
+            table_temporal::where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->update(['cantidad'=> $cantidadTableTemporal + $request->cantidad]);
+        } else {
+            //No existe
+            table_temporal::create(
+                ['id_producto' => $request->btnId,
+                'id_usuario' => Auth::user()->id,            
+                'cantidad' => $request->cantidad,
+                'tipo_producto' => $categoria]
+            );
+        }
+        
+        
+        
+
+        
 
         return back();        
     }
@@ -100,6 +111,18 @@ class PedidoHerramientaController extends Controller
 
     public function eliminar(Request $request){
 
+        //seleccionar el nombre de la herramienta segun el id
+        $herramientaNombre = Herramientas::select('nombre')->where('id','=',$request->btnId)->value('nombre') ; 
+
+        //seleccionar la cantidad del producto segun id
+        $cantidadTableTemporal = table_temporal::select('cantidad')->where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->value('cantidad');
+
+        //consulta cantidad en stock disponible en la tabla stock segun el nombre
+        $stockDisponible = stock::select('stock_disponible')->where('nombre','=',$herramientaNombre)->value('stock_disponible');
+        //actualizar la tabla stock agregando la cantidad eliminada en table_temporals
+        stock::where('nombre','=',$herramientaNombre)->update(['stock_disponible'=>  $stockDisponible + $cantidadTableTemporal]);
+
+        //eliminar el dato de la tabla temporal
         DB::table('table_temporals')->where('id_producto','=',$request->btnId)->delete();
 
         return back();       

@@ -49,8 +49,6 @@
       </nav>
   </header>
 
-
-
   
   <div class="contact-clean" style="background-color: transparent;background-position: top;">
       <div class="container">
@@ -145,7 +143,9 @@
               <th>imagen</th>
               <th>nombre</th>
               <th>categoria</th>              
-              <th>        </tr>
+              <th>Cantidad</th>
+              <th></th>
+                
       </thead>
       <tbody>
         @foreach($herramientas as $herramienta)
@@ -159,17 +159,36 @@
           
           <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
             @csrf
-          <td> <input type="number" name="cantidad" id="" max="" min="1" value="1"> </td>  
-          <td>                          
-              <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
+          <td> 
+            @foreach ($stockHerramientas as $stock)
+  {{-- <label for="" style="color:white">{{$stock->stock_total}}</label>     --}}
+          @if ($herramienta->nombre == $stock->nombre)
+              @if ($stock->stock_disponible > 0)
+                <input type="number" name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
           </td>
+          <td>
+            <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
+          </td>
+              @else
+                <input type="number" name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="0" disabled> 
+          </td>
+          <td>
+            <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" disabled>Sin stock</button>              
+          </td>
+              @endif                
+          @endif
+          @endforeach
+            
+
         </form>
         </tr>
         @endforeach
          
       </tbody>
   </table>
-</div></div>
+</div>
+
+</div>
           </div>
       </div>
   </div>
