@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login</title>
+    <title>Detalle pedido</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
@@ -30,7 +30,8 @@
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item" role="presentation"><a class="nav-link" href="HomeBodega.html" style="color: #ffffff;">Home</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="Perfil.html" style="color: #ffffff;">Perfil</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="Notificaciones.html" style="color: #ffffff;">Mensajes</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="mensajes" style="color: #ffffff;">Mensajes</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="pedidoHerramienta" style="color: #ffffff;">Generar pedido</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                     </ul><span class="navbar-text actions"> </span></div>
             </div>
@@ -44,31 +45,50 @@
             <div
                 class="card">
                 <div class="card-body" style="background-color: #002d47;color: rgb(255,255,255);opacity: 1;">
-                    <h4 class="card-title">Asunto</h4>
-                    <div class="form-group"><span>Fecha:</span></div>
-                    <div class="form-group"><span>Nombre:</span></div>
+                    @foreach($pedido as $pedido)
+                    <h4 class="card-title">Asunto: {{$pedido->asunto}}</h4>                    
+                    <div class="form-group"><span>Fecha entrega: {{$pedido->fecha_entrega}}</span></div>
+                    @foreach ($usuario as $usuario)                        
+                    @if ($pedido->id_usuario == $usuario->id)
+                    <div class="form-group"><span>Nombre: {{$usuario->name}}</span></div>    
+                    @endif                        
+                    @endforeach
+                    @endforeach
+
                     
-                    <p class="card-text">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
                     <div><div class="table-responsive table-striped">
     <table class="table" style="color: #eff1f4">
         <thead style="background-color: #c67e06;">
             <tr>
-                <th><strong>Id herramienta</strong></th>
-                
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
                 <th>Estado</th>
-                
             </tr>
         </thead>
         <tbody>
           
             @foreach($pedidoHerramientas as $pedidoHerramienta)
             <tr>
-              <td>{{$pedidoHerramienta->id_herramienta}}</td>
+
+                @foreach ($herramientas as $herramienta)
+                    
+                    @if ($pedidoHerramienta->id_herramienta == $herramienta->id)
+                    
+                    <td><img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100"></td>
+                    <td>{{$herramienta->nombre}}</td>
+                    <td>{{$pedidoHerramienta->cantidad}}</td>
+                    @endif    
+                @endforeach
+
+                <td>{{$pedidoHerramienta->estado_herramienta}}</td>    
+                
+
+              
               {{-- <td>
               <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
               </td> --}}
               
-              <td>{{$pedidoHerramienta->estado_herramienta}}</td>    
               
             
             </tr>

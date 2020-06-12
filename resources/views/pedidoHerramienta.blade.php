@@ -17,19 +17,17 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+   {{-- <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css"> --}}
     <link rel="stylesheet" href="assets/css/Data-Table-1.css">
     <link rel="stylesheet" href="assets/css/Data-Table.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Footer-Clean.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    {{-- <link rel="stylesheet" href="assets/css/Login-Form-Clean.css"> --}}
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-
-
 
 
 
@@ -42,7 +40,8 @@
                   <ul class="nav navbar-nav mr-auto">
                       <li class="nav-item" role="presentation"><a class="nav-link" href="HomeBodega.html" style="color: #ffffff;">Home</a></li>
                       <li class="nav-item" role="presentation"><a class="nav-link" href="Perfil.html" style="color: #ffffff;">Perfil</a></li>
-                      <li class="nav-item" role="presentation"><a class="nav-link" href="Notificaciones.html" style="color: #ffffff;">Notificaciones</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" href="mensajes" style="color: #ffffff;">Mensajes</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" href="pedidoHerramienta" style="color: #ffffff;">Generar pedido</a></li>
                       <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                   </ul><span class="navbar-text actions"> </span></div>
           </div>
@@ -52,24 +51,40 @@
   
   <div class="contact-clean" style="background-color: transparent;background-position: top;">
       <div class="container">
-          <div class="row">
-              <div class="col">
+          <div class="row d-flex justify-content-center">
+              
 
-                  {{-- <form class="border rounded border-white" method="post" style="margin-bottom: 20px; background-color: #c67e06;color">
-                      <h2 class="text-center" style="padding-top: 15px;color: #ffffff;">Filtrar</h2>
-                      <div class="form-group"><input class="border rounded form-control" type="text" name="name" placeholder="Buscar" style="background-color: #002d47;color: rgb(255,255,255);border-color: #002d47!important;"></div>
-                      <div class="form-group">
-                          <div class="dropdown"><button class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Tipo</button>
-                              <div class="dropdown-menu" role="menu" style="background-color: #002d47;color: rgb(255,255,255);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Taladros</a><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Sierras</a></div>
-                          </div>
-                      </div>
-                      <div class="form-group"><button class="btn btn-primary btn-block" type="button" style="background-color: #002d47;">Buscar</button></div>
-                  </form> --}}
+
+
+
+
+              
+            
+              <!-- <a class="btn btn-primary border rounded border-white" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Enviar Lista</a>-->
+<form action="pedidoHerramienta.volcar" class="form-inline " method="post" style="padding: 1%;background-color: #c67e06;border: 1px solid;color:white;margin: 2%;border-radius: 5px">
+@csrf
+<div class="form-group" style="">    
+<input type="text" class="form-control" name="asunto" placeholder="Asunto"  style="color:black;border-radius: 5px" />    
+</div>
+<div class="form-group" style="padding-inline: 10px">
+  <input type="date" name="fechaEntrega" class="from-control" id="">
+</div>
+
+<div class="form-group">
+ <button name="idUser" value="{{$usuario}}" type="submit" class="btn btn-primary border rounded border-white"  >Generar lista</button>
+</div>
+
+
+</form>
+
+
+
+
+                  
                   
                   <div class="table-responsive table-striped">
-
                     <!-- Tabla elementos seleccionados -->
-  <table class="table-sm " style="color:white">
+  <table class="table  " style="color:white">
       <thead style="background-color: #c67e06;color: #eff1f4;">
           <tr>
               <th>Id</th>
@@ -97,44 +112,21 @@
                   @csrf
                   <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$producto->id_producto}}"  >Eliminar</button>
                 </form>
-              </td>
-            
+              </td>            
             </tr>
             @endforeach
-
           </tr>
       </tbody>
   </table>
 </div>
-</div>
 
 
 
-              <div class="col">
-                  <div class="form-group">
-                   <!-- <a class="btn btn-primary border rounded border-white" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Enviar Lista</a>-->
 
-<form action="pedidoHerramienta.volcar" class="form-inline" method="post" style="padding: 20px;background-color: #c67e06;border: 1px solid;color:white">
-  @csrf
 
-  <div class="form-group mb2" >    
-    <input type="text" class="form-control" name="asunto" placeholder="Asunto"  style="color:black;border-radius: 5px" />    
-  </div>
 
-  
-  <div class="form-group mb2 mx-sm-3" >
-    <input type="date" name="fechaEntrega" class="from-control" id="">
-  </div>
 
-    
-    <div class="form-group">
-      <button name="idUser" value="{{$usuario}}" type="submit" class="btn btn-primary border rounded border-white btn-block" style="background-color: #002d47;">Generar lista</button>
-    </div>
-
-    
-
-  </form>
-                  </div>
+                  {{-- Tabla con todo --}}
                   <div class="table-responsive table-striped">
   <table class="table" style="color:white">
       <thead style="background-color: #c67e06;color: #eff1f4;">
@@ -159,12 +151,12 @@
           
           <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
             @csrf
-          <td> 
+          <td style="width: 25%"> 
             @foreach ($stockHerramientas as $stock)
   {{-- <label for="" style="color:white">{{$stock->stock_total}}</label>     --}}
           @if ($herramienta->nombre == $stock->nombre)
               @if ($stock->stock_disponible > 0)
-                <input type="number" name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
+                <input type="number" style="width: 30%"  name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
           </td>
           <td>
             <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
@@ -187,11 +179,41 @@
       </tbody>
   </table>
 </div>
+{{-- Tabla con todo --}}
 
-</div>
+
+
           </div>
       </div>
   </div>
+
+
+
+{{-- 
+  <script type="text/javascript">
+    mostrarNotificacion($notificacion,$estado);
+    </script>
+    
+<script type="text/javascript">
+ function mostrarNotificacion({{$notificacion}},{{$estado}}){
+  if ({{estado}} == "success") {
+    toastr.success($notificacion,{
+      "progressBar":true,
+      "positionClass": "toast-bottom-right"
+    })
+  } else if ({{estado}} == "fail") {
+    toastr.fail($notificacion,{
+      "progressBar":true,
+      "positionClass": "toast-bottom-right"
+    })
+  }
+
+ }
+
+</script> --}}
+
+  
+  
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   <script src="assets/js/smart-forms.min.js"></script>

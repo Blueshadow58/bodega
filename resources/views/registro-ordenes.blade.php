@@ -30,7 +30,8 @@
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item" role="presentation"><a class="nav-link" href="home-bodega" style="color: #ffffff;">Home</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="perfil" style="color: #ffffff;">Perfil</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="notificaciones" style="color: #ffffff;">Notificaciones</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="mensajes" style="color: #ffffff;">Mensajes</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="pedidoHerramienta" style="color: #ffffff;">Generar pedido</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                     </ul><span class="navbar-text actions"> </span></div>
             </div>
@@ -39,19 +40,12 @@
     <div class="contact-clean" style="background-color: transparent;">
         <div class="container">
 
-            {{-- <div class="form-group">
-                <div class="dropdown"><button class="btn btn-primary dropdown-toggle border rounded border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Solicitudes Pendientes</button>
-                    <div class="dropdown-menu" role="menu"
-                        style="background-color: #002d47;color: rgb(255,255,255);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Solicitudes Registradas</a></div>
-                </div>
-            </div>
-             --}}
             <div class="table-responsive">
     <table class="table table-striped" style="color:#ffffff;">
         <thead style="background-color:#c67e06;">
             <tr>
                 <th>Fecha de envio</th>
-                <th>Nombre</th>
+                <th>Nombre</th>                
                 <th>Asunto</th>
                 <th></th>
                 
@@ -63,7 +57,15 @@
             <tr>
                 <td>{{$pedido->created_at}}</td>
               
-                <td>{{$pedido->id_usuario}}</td>
+                {{-- Nombre del usuario de la solicitud   --}}
+                @foreach($usuarios as $usuario)
+                    @if ($pedido->id_usuario == $usuario->id)
+                    <td>{{$usuario->name}}</td>
+                    @else
+                    
+                    @endif
+                @endforeach
+
               
                 <td>{{$pedido->asunto}}</td>              
               <td>

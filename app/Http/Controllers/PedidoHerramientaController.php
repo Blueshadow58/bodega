@@ -34,7 +34,9 @@ class PedidoHerramientaController extends Controller
         $productos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
 
 
-        return view('pedidoHerramienta')->with('herramientas',$herramientas)->with('usuario',$usuario)->with('productos',$productos)->with('stockHerramientas',$stockHerramientas);
+
+        return view('pedidoHerramienta')->with('herramientas',$herramientas)->with('usuario',$usuario)
+        ->with('productos',$productos)->with('stockHerramientas',$stockHerramientas);
         
         
     }
@@ -53,8 +55,6 @@ class PedidoHerramientaController extends Controller
     {
         
         
-
-
 
         $herramienta = Herramientas::where('id','=',$request->btnId)->get();   
         
@@ -81,9 +81,9 @@ class PedidoHerramientaController extends Controller
         $countH = Herramientas::where('categoria','=','martillos')->count();   
 
         //verificar si la herramienta que hemos agregado a nuestro pedido existe, sino aumentar la cantidad
-        if (table_temporal::where('id_producto','=',$request->btnId)->exists()) {
+        if (table_temporal::where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->exists()) {
             //Si existe
-            //Herramientas::select('id')->where('')
+            
 
             //cantidad de ese producto
             $cantidadTableTemporal = table_temporal::select('cantidad')->where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->value('cantidad');
@@ -99,7 +99,7 @@ class PedidoHerramientaController extends Controller
             );
         }
         
-        
+        //Arreglar problema se suma el item a greado a este usuario a la otra lista
         
 
         
@@ -129,13 +129,23 @@ class PedidoHerramientaController extends Controller
     }
 
     public function volcar(Request $request){
-    
-        // ::create(
-        //     ['id_producto' => $request->btnId,
-        //     'id_usuario' => Auth::user()->id,            
-        //     'cantidad' => $countH,
-        //     'tipo_producto' => $categoria]
-        // ) ;
+
+
+
+        //seleccionar el numero de elementos que a ingresado este usuario a el pedido
+         $herramietasPorUser = DB::table('table_temporals')->select('*')->where('id_usuario','=',Auth::user()->id)->count();
+
+
+        // if ($herramietasPorUser == 0) {
+        //     return back();
+        //     $estado = "fail";
+        //     $notificacion = "Debe ingresar elementos para generar un pedido";
+        // } else {
+        //     $notificacion = "Pedido Generado correctamente";
+        //     $estado = "success";
+        // }
+        
+
 
         Pedido::create(
             ['id_usuario' => $request->idUser,
@@ -144,23 +154,29 @@ class PedidoHerramientaController extends Controller
             ]
         );
 
-
+        //seleccioanr todo de la tabla temporal de lo que haya ingresado el usuario
         $herramietasPorUser = DB::table('table_temporals')->select('*')->where('id_usuario','=',Auth::user()->id)->get();
 
-
+        //seleccioanr ultima id
         $ultimaId = Pedido::select('select id from pedido')->max('id');
 
+
+
         foreach ($herramietasPorUser as $herramienta){
+
+            $cantidadHerramienta = table_temporal::select('cantidad')->where('id_producto','=',$herramienta->id_producto)->value('cantidad');
 
         PedidoHerramienta::create(
             ['id_pedido' => $ultimaId,
              'id_herramienta' => $herramienta->id_producto,            
+             'cantidad' => $cantidadHerramienta,  
             //'fecha_devolución' => $request->fechaEntrega,                               
             //'estado_herramienta' => $request->asunto,            
             ]
         );
         };
         
+
         table_temporal::destroy('delete * table_temporal where id_usuario','=',Auth::user()->id);
 
 

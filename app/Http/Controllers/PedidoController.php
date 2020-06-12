@@ -24,10 +24,20 @@ class PedidoController extends Controller
         //$users = User::where('id','!=',Auth::user()->id)->get(); 
 
         
-        $pedidos = DB::table('pedidos')->get();
+         //$pedidos = DB::table('pedidos')->get();
 
         //en este caso se llama registro de ordenes
-        return view('registro-ordenes')->with('pedidos',$pedidos);
+
+        //$idUsuarioPedido = DB::table('pedidos')->get('id_usuario')->values('id_usuario');
+
+
+        $pedidos = Pedido::select('*')->get();
+
+        $usuarios = User::select(array('id','name'))->get();        
+
+        
+
+        return view('registro-ordenes')->with('pedidos',$pedidos)->with('usuarios',$usuarios);
 
     }
 
@@ -43,23 +53,22 @@ class PedidoController extends Controller
 
     public function detalle(Request $request){
 
-        //$pedidoHerramientas = DB::table('pedido_herramientas')->where('id_pedido','=',$request->btnId);
+        
+        
+        //seleccionar el pedido segun la id
+        $pedido = Pedido::select('*')->where('id','=',$request->btnId)->get();
 
-        //$pedidoHerramientas = PedidoHerramienta::select('id_pedido')->where('id_pedido',$request->btnId)->value('id_pedido');
+        //seleccionar id y nombre de usuario
+        $usuario = User::select(array('id','name'))->get();
 
-
-        //$pedidoHerramientas = PedidoHerramienta::select('*')->join('herramienta','pedido_herramientas.id_herramienta','=','herramienta_id')->get();
-
+        //seleccionar la lista de herramientas del pedido segun la id del pedido
         $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido','=',$request->btnId)->get();
 
+        //seleccioar herramientas 
+        $herramientas = Herramientas::select('*')->get();
 
-            // $herramientas = DB::table('herramienta')
-            // ->join('pedido_herramientas', 'herramienta.id', '=', 'pedido_herramienta.id_pedido')            
-            // ->select('*')->where('id_pedido from pedido_herramienta',$request->id)->get();
-
-
-
-        return view('bodegero-confirmar')->with('pedidoHerramientas',$pedidoHerramientas);
+        return view('pedido-detalle')->with('pedidoHerramientas',$pedidoHerramientas)
+        ->with('pedido',$pedido)->with('usuario',$usuario)->with('herramientas',$herramientas);
 
 
     }
