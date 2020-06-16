@@ -7,8 +7,10 @@ use App\Pedido;
 use App\PedidoHerramienta;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class PedidoController extends Controller
 {
@@ -38,6 +40,40 @@ class PedidoController extends Controller
         
 
         return view('registro-ordenes')->with('pedidos',$pedidos)->with('usuarios',$usuarios);
+
+    }
+
+
+    public function PDF(){
+
+        //$pedidos = Pedido::select('*')->get();
+
+       // $usuarios = User::select(array('id','name'))->get();   
+
+       // $pdf = \PDF::loadView('registro-ordenes');
+        //$pdf = App::make('dompdf.wrapper');
+        $pdf = App::make('dompdf.wrapper');
+
+        $pdf->loadHTML($this->convert_customer_data_to_html());
+
+        return $pdf->stream();
+        // $pdf->loadView('registro-ordenes');
+        // $pdf->render();
+
+        // return $pdf->download('Ordenes.pdf');
+        //return view('registro-ordenes')->with('pedidos',$pedidos)->with('usuarios',$usuarios)->$pdf->download();
+        //$pdf = \PDF::loadView('registro-ordenes');
+        
+        //$pdf->download('Ordenes.pdf');
+    }
+
+    public function convert_customer_data_to_html(){
+
+        $pedidos = Pedido::select('*')->get();
+        $usuarios = User::select(array('id','name'))->get();   
+        $output = '<h1>probando</h1>';
+
+        return $output;
 
     }
 

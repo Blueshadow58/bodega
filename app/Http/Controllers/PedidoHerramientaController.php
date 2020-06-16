@@ -41,6 +41,8 @@ class PedidoHerramientaController extends Controller
         
     }
 
+    
+
     public function insert(Request $request){
 
     }

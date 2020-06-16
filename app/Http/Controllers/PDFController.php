@@ -8,8 +8,10 @@ class PDFController extends Controller
 {
 
     
-    public function PDF(){
+    public function PDF() {
         $pdf = \PDF::loadView('registro-ordenes');
-        $pdf->download('Ordenes.pdf');
+        
+        return view('registro-ordenes');
+        //$pdf->download('Ordenes.pdf'),back()
     }
 }

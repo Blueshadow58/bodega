@@ -20,6 +20,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+//DomPDF
+Route::get('descargarPDF','PedidoController@PDF');
+
+
+
 Route::get('/home', 'HomeController@index');
 
 //Funcionana igual pero todas las rutas del group van a filtarr primero si tiene los permisos

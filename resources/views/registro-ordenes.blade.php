@@ -47,8 +47,9 @@
                 <th>Fecha de envio</th>
                 <th>Nombre</th>                
                 <th>Asunto</th>
-                <th></th>
-                
+                {{-- <th><a href="{{route('descargarPDF')}}" class="btn btn-primary">Imprimir PDF</a></th> --}}
+                {{-- <th><button type="button" onclick="window.location='{{ url('descargarPDF') }}'">Button</button></th> --}}
+                <th><a href="{{url('descargarPDF')}}" class="btn btn-primary">Imprimir PDF</a></th>
             </tr>
         </thead>
         <tbody>
