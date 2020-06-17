@@ -49,7 +49,7 @@
                 <th>Asunto</th>
                 {{-- <th><a href="{{route('descargarPDF')}}" class="btn btn-primary">Imprimir PDF</a></th> --}}
                 {{-- <th><button type="button" onclick="window.location='{{ url('descargarPDF') }}'">Button</button></th> --}}
-                <th><a href="{{url('descargarPDF')}}" class="btn btn-primary">Imprimir PDF</a></th>
+                <th><a href="{{url('descargarPDF')}}" style="border: 1px solid;" class="btn btn-success">Imprimir PDF</a></th>
             </tr>
         </thead>
         <tbody>

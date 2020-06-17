@@ -54,9 +54,13 @@ class PedidoController extends Controller
         //$pdf = App::make('dompdf.wrapper');
         $pdf = App::make('dompdf.wrapper');
 
-        $pdf->loadHTML($this->convert_customer_data_to_html());
+        $pdf->loadHTML($this->dataPedidoAHTML());
 
-        return $pdf->stream();
+        //return $pdf->stream();
+        return $pdf->download();
+
+        
+
         // $pdf->loadView('registro-ordenes');
         // $pdf->render();
 
@@ -67,11 +71,40 @@ class PedidoController extends Controller
         //$pdf->download('Ordenes.pdf');
     }
 
-    public function convert_customer_data_to_html(){
+
+    //Generar pdf de los pedidos
+    public function dataPedidoAHTML(){
 
         $pedidos = Pedido::select('*')->get();
         $usuarios = User::select(array('id','name'))->get();   
-        $output = '<h1>probando</h1>';
+
+        $output = ' <table class="table table-striped" >
+        <thead style="background-color:#c67e06;">
+            <tr>
+                <th>Fecha de envio</th>
+                <th>Nombre</th>                
+                <th>Asunto</th>              
+            </tr>
+        </thead>
+        <tbody>';
+            foreach($pedidos as $pedido){            
+                $output .='
+            <tr>
+            <td>'.$pedido->created_at.'</td>';
+          
+            foreach($usuarios as $usuario){
+                if ($pedido->id_usuario == $usuario->id){
+              $output .= '<td>'.$usuario->name.'</td>';
+                }
+                else{
+                }
+            }
+          $output.='  <td>'.$pedido->asunto.'</td>                        
+        </tr>';
+    }
+            $output .= ' </tbody>
+            </table>';
+
 
         return $output;
 
