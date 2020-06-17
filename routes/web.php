@@ -21,9 +21,11 @@ Route::get('/', function () {
 Auth::routes();
 
 
-//DomPDF
+//DomPDF Pedidos
 Route::get('descargarPDF','PedidoController@PDF');
 
+//DomPDF Detalle pedidos
+Route::post('detallePDF','PedidoController@detallePDF');
 
 
 Route::get('/home', 'HomeController@index');

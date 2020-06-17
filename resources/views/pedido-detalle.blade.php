@@ -45,6 +45,11 @@
             <div
                 class="card">
                 <div class="card-body" style="background-color: #002d47;color: rgb(255,255,255);opacity: 1;">
+                    
+                    <div class="container">
+                        <div class="row">
+                        <div class="col ">
+                            
                     @foreach($pedido as $pedido)
                     <h4 class="card-title">Asunto: {{$pedido->asunto}}</h4>                    
                     <div class="form-group"><span>Fecha entrega: {{$pedido->fecha_entrega}}</span></div>
@@ -54,9 +59,25 @@
                     @endif                        
                     @endforeach
                     @endforeach
+                        </div>
+                        <div class="col text-right">
+                            {{-- <a href="{{url('descargarDetallePDF')}}" style="border: 1px solid;" class="btn btn-success">Imprimir PDF</a> --}}
 
-                    
-                    <div><div class="table-responsive table-striped">
+                            
+                            <form action="detallePDF" method="post" style="background-color: #002d47;padding:10px">
+                                @csrf
+
+                                <button class="btn-success" style="border: 1px solid;" name="idPedido" value="{{$pedido->id}}">Generar PDF</button>    
+                                
+                              </form>
+                            
+
+                        </div>
+                    </div>
+                    </div>
+
+                    <div>                        
+                        <div class="table-responsive table-striped">
     <table class="table" style="color: #eff1f4">
         <thead style="background-color: #c67e06;">
             <tr>
@@ -83,14 +104,10 @@
 
                 <td>{{$pedidoHerramienta->estado_herramienta}}</td>    
                 
-
-              
               {{-- <td>
               <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
               </td> --}}
               
-              
-            
             </tr>
             @endforeach
         </tbody>

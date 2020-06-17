@@ -54,12 +54,6 @@
           <div class="row d-flex justify-content-center">
               
 
-
-
-
-
-              
-            
               <!-- <a class="btn btn-primary border rounded border-white" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Enviar Lista</a>-->
 <form action="pedidoHerramienta.volcar" class="form-inline " method="post" style="padding: 1%;background-color: #c67e06;border: 1px solid;color:white;margin: 2%;border-radius: 5px">
 @csrf
@@ -67,7 +61,7 @@
 <input type="text" class="form-control" name="asunto" placeholder="Asunto"  style="color:black;border-radius: 5px" />    
 </div>
 <div class="form-group" style="padding-inline: 10px">
-  <input type="date" name="fechaEntrega" class="from-control" id="">
+  <input type="date" name="fechaEntrega"  class="from-control" id="">
 </div>
 
 <div class="form-group">

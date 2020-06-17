@@ -21,12 +21,12 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        
+
         //traer a los usuarios menos a mi
         //$users = User::where('id','!=',Auth::user()->id)->get(); 
 
-        
-         //$pedidos = DB::table('pedidos')->get();
+
+        //$pedidos = DB::table('pedidos')->get();
 
         //en este caso se llama registro de ordenes
 
@@ -35,48 +35,32 @@ class PedidoController extends Controller
 
         $pedidos = Pedido::select('*')->get();
 
-        $usuarios = User::select(array('id','name'))->get();        
+        $usuarios = User::select(array('id', 'name'))->get();
 
-        
 
-        return view('registro-ordenes')->with('pedidos',$pedidos)->with('usuarios',$usuarios);
 
+        return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
     }
 
 
-    public function PDF(){
+    public function PDF()
+    {
 
-        //$pedidos = Pedido::select('*')->get();
-
-       // $usuarios = User::select(array('id','name'))->get();   
-
-       // $pdf = \PDF::loadView('registro-ordenes');
-        //$pdf = App::make('dompdf.wrapper');
         $pdf = App::make('dompdf.wrapper');
 
         $pdf->loadHTML($this->dataPedidoAHTML());
 
         //return $pdf->stream();
         return $pdf->download();
-
-        
-
-        // $pdf->loadView('registro-ordenes');
-        // $pdf->render();
-
-        // return $pdf->download('Ordenes.pdf');
-        //return view('registro-ordenes')->with('pedidos',$pedidos)->with('usuarios',$usuarios)->$pdf->download();
-        //$pdf = \PDF::loadView('registro-ordenes');
-        
-        //$pdf->download('Ordenes.pdf');
     }
 
 
     //Generar pdf de los pedidos
-    public function dataPedidoAHTML(){
+    public function dataPedidoAHTML()
+    {
 
         $pedidos = Pedido::select('*')->get();
-        $usuarios = User::select(array('id','name'))->get();   
+        $usuarios = User::select(array('id', 'name'))->get();
 
         $output = ' <table class="table table-striped" >
         <thead style="background-color:#c67e06;">
@@ -87,27 +71,111 @@ class PedidoController extends Controller
             </tr>
         </thead>
         <tbody>';
-            foreach($pedidos as $pedido){            
-                $output .='
+        foreach ($pedidos as $pedido) {
+            $output .= '
             <tr>
-            <td>'.$pedido->created_at.'</td>';
-          
-            foreach($usuarios as $usuario){
-                if ($pedido->id_usuario == $usuario->id){
-              $output .= '<td>'.$usuario->name.'</td>';
-                }
-                else{
+            <td>' . $pedido->created_at . '</td>';
+
+            foreach ($usuarios as $usuario) {
+                if ($pedido->id_usuario == $usuario->id) {
+                    $output .= '<td>' . $usuario->name . '</td>';
+                } else {
                 }
             }
-          $output.='  <td>'.$pedido->asunto.'</td>                        
+            $output .= '  <td>' . $pedido->asunto . '</td>                        
         </tr>';
-    }
-            $output .= ' </tbody>
+        }
+        $output .= ' </tbody>
             </table>';
 
 
         return $output;
+    }
 
+
+    public function detallePDF(Request $request)
+    {
+
+        //seleccionar el pedido segun la id
+        $pedido = Pedido::select('*')->where('id', '=', $request->idPedido)->get();
+        //seleccionar id y nombre de usuario
+        $usuario = User::select(array('id', 'name'))->get();
+        //seleccionar la lista de herramientas del pedido segun la id del pedido
+        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', '=', $request->idPedido)->get();
+        //seleccioar herramientas 
+        $herramientas = Herramientas::select('*')->get();
+
+
+        $output = ' <div class="container">
+        <div class="row">
+        <div class="col ">';
+        foreach ($pedido as $pedido) {
+            $output .= ' <h4 class="card-title">Asunto:' . $pedido->asunto . '</h4>                    
+                 <div class="form-group"><span>Fecha entrega:' . $pedido->fecha_entrega . '</span></div>';
+            foreach ($usuario as $usuario) {
+                if ($pedido->id_usuario == $usuario->id) {
+                    $output .= ' <div class="form-group"><span>Nombre:' . $usuario->name . '</span></div>';
+                }
+            }
+        }
+        $output .= '
+        </div>        
+    </div>
+    </div>';
+
+
+    // <th>Imagen</th>
+
+    $output .=' <div class="table-responsive table-striped">
+    <table class="table" >
+        <thead style="background-color: #c67e06;">
+            <tr>
+                
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>';
+          
+
+        // No se como hacer que tome la imagen
+        // <td><img src="'.asset('storage').'/'.$herramienta->imagen.'" class="img-thumbnail img-fliud" alt="" width="100"></td>
+
+            foreach($pedidoHerramientas as $pedidoHerramienta){
+
+           $output.= '<tr>';
+                foreach ($herramientas as $herramienta){
+                    
+                    if ($pedidoHerramienta->id_herramienta == $herramienta->id){
+                        $output .= '
+                            
+                            <td>'.$herramienta->nombre.'</td>
+                            <td>'.$pedidoHerramienta->cantidad.'</td>';
+                    }
+                }
+
+           $output .= '<td>'.$pedidoHerramienta->estado_herramienta.'</td>                  
+             
+            </tr>';
+
+              }
+
+           $output .= '   
+        </tbody>
+    </table>
+</div>';
+
+
+
+
+
+        //funca! $output = '<h1>' . $request->idPedido . '</h1>';
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($output);
+
+        //return $pdf->stream();
+        return $pdf->download();
     }
 
     /**
@@ -120,26 +188,25 @@ class PedidoController extends Controller
         //
     }
 
-    public function detalle(Request $request){
+    public function detalle(Request $request)
+    {
 
-        
-        
+
+
         //seleccionar el pedido segun la id
-        $pedido = Pedido::select('*')->where('id','=',$request->btnId)->get();
+        $pedido = Pedido::select('*')->where('id', '=', $request->btnId)->get();
 
         //seleccionar id y nombre de usuario
-        $usuario = User::select(array('id','name'))->get();
+        $usuario = User::select(array('id', 'name'))->get();
 
         //seleccionar la lista de herramientas del pedido segun la id del pedido
-        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido','=',$request->btnId)->get();
+        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', '=', $request->btnId)->get();
 
         //seleccioar herramientas 
         $herramientas = Herramientas::select('*')->get();
 
-        return view('pedido-detalle')->with('pedidoHerramientas',$pedidoHerramientas)
-        ->with('pedido',$pedido)->with('usuario',$usuario)->with('herramientas',$herramientas);
-
-
+        return view('pedido-detalle')->with('pedidoHerramientas', $pedidoHerramientas)
+            ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas);
     }
 
     /**
@@ -150,30 +217,31 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        
-         $idUsuario = $request->id_usuario;
 
-         //si el que realiza el formulario no es un admin usar la id del usuario conectado
-         if ($request->id_usuario == "") {
+        $idUsuario = $request->id_usuario;
+
+        //si el que realiza el formulario no es un admin usar la id del usuario conectado
+        if ($request->id_usuario == "") {
             $idUsuario = Auth::user()->id;
-         }
-     
+        }
 
-         Pedido::create(
-            ['fecha_entrega' => $request->fecha_entrega,
-            'fecha_devolucion' => $request->fecha_devolucion,
-            'estado' => $request->estado,
-            'id_usuario' => $idUsuario                       
+
+        Pedido::create(
+            [
+                'fecha_entrega' => $request->fecha_entrega,
+                'fecha_devolucion' => $request->fecha_devolucion,
+                'estado' => $request->estado,
+                'id_usuario' => $idUsuario
             ]
 
-        ) ;
+        );
 
 
 
         //traer a los usuarios menos a mi
 
-        $users = User::where('id','!=',Auth::user()->id)->get(); 
-        return view('pedido')->with('users',$users);
+        $users = User::where('id', '!=', Auth::user()->id)->get();
+        return view('pedido')->with('users', $users);
     }
 
     /**
