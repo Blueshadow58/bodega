@@ -28,6 +28,13 @@ Route::get('descargarPDF','PedidoController@PDF');
 Route::post('detallePDF','PedidoController@detallePDF');
 
 
+//Excel Pedidos
+
+Route::get('descargarExcel','PedidoController@descargarExcelPedidos');
+
+
+
+
 Route::get('/home', 'HomeController@index');
 
 //Funcionana igual pero todas las rutas del group van a filtarr primero si tiene los permisos

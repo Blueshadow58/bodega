@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PedidosExport;
 use App\Herramientas;
 use App\Pedido;
 use App\PedidoHerramienta;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Excel;
+
 
 class PedidoController extends Controller
 {
@@ -123,9 +126,7 @@ class PedidoController extends Controller
     </div>
     </div>';
 
-
     // <th>Imagen</th>
-
     $output .=' <div class="table-responsive table-striped">
     <table class="table" >
         <thead style="background-color: #c67e06;">
@@ -177,6 +178,17 @@ class PedidoController extends Controller
         //return $pdf->stream();
         return $pdf->download();
     }
+
+
+    public function descargarExcelPedidos(){
+
+        $pedidoExport = new PedidosExport;
+
+        return $pedidoExport->download('pedido.xlsx');
+
+    }
+
+    
 
     /**
      * Show the form for creating a new resource.
