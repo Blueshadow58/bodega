@@ -189,6 +189,34 @@ class PedidoController extends Controller
     }
 
     
+    //Filtrar pedidos segun nombre de usuario
+    public function filtrarNombre(Request $request){
+
+
+
+
+        if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo') {            
+        //vacio
+        $pedidos = Pedido::select('*')->get();
+        $usuarios = User::select(array('id', 'name'))->get();
+        return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
+
+        }else{
+            //Si sale bien la consulta
+        $idUsuarioFiltro = User::select('id')->where('name','=',$request->filtrarNombre)->value('id');
+
+        $pedidos = Pedido::select('*')->where('id_usuario','=',$idUsuarioFiltro)->get();
+        $usuarios = User::select(array('id', 'name'))->get();
+
+        return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
+
+
+        }
+
+
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

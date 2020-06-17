@@ -33,6 +33,10 @@ Route::post('detallePDF','PedidoController@detallePDF');
 Route::get('descargarExcel','PedidoController@descargarExcelPedidos');
 
 
+//Filtrar por nombre
+Route::post('filtrarNombre','PedidoController@filtrarNombre');
+
+
 
 
 Route::get('/home', 'HomeController@index');

@@ -41,8 +41,34 @@
         <div class="container">
 
 
+            
+            <div class="row">
+                <div class="col align-self-start">
+
+
+                    <form action="filtrarNombre"  method="post" style="background-color: #002d47;padding-top:0px;">
+                        @csrf
+
+                        <input type="text" name="filtrarNombre" placeholder="Nombre">
+
+                        <button class="btn-primary"  style="border: 1px solid;border-radius: 5px" name="btnId" value=""  >Filtrar</button>
+                        
+                    </form>
+
+                </div>     
+
+                <div class="col text-right">
             {{-- Excel --}}
             <a href="{{url('descargarExcel')}}" style="border: 1px solid;" class="btn btn-success">Descargar Excel</a>
+            {{-- PDF --}}
+            <a href="{{url('descargarPDF')}}" style="border: 1px solid;" class="btn btn-success">Descargar PDF</a>
+                </div>
+            </div>
+
+
+
+
+
 
             <div class="table-responsive">
     <table class="table table-striped" style="color:#ffffff;">
@@ -53,7 +79,7 @@
                 <th>Asunto</th>
                 {{-- <th><a href="{{route('descargarPDF')}}" class="btn btn-primary">Imprimir PDF</a></th> --}}
                 {{-- <th><button type="button" onclick="window.location='{{ url('descargarPDF') }}'">Button</button></th> --}}
-                <th><a href="{{url('descargarPDF')}}" style="border: 1px solid;" class="btn btn-success">Descargar PDF</a></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -71,12 +97,11 @@
                     @endif
                 @endforeach
 
-              
                 <td>{{$pedido->asunto}}</td>              
               <td>
                 <form action="pedido.detalle" method="post" style="background-color: #002d47;padding:10px">
                   @csrf
-                  <button class="btn-primary" style="border: 1px solid;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
+                  <button class="btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
                 </form>
               </td>
             
