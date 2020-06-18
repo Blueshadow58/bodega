@@ -6,6 +6,9 @@ use App\Herramientas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
+//codigo de mi compañero lo comentare de todas formas
+
 class HerramientasController extends Controller
 {
     /**
@@ -13,6 +16,8 @@ class HerramientasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     //llamado a las herramientas
     public function index()
     {
         $datos['herramientas']=Herramientas::paginate(6);
@@ -24,6 +29,8 @@ class HerramientasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //redireccionar a la pagina de creacion
     public function create()
     {
         return view('herramientas.create');
@@ -35,6 +42,9 @@ class HerramientasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+     //crear herramienta
     public function store(Request $request)
     {
         //
@@ -80,6 +90,8 @@ class HerramientasController extends Controller
      * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
+
+     //usar la id para llamar a la herraienta que tenga esa id y enviarla a la pagina edit
     public function edit($id)
     {
         //
@@ -94,6 +106,8 @@ class HerramientasController extends Controller
      * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
+
+     //actulizar la herramienta 
     public function update(Request $request,$id)
     {
         //
@@ -136,6 +150,8 @@ class HerramientasController extends Controller
      * @param  \App\Herramientas  $herramientas
      * @return \Illuminate\Http\Response
      */
+
+     //eliminar una herramienta por id
     public function destroy($id)
     {
         //

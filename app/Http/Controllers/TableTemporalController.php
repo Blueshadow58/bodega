@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class TableTemporalController extends Controller
 {
+    //al final no lo esoty usando porque esoty usando el controles de pedidido y pedidoHrramienta
+
     /**
      * Display a listing of the resource.
      *

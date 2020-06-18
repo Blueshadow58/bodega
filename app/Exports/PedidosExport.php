@@ -6,9 +6,10 @@ use App\Pedido;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
+//Realizar export a excel
 class PedidosExport implements FromCollection
 {
-
+    
     use Exportable;
 
     /**

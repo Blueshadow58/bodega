@@ -36,16 +36,17 @@ class PedidoController extends Controller
         //$idUsuarioPedido = DB::table('pedidos')->get('id_usuario')->values('id_usuario');
 
 
+        //llamar a todos los pedidos
         $pedidos = Pedido::select('*')->get();
-
+        //generar una consulta de solo id y nombre como array
         $usuarios = User::select(array('id', 'name'))->get();
 
 
-
+        //enviar estos datos a la vista registro-ordenes
         return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
     }
 
-
+    //Generar un pdf de html
     public function PDF()
     {
 
@@ -95,7 +96,7 @@ class PedidoController extends Controller
         return $output;
     }
 
-
+    //generar un pdf de el detalle de un pedido
     public function detallePDF(Request $request)
     {
 
@@ -140,7 +141,7 @@ class PedidoController extends Controller
         <tbody>';
           
 
-        // No se como hacer que tome la imagen
+        // F
         // <td><img src="'.asset('storage').'/'.$herramienta->imagen.'" class="img-thumbnail img-fliud" alt="" width="100"></td>
 
             foreach($pedidoHerramientas as $pedidoHerramienta){
@@ -172,6 +173,7 @@ class PedidoController extends Controller
 
 
         //funca! $output = '<h1>' . $request->idPedido . '</h1>';
+        //generar el pdf
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($output);
 
@@ -181,9 +183,9 @@ class PedidoController extends Controller
 
 
     public function descargarExcelPedidos(){
-
+        //generando el Excel
         $pedidoExport = new PedidosExport;
-
+        //retornar la descarga
         return $pedidoExport->download('pedido.xlsx');
 
     }
@@ -192,7 +194,7 @@ class PedidoController extends Controller
     //Filtrar pedidos segun nombre de usuario
     public function filtrarNombre(Request $request){
 
-
+        //si al filtrar por nombre esta vacio y = a "todo" retornar lo normal como e index
         if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo') {            
         //vacio
         $pedidos = Pedido::select('*')->get();
@@ -201,11 +203,14 @@ class PedidoController extends Controller
 
         }else{
 
-            //Si sale bien la consulta
+            //Si sale bien la consulta (si el usuario escribe en el filtrador algo aparte de "todo")
+            //filtrar el usuario con un like y % entre la palabra ingresada por el input para filtrar
         $idUsuarioFiltro = User::select('id')->where('name','=',$request->filtrarNombre)
         ->orWhere('name','like','%'.$request->filtrarNombre.'%')->value('id');
 
+        //llamar a todos los pedidos cuando la id del usuario sea igual a la del usuario filtrado
         $pedidos = Pedido::select('*')->where('id_usuario','=',$idUsuarioFiltro)->get();
+        //llamara los usuarios en forma de un array con las columnas id y nombre
         $usuarios = User::select(array('id', 'name'))->get();
 
         return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
@@ -256,6 +261,7 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
 
+        //pasar la requesta  una variable simple
         $idUsuario = $request->id_usuario;
 
         //si el que realiza el formulario no es un admin usar la id del usuario conectado
@@ -263,7 +269,7 @@ class PedidoController extends Controller
             $idUsuario = Auth::user()->id;
         }
 
-
+        //crear un pedido
         Pedido::create(
             [
                 'fecha_entrega' => $request->fecha_entrega,
@@ -276,7 +282,7 @@ class PedidoController extends Controller
 
 
 
-        //traer a los usuarios menos a mi
+        //traer a los usuarios menos a el usuario conectado
 
         $users = User::where('id', '!=', Auth::user()->id)->get();
         return view('pedido')->with('users', $users);

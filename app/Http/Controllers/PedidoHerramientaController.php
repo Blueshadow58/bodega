@@ -57,9 +57,10 @@ class PedidoHerramientaController extends Controller
     {
         
         
-
+        //llamar a la herramienta que tenga la misma id que estoy trayendo de la request
         $herramienta = Herramientas::where('id','=',$request->btnId)->get();   
         
+        //llamar a la categoria cuando la id de la herramienta sea igual a la traida de la request y sacarla como dato en vez de objeto
         $categoria = DB::table('herramienta')->select('categoria')->where('id', '=', $request->btnId)->value('categoria');
 
 
@@ -101,7 +102,7 @@ class PedidoHerramientaController extends Controller
             );
         }
         
-        //Arreglar problema se suma el item a greado a este usuario a la otra lista
+        
         
 
         
@@ -148,7 +149,7 @@ class PedidoHerramientaController extends Controller
         // }
         
 
-
+            //Crear un pedido
         Pedido::create(
             ['id_usuario' => $request->idUser,
             'asunto' => $request->asunto,
@@ -163,11 +164,13 @@ class PedidoHerramientaController extends Controller
         $ultimaId = Pedido::select('select id from pedido')->max('id');
 
 
-
+        //crear una tabla de pedidoHerramienta con todas las herramientas seleccionadas
         foreach ($herramietasPorUser as $herramienta){
 
+            //seleccionar la cantidad cuando la id del producto sea igual a la id de la herramienta y sacar su cantidad
             $cantidadHerramienta = table_temporal::select('cantidad')->where('id_producto','=',$herramienta->id_producto)->value('cantidad');
 
+            //crear un pedido herramienta por cada ciclo
         PedidoHerramienta::create(
             ['id_pedido' => $ultimaId,
              'id_herramienta' => $herramienta->id_producto,            
@@ -179,9 +182,8 @@ class PedidoHerramientaController extends Controller
         };
         
 
-        table_temporal::destroy('delete * table_temporal where id_usuario','=',Auth::user()->id);
-
-
+        //al generar la lista del pedido eliminar los datos agregados ala tabla_temporal
+        table_temporal::where('id_usuario','=',Auth::user()->id)->delete();
         
         return back();
 
@@ -195,6 +197,7 @@ class PedidoHerramientaController extends Controller
      */
     public function lista(Request $request)
     {
+        //creando una variable simple con la request y enviarla a registro ordenes
         $selecHerramientas = $request->herramientas;
        return view('registro-ordenes')->with('herramientas',$selecHerramientas);
     }
@@ -240,7 +243,7 @@ class PedidoHerramientaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //esto al final no lo estoy usando
 
         $herramienta= Herramientas::findOrFail($id);
 

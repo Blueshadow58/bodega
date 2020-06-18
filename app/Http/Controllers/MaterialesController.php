@@ -12,9 +12,12 @@ class MaterialesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     //codigo de mi compañero lo comentare de todas formas
+
     public function index()
     {
-        //
+        //seleccionar los materiales
         $datos['materiales']=Materiales::paginate(5);
         return view('materiales.index',$datos);
     }
@@ -26,7 +29,7 @@ class MaterialesController extends Controller
      */
     public function create()
     {
-        //
+        //enviar a pagina create
         return view ('materiales.create');
     }
 
@@ -38,7 +41,7 @@ class MaterialesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //crear un material
        // $datosMaterial=request()->all();
         $datosMaterial=request()->except('_token');
         Materiales::create($datosMaterial);
@@ -64,7 +67,7 @@ class MaterialesController extends Controller
      */
     public function edit($id)
     {
-        //
+        //llamar un material al buscarlo por la id y retornar a vista edit
         $material=Materiales::findOrFail($id);
         return view('materiales.edit',compact('material'));
         
@@ -79,7 +82,7 @@ class MaterialesController extends Controller
      */
     public function update(Request $request,$id)
     {
-        //
+        //actualizar un material
         $datosMaterial=request()->except(['_token','_method']);
         Materiales::where('id','=',$id)->update($datosMaterial);
 
@@ -96,7 +99,7 @@ class MaterialesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //eliminar un material
         Materiales::destroy($id);
         return redirect('materiales');
        

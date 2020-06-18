@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+//solo pruebas nada importante revisare si es util de lo contrario lo eliminare
+
 class BodegaController extends Controller
 {
     /**
