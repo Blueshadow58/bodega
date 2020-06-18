@@ -33,9 +33,13 @@ Route::post('detallePDF','PedidoController@detallePDF');
 Route::get('descargarExcel','PedidoController@descargarExcelPedidos');
 
 
-//Filtrar por nombre
+//Filtrar los pedidos por nombre de usuario
 Route::post('filtrarNombre','PedidoController@filtrarNombre');
 
+
+
+//Filtrar mensajes por nombre de usuario
+Route::post('filtrarMensajes','MensajeController@filtrarMensajes');
 
 
 

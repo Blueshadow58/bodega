@@ -193,8 +193,6 @@ class PedidoController extends Controller
     public function filtrarNombre(Request $request){
 
 
-
-
         if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo') {            
         //vacio
         $pedidos = Pedido::select('*')->get();
@@ -202,17 +200,17 @@ class PedidoController extends Controller
         return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
 
         }else{
+
             //Si sale bien la consulta
-        $idUsuarioFiltro = User::select('id')->where('name','=',$request->filtrarNombre)->value('id');
+        $idUsuarioFiltro = User::select('id')->where('name','=',$request->filtrarNombre)
+        ->orWhere('name','like','%'.$request->filtrarNombre.'%')->value('id');
 
         $pedidos = Pedido::select('*')->where('id_usuario','=',$idUsuarioFiltro)->get();
         $usuarios = User::select(array('id', 'name'))->get();
 
         return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
 
-
         }
-
 
     }
 

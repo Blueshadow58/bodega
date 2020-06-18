@@ -17,12 +17,61 @@ class MensajeController extends Controller
     public function index()
     {
         
+        //Select a users que no es el que esta actualmente conectado
         $users = User::where('id','!=',Auth::user()->id)->get();        
+
+
+        //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
-        
+
+
         return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
         
     }
+
+
+    public function filtrarMensajes(Request $request){
+
+
+        if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo') { 
+
+         //Select a users que no es el que esta actualmente conectado
+         $users = User::where('id','!=',Auth::user()->id)->get();        
+
+         //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
+         //HACER arreglar esta consulta a where = 1--------
+         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
+ 
+         return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
+        }else{
+            //Si se filtra correctamente            
+            
+         //Select a users que no es el que esta actualmente conectado
+         $users = User::where('id','!=',Auth::user()->id)->get();        
+     
+
+        //Seleccionar la id del remitente segun el nombre que filtramos
+        $idRemitente = User::select('id')->where('name','like',$request->filtrarNombre.'%')->value('id');
+
+
+     
+         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)
+         ->where('remitente_id','=',$idRemitente)->get();
+
+
+         return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
+
+
+
+        }
+
+
+
+
+
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -60,11 +109,15 @@ class MensajeController extends Controller
         ) ;
         
         
-        
-            
-        //return  view('mensajes')->with('users',$users)->with('mensajes',$mensajes);
 
-        return back();
+
+         //Select a users que no es el que esta actualmente conectado
+         $users = User::where('id','!=',Auth::user()->id)->get();        
+         //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
+         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
+ 
+            
+         return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
     }
 
     /**
@@ -88,7 +141,6 @@ class MensajeController extends Controller
 
             return view('home');
         //Mensaje::update('update mensajes set leer = false where id =' [$request->id] );
-
     }
 
 

@@ -23,68 +23,183 @@
 
 <body style="background-color: #002d47;">
     <header style="background-color: #ffffff;color: rgb(255,255,255);">
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="background-color: #c67e06;color: rgb(255,255,255);">
-            <div class="container"><a class="navbar-brand" href="#">Nombre</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="background-color: #ffffff;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div
-                    class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,255,255);">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="home-bodega" style="color: #ffffff;">Home</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="perfil" style="color: #ffffff;">Perfil</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="mensajes" style="color: #ffffff;">Mensajes</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="pedidoHerramienta" style="color: #ffffff;">Generar pedido</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
-                    </ul><span class="navbar-text actions"> </span></div>
-            </div>
-        </nav>
+        {{-- Llamando la navbar de carpeta --}}
+        @include('layouts.navbarMenu')
     </header>
-    <div class="contact-clean" style="background-color: transparent;">
-        <div class="container">
+    
+
+
+
+        <div class="container" style="padding-top: 25px">
+
+            <div class="row">
+
+            <div class="col text-center">
+                    <div>                    
+                        <button class="btn btn-success font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseCrearMensaje" aria-expanded="false" aria-controls="collapseCrearMensaje">
+                            Crear mensaje
+                        </button>
+                    </div>
+                    <br/>
+
+                    <div style="">                    
+                        <form action="filtrarMensajes" method="post">
+                            @csrf
+                            <input type="text" class="text-center" name="filtrarNombre" placeholder="Nombre" style="margin-bottom: 15px">                            
+                            <button class="btn-primary btn font-weight-bold" style="border-radius: 5px;">Filtrar</button>
+                        </form>
+                    </div>
+                    
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="col-9">
+
+
+
+              <div class="collapse" id="collapseCrearMensaje" style="padding-bottom: 15px;" >
+                <div class="card card-body" style="background-color: #c67e06;border: 1px solid;border-color: white">
+                    <form class="form-inline" action="mensajes.store" method="post" style="color:white">
+                        @csrf
+
+                        <div class="container text-center">
+                            <div class="row" style="padding-bottom: 15px">
+
+                                <div class="col">
+
+                                    <div class="form-group"> 
+
+                                        {{-- <div>
+                                            <input type="text" placeholder="Mensaje" name="mensaje" class="form-control input-block" id="mensaje">
+                                        </div> --}}
+
+                                        <div style="padding-inline: 15px">
+                                            <select name="destinatario_id" >
+                                                    <option value="">Selecciona el destinatario</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                @endforeach  
+                                            </select>
+                                        </div>
+
+                                        <div class="">
+                                            <button class="btn btn-success font-weight-bold" type="submit" style="border: 1px solid;border-radius:5px" >Enviar</button>  
+                                        </div>    
+                                    </div>
+                                
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <textarea name="mensaje" placeholder="texto" id="" cols="30" rows="10" style="width: 100%;border-radius: 5px;min-height: 100px"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                          
+                            
+                        
+                      </form> 
+                </div>
+                        </div> 
+
+
+
+
+
+                        @foreach($mensajes as $mensaje)
+                      
+                        <div class="accordion" id="ID" style="padding-bottom: 15px">
+                            <div class="card" style="background-color: #c67e06;">
+                              <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                  <button class="btn btn-link btn-block text-left font-weight-bold" type="button" data-toggle="collapse" data-target="#ID{{$mensaje->id}}" aria-expanded="true" aria-controls="collapseOne" style="color: white;">                                    
+
+                                    @foreach ($users as $usuario)
+                                        @if ($mensaje->remitente_id == $usuario->id)
+                                        De: {{$usuario->name}} | Fecha: {{$mensaje->created_at}}         
+                                        @endif
+                                    @endforeach
+                                    
+                                  </button>
+                                </h2>
+                              </div>                      
+                              <div id="ID{{$mensaje->id}}" class="collapse" aria-labelledby="headingOne" >
+                                <div class="card-body" style="color: white;font-size: 18px">
+                                  {{$mensaje->contenido_mensaje}}
+                                </div>
+                              </div>
+                            </div>                
+                          </div>
+
+                        @endforeach
+                   
+            </div>
+
+         </div>
+         
 
             {{-- <div class="form-group">
                 <div class="dropdown"><button class="btn btn-primary dropdown-toggle border rounded border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Asunto</button>
                     <div class="dropdown-menu" role="menu" style="background-color: #002d47;color: rgb(198,125,7);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Solicitud de herramientas</a><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Mensaje</a></div>
                 </div>
             </div><div class="table-responsive"> --}}
-<br>
-                <form class="form-inline" action="mensajes.store" method="post" style="color:white">
+
+
+            {{-- Crear mensaje --}}
+                {{-- importante --}}
+                {{-- <form class="form-inline" action="mensajes.store" method="post" style="color:white">
                     @csrf
-                    <div class="form-group">
-                    
+                    <div class="form-group">                    
                       <input type="text" placeholder="Mensaje" name="mensaje" class="form-control" id="mensaje">
                     </div>
-
                     <select name="destinatario_id" >
                     <option value="">Selecciona el destinatario</option>
                     @foreach ($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
 
-        </select>
-        <button class="btn-success" type="submit" style="border: 1px solid;" >Enviar</button>
-                    
-                  </form> 
-<br>
-    <table class="table table-striped" style="color:#ffffff">
-        <thead style="background-color: #c67e06;">
-            <tr>
-                {{-- <th><strong>Fecha de envio</strong></th> --}}
+                </select>
+            <button class="btn-success" type="submit" style="border: 1px solid;" >Enviar</button>                
+                  </form>  --}}
+
+
+
+                {{-- Tabla antigua --}}
+{{-- 
+                <table class="table table-striped" style="color:#ffffff">
+          <thead style="background-color: #c67e06;">
+               <tr>
+                <th><strong>Fecha de envio</strong></th> 
                 <th>usuario</th>
                 <th>mensaje</th>                
             </tr>
-        </thead>
-        <tbody>
-
+          </thead>
+             <tbody>
             @foreach($mensajes as $mensaje)
             <tr>
                 <td>{{$mensaje->remitente_id}}</td>   
               <td>{{$mensaje->contenido_mensaje}}</td>                                       
+              <td>{{$mensaje->created_at}}</td>  
             </tr>
-            @endforeach
+            @endforeach 
+             </tbody>
+                </table>
+  --}}
 
-        </tbody>
-    </table>
-</div></div>
-    </div>
+
+  
+
+
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/smart-forms.min.js"></script>

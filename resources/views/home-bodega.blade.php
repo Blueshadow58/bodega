@@ -23,18 +23,11 @@
 
 <body style="background-color: #002d47;">
     <header style="background-color: #ffffff;color: rgb(255,255,255);">
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="background-color: #c67e06;color: rgb(255,255,255);">
-            <div class="container"><a class="navbar-brand" href="#">Nombre</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="background-color: #ffffff;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div
-                    class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,255,255);">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="home-bodega" style="color: #ffffff;">Home</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="perfil" style="color: #ffffff;">Perfil</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="notificaciones" style="color: #ffffff;">Notificaciones</a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
-                    </ul><span class="navbar-text actions"> </span></div>
-            </div>
-        </nav>
+
+        {{-- Llamando la navbar de carpeta --}}
+        @include('layouts.navbarMenu')
+
+
     </header>
     <div class="contact-clean" style="background-color: transparent;">
         <div class="container">
