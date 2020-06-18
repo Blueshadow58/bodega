@@ -42,6 +42,14 @@ Route::post('filtrarNombre','PedidoController@filtrarNombre');
 Route::post('filtrarMensajes','MensajeController@filtrarMensajes');
 
 
+// Segun si tienen permiso podran ingresar a estas rutas
+Route::group(['middleware' => ['permiso:bodeguero']], function () {    
+Route::get('/pedido', 'PedidoController@index');
+Route::post('/pedido.detalle', 'PedidoController@detalle');
+Route::post('/pedido.store', 'PedidoController@store');
+Route::get('/registro-ordenes', 'PedidoController@index');
+});
+
 
 Route::get('/home', 'HomeController@index');
 
@@ -83,14 +91,6 @@ Route::view('home-bodega','home-bodega');
 //----------------------------------------------------------------
 
 
-Route::get('/pedido', 'PedidoController@index');
-
-Route::post('/pedido.detalle', 'PedidoController@detalle');
-
-
-Route::post('/pedido.store', 'PedidoController@store');
-
-Route::get('/registro-ordenes', 'PedidoController@index');
 
 
 

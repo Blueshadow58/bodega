@@ -12,6 +12,14 @@
                 @can('bodeguero')
                 <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
                 @endcan
-            </ul><span class="navbar-text actions"> </span></div>
+            
+            
+            
+                
+            </ul>
+            
+                <span class="nav-item " role="presentation"><a class="nav-link"  style="color: #ffffff;">Bienvenido: <span class="font-weight-bold">{{Auth::user()->name}}</span></a></span>
+            
+            <span class="navbar-text actions"> </span></div>
     </div>
 </nav>    
