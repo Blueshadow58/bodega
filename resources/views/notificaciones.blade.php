@@ -27,9 +27,6 @@
         @include('layouts.navbarMenu')
     </header>
     
-
-
-
         <div class="container" style="padding-top: 25px">
 
             <div class="row">
@@ -51,11 +48,6 @@
                     </div>
                     
             </div>
-
-
-
-
-
 
 
 
@@ -121,17 +113,26 @@
                         <div class="accordion" id="ID" style="padding-bottom: 15px">
                             <div class="card" style="background-color: #c67e06;">
                               <div class="card-header" id="headingOne">
-                                <h2 class="mb-0">
-                                  <button class="btn btn-link btn-block text-left font-weight-bold" type="button" data-toggle="collapse" data-target="#ID{{$mensaje->id}}" aria-expanded="true" aria-controls="collapseOne" style="color: white;">                                    
 
+                              
+                                  <div class="inline">
+                                    <form action="mensajes.read"  method="post" style="padding: 0px">
+                                      @csrf
+                                  <button class="btn btn-link  font-weight-bold" type="button" data-toggle="collapse" data-target="#ID{{$mensaje->id}}" aria-expanded="true" aria-controls="collapseOne" style="color: white;">                                    
                                     @foreach ($users as $usuario)
                                         @if ($mensaje->remitente_id == $usuario->id)
                                         De: {{$usuario->name}} | Fecha: {{$mensaje->created_at}}         
                                         @endif
-                                    @endforeach
-                                    
+                                    @endforeach                                    
                                   </button>
-                                </h2>
+                               
+                                 
+                                      <button type="submit" name="idMensaje" value="{{$mensaje->id}}" class="btn btn-danger float-right">Eliminar</button>
+                                  </form>
+
+                                </div>
+
+                              
                               </div>                      
                               <div id="ID{{$mensaje->id}}" class="collapse" aria-labelledby="headingOne" >
                                 <div class="card-body" style="color: white;font-size: 18px">
@@ -145,59 +146,37 @@
                    
             </div>
 
-         </div>
-         
 
-            {{-- <div class="form-group">
-                <div class="dropdown"><button class="btn btn-primary dropdown-toggle border rounded border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Asunto</button>
-                    <div class="dropdown-menu" role="menu" style="background-color: #002d47;color: rgb(198,125,7);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Solicitud de herramientas</a><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Mensaje</a></div>
+
+
+     {{--        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                <div class="toast-header">
+                  <img src="..." class="rounded mr-2" alt="...">
+                  <strong class="mr-auto">Bootstrap</strong>
+                  <small>11 mins ago</small>
+                  <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-            </div><div class="table-responsive"> --}}
+                <div class="toast-body">
+                  Hello, world! This is a toast message.
+                </div>
+              </div>
 
+              <button id="dialog">dsd</button>
+--}}    
+         </div><!-- container -->
+      {{-- sdfsd --}}
 
-            {{-- Crear mensaje --}}
-                {{-- importante --}}
-                {{-- <form class="form-inline" action="mensajes.store" method="post" style="color:white">
-                    @csrf
-                    <div class="form-group">                    
-                      <input type="text" placeholder="Mensaje" name="mensaje" class="form-control" id="mensaje">
-                    </div>
-                    <select name="destinatario_id" >
-                    <option value="">Selecciona el destinatario</option>
-                    @foreach ($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
-                    @endforeach
-
-                </select>
-            <button class="btn-success" type="submit" style="border: 1px solid;" >Enviar</button>                
-                  </form>  --}}
-
-
-
-                {{-- Tabla antigua --}}
 {{-- 
-                <table class="table table-striped" style="color:#ffffff">
-          <thead style="background-color: #c67e06;">
-               <tr>
-                <th><strong>Fecha de envio</strong></th> 
-                <th>usuario</th>
-                <th>mensaje</th>                
-            </tr>
-          </thead>
-             <tbody>
-            @foreach($mensajes as $mensaje)
-            <tr>
-                <td>{{$mensaje->remitente_id}}</td>   
-              <td>{{$mensaje->contenido_mensaje}}</td>                                       
-              <td>{{$mensaje->created_at}}</td>  
-            </tr>
-            @endforeach 
-             </tbody>
-                </table>
-  --}}
+<script>
+    $(document).ready(function(){
+        $('.toast').toast('show');
+        
+    });
+    
+</script> --}}
 
-
-  
 
 
     <script src="assets/js/jquery.min.js"></script>

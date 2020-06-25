@@ -22,7 +22,7 @@ class MensajeController extends Controller
 
 
         //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
-        $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
+        $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->where('leer','=','1')->orderBy('created_at','DESC')->get();
 
         //retornar a la vista con las colsultas para su uso
         return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
@@ -40,7 +40,7 @@ class MensajeController extends Controller
 
          //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
          //HACER arreglar esta consulta a where = 1--------
-         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
+         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->where('leer','=','1')->orderBy('created_at','DESC')->get();
  
          return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
         }else{
@@ -56,7 +56,7 @@ class MensajeController extends Controller
 
         //retornar los mensajes en el cual el destinatario sea el usuario actual y el remitente el que filtramos por el input
          $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)
-         ->where('remitente_id','=',$idRemitente)->get();
+         ->where('remitente_id','=',$idRemitente)->where('leer','=','1')->orderBy('created_at','DESC')->get();
 
 
          return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
@@ -91,19 +91,7 @@ class MensajeController extends Controller
      */
     public function store(Request $request)
     {
-        //llamar a todos los usuarios menos el contectado actualmente
-        $users = User::where('id','!=',Auth::user()->id)->get(); 
-        //llamar a todos los mensajes en los que el destinatario sea el usuario actual | ahora que lo veo esta consulta esta de adorno
-        $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->get();
-
-        /*
-        DB::insert([
-            ['contenido_mensaje' => $request->mensaje,
-            'remitente_id' => Auth::user()->id,
-            'destinatario_id' => $request->destinatario_id
-            ],            
-        ])  ;*/
-
+        
         //Crear el mensaje
         Mensaje::create(
             ['contenido_mensaje' => $request->mensaje,
@@ -117,7 +105,7 @@ class MensajeController extends Controller
          //Select a users que no es el que esta actualmente conectado
          $users = User::where('id','!=',Auth::user()->id)->get();        
          //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
-         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->orwhere('leer','=','true')->get();
+         $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->where('leer','=','1')->orderBy('created_at','DESC')->get();
  
             
          return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
@@ -134,16 +122,27 @@ class MensajeController extends Controller
         //
     }
 
-    public function read($id)
+    public function read(Request $request)
     {
         //en desarrollo
+        
+        
+         Mensaje::where('id', $request->idMensaje)
+             ->update(['leer' => 0]);
 
         
-        Mensaje::where('id', $id)
-            ->update(['leer' => false]);
 
-            return view('home');
-        //Mensaje::update('update mensajes set leer = false where id =' [$request->id] );
+// Enviar al index
+
+       //Select a users que no es el que esta actualmente conectado
+       $users = User::where('id','!=',Auth::user()->id)->get();        
+
+
+       //Select a mensajes que yo sea el destinatario y que no haya marcado como leido
+       $mensajes = Mensaje::where('destinatario_id','=',Auth::user()->id)->where('leer','=','1')->orderBy('created_at','DESC')->get();
+
+       //retornar a la vista con las colsultas para su uso
+       return  view('notificaciones')->with('users',$users)->with('mensajes',$mensajes);
     }
 
 
@@ -165,7 +164,7 @@ class MensajeController extends Controller
      * @param  \App\Mensaje  $mensaje
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mensaje $mensaje)
+    public function updateNavBar(Request $request, Mensaje $mensaje)
     {
         //
     }

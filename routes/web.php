@@ -72,6 +72,8 @@ Route::post('/mensajes.store', 'MensajeController@store');
 
 //Route::get('/mensajes.leer  ', 'MensajeController@read');
 
+Route::post('mensajes.read','MensajeController@read');
+
 Route::post('mensajes.leer/{id}','MensajeController@read');
 
 
