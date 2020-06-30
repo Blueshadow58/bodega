@@ -42,6 +42,14 @@ Route::post('filtrarNombre','PedidoController@filtrarNombre');
 Route::post('filtrarMensajes','MensajeController@filtrarMensajes');
 
 
+
+//todos los barcodes
+Route::get('barcode','BarcodeController@index');
+
+//filtrar barcodes
+Route::post('barcode-filtro','BarcodeController@filtrarBC');
+
+
 // Segun si tienen permiso podran ingresar a estas rutas
 Route::group(['middleware' => ['permiso:bodeguero']], function () {    
 Route::get('/pedido', 'PedidoController@index');
