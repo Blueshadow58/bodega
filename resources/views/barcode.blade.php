@@ -45,13 +45,22 @@
             </div>            
         <div class="col">
             <button type="submit" class="btn btn-primary btn-block" >Filtrar</button>
-        </div>    
-            
+        </div>                
         </form>        
+           
+        <form class="form-inline" action="PDFBarcode" method="post">
+            @csrf                             
+
+            <div class="col">
+                <button type="submit" name="btnHerramientas" value="{{$herramientas}}" class="btn btn-primary">PDF Barcode</button>
+            </div>
             
+        </form>
+        
+
     </div>
 
-    <div class="row ">
+    {{-- <div class="row ">
         @for ($i = 0; $i < $largo ; $i++)
         <div class="col-4 text-center pb-4 " >
             <h4>{{$herramientas[$i]->nombre}}</h4>
@@ -59,7 +68,11 @@
             <h4>{{$herramientas[$i]->id}}</h4>
         </div>
         @endfor
-    </div>
+    </div> --}}
+
+
+    @include('select-barcode')
+
 </div>
 
 

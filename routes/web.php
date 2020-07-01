@@ -49,6 +49,9 @@ Route::get('barcode','BarcodeController@index');
 //filtrar barcodes
 Route::post('barcode-filtro','BarcodeController@filtrarBC');
 
+//PDF Barcode
+Route::post('PDFBarcode','BarcodeController@PDFBarcode');
+
 
 // Segun si tienen permiso podran ingresar a estas rutas
 Route::group(['middleware' => ['permiso:bodeguero']], function () {    
