@@ -13,7 +13,7 @@
 {{-- Mensajes --}}
 
 
-                <li class="nav-item" role="presentation"><a class="nav-link" href="mensajes" style="color: #ffffff;">Mensajes  <span class="badge badge-danger">@include('layouts.unReadMesseges')</span></a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link"  href="mensajes" style="color: #ffffff;">Mensajes  <span class="badge badge-danger">@include('layouts.unReadMesseges')</span></a></li>
 {{-- Mensajes --}}
 
 
@@ -23,6 +23,8 @@
                 {{-- Solo permirile esta ruta al que tenga el permiso bodeguero --}}
                 @can('bodeguero')
                 <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Ver pedidos</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="registrar-herramientas-pedido" style="color: #ffffff;">Registrar Pedidos</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="barcode" style="color: #ffffff;">Codigos de barra</a></li>
                 @endcan
             
                 @cannot('bodeguero')

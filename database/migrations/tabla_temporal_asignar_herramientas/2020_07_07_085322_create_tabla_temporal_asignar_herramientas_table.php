@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePedidosTable extends Migration
+class CreateTablaTemporalAsignarHerramientasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreatePedidosTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedidos', function (Blueprint $table) {
+        Schema::create('tabla_temporal_asignar_herramientas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_usuario');
-            $table->string('asunto');
-            $table->date('fecha_entrega');
-            $table->string('estado_pedido')->default('Por confirmar');
+            $table->bigInteger('id_herramienta');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreatePedidosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('tabla_temporal_asignar_herramientas');
     }
 }

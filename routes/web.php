@@ -113,6 +113,18 @@ Route::post('p','MisPedidosController@probar');
 
 
 
+//Registrar pedidos----------------------------------------------------------------
+
+
+Route::get('registrar-herramientas-pedido','RegistrarHerramientasPedidoController@index');
+
+Route::post('rh-pedido-crear','RegistrarHerramientasPedidoController@crear');
+
+Route::post('rh-pedido-generar','RegistrarHerramientasPedidoController@generar');
+
+//-------------------------------------------------------------------------------
+
+
 
 Route::get('/pedidoHerramienta', 'PedidoHerramientaController@index');
 Route::post('/pedidoHerramienta.lista', 'PedidoHerramientaController@lista');

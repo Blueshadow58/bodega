@@ -70,6 +70,7 @@
                 <th>Fecha de envio</th>
                 <th>Nombre</th>                
                 <th>Asunto</th>
+                <th>Estado</th>
                 {{-- <th><a href="{{route('descargarPDF')}}" class="btn btn-primary">Imprimir PDF</a></th> --}}
                 {{-- <th><button type="button" onclick="window.location='{{ url('descargarPDF') }}'">Button</button></th> --}}
                 <th></th>
@@ -91,6 +92,7 @@
                 @endforeach
 
                 <td>{{$pedido->asunto}}</td>              
+                <td>{{$pedido->estado_pedido}}</td>
               <td>
                 <form action="pedido.detalle" method="post" style="background-color: #002d47;padding:10px">
                   @csrf
@@ -103,7 +105,11 @@
             
         </tbody>
     </table>
-</div></div>
+</div>
+
+
+
+</div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

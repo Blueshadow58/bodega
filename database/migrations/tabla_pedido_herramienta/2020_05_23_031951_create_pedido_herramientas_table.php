@@ -19,7 +19,7 @@ class CreatePedidoHerramientasTable extends Migration
             $table->integer('id_herramienta');
             $table->integer('cantidad');
             $table->date('fecha_devolucion')->nullable();
-            $table->string('estado_herramienta')->default('Prestada');
+            $table->string('estado_herramienta')->default('Por confirmar');
             $table->timestamps();            
         });
     }

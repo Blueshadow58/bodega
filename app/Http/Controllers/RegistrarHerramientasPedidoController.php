@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Herramientas;
+use App\Pedido;
+use App\PedidoHerramienta;
 use App\RegistrarHerramientasPedido;
+use App\User;
 use Illuminate\Http\Request;
 
 class RegistrarHerramientasPedidoController extends Controller
@@ -14,7 +18,13 @@ class RegistrarHerramientasPedidoController extends Controller
      */
     public function index()
     {
-        //
+
+
+        $pedidos = Pedido::all()->where('estado_pedido','Por confirmar');
+        $usuarios = User::all();
+
+
+        return view('registrar-herramientas-pedido')->with('pedidos',$pedidos)->with('usuarios',$usuarios);
     }
 
     /**
@@ -22,9 +32,36 @@ class RegistrarHerramientasPedidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear(Request $request )
     {
-        //
+
+        //seleccionar el pedido segun la id
+        $pedido = Pedido::all()->where('id', '=', $request->btnId);
+
+        //seleccionar id y nombre de usuario
+        $usuario = User::select(array('id', 'name'))->get();
+
+        //seleccionar la lista de herramientas del pedido segun la id del pedido
+        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', '=', $request->btnId)->get();
+
+        //seleccioar herramientas 
+        $herramientas = Herramientas::all();
+
+        return view('crear-registro-herramientas-pedido')->with('pedidoHerramientas', $pedidoHerramientas)
+            ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas);
+
+
+
+
+    }
+
+
+    public function generar(){
+
+
+
+        return $this->index();
+
     }
 
     /**

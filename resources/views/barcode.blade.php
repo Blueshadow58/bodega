@@ -21,7 +21,10 @@
     <title></title>
 </head>
 <body>
-    
+    <header >
+        {{-- Llamando la navbar de carpeta --}}
+        @include('layouts.navbarMenu')
+    </header>
 
 
 <div class="container">
