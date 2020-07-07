@@ -26,7 +26,7 @@ class PedidoHerramientaController extends Controller
         $usuario = Auth::user()->id;
 
         //seleccionar herramientas por grupo nombre sin repetir
-        $herramientas = Herramientas::select('*')->groupBy('nombre')->get();
+        $herramientas = Herramientas::select('*')->groupBy('categoria')->get();
     
         $stockHerramientas = stock::select('*')->get();
 
@@ -67,14 +67,14 @@ class PedidoHerramientaController extends Controller
 //Disminuir Stock-------------------------------------------------------------------------------------
         
         //capturar el nombre de la herramienta por la id del item seleccionado por el boton
-        $herramientaNombre = Herramientas::select('nombre')->where('id','=',$request->btnId)->value('nombre') ; 
+        $herramientaCategoria = Herramientas::select('categoria')->where('id','=',$request->btnId)->value('categoria') ; 
 
         //seleccionar el stock dependiendo de su nombre 
-        $stockDisponible = stock::select('stock_disponible')->where('nombre','=',$herramientaNombre)->value('stock_disponible');
+        $stockDisponible = stock::select('stock_disponible')->where('categoria','=',$herramientaCategoria)->value('stock_disponible');
 
         
         // stock de la herramienta seleccionada menos la cantidad que seleccionamos
-        stock::where('nombre','=',$herramientaNombre)->update(['stock_disponible'=> $stockDisponible - $request->cantidad]);
+        stock::where('categoria','=',$herramientaCategoria)->update(['stock_disponible'=> $stockDisponible - $request->cantidad]);
 
 //
 
@@ -115,15 +115,15 @@ class PedidoHerramientaController extends Controller
     public function eliminar(Request $request){
 
         //seleccionar el nombre de la herramienta segun el id
-        $herramientaNombre = Herramientas::select('nombre')->where('id','=',$request->btnId)->value('nombre') ; 
+        $herramientaCategoria = Herramientas::select('categoria')->where('id','=',$request->btnId)->value('categoria') ; 
 
         //seleccionar la cantidad del producto segun id
         $cantidadTableTemporal = table_temporal::select('cantidad')->where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->value('cantidad');
 
         //consulta cantidad en stock disponible en la tabla stock segun el nombre
-        $stockDisponible = stock::select('stock_disponible')->where('nombre','=',$herramientaNombre)->value('stock_disponible');
+        $stockDisponible = stock::select('stock_disponible')->where('categoria','=',$herramientaCategoria)->value('stock_disponible');
         //actualizar la tabla stock agregando la cantidad eliminada en table_temporals
-        stock::where('nombre','=',$herramientaNombre)->update(['stock_disponible'=>  $stockDisponible + $cantidadTableTemporal]);
+        stock::where('categoria','=',$herramientaCategoria)->update(['stock_disponible'=>  $stockDisponible + $cantidadTableTemporal]);
 
         //eliminar el dato de la tabla temporal
         DB::table('table_temporals')->where('id_producto','=',$request->btnId)->delete();

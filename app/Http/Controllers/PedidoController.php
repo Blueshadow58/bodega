@@ -37,7 +37,7 @@ class PedidoController extends Controller
 
 
         //llamar a todos los pedidos
-        $pedidos = Pedido::select('*')->get();
+        $pedidos = Pedido::all();
         //generar una consulta de solo id y nombre como array
         $usuarios = User::select(array('id', 'name'))->get();
 

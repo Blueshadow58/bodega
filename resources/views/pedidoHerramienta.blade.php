@@ -76,18 +76,18 @@
                     <table class="table" style="color:white">
                         <thead style="background-color: #c67e06;color: #eff1f4;">
                             <tr >
-                              <th>Id</th>
+                            
                                 <th>imagen</th>
                                 <th>nombre</th>
                                 <th>categoria</th>              
-                                <th>Cantidad</th>
+                                <th>cantidad</th>
                                 <th></th>
                                   
                         </thead>
                         <tbody>
                           @foreach($herramientas as $herramienta)
                           <tr id="estado_tr{{$herramienta->id}}">
-                            <td>{{$herramienta->id}}</td>
+                            
                             <td>
                             <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
                             </td>
@@ -99,7 +99,7 @@
                             <td style="width: 25%"> 
                               @foreach ($stockHerramientas as $stock)
                     {{-- <label for="" style="color:white">{{$stock->stock_total}}</label>     --}}
-                            @if ($herramienta->nombre == $stock->nombre)
+                            @if ($herramienta->categoria == $stock->categoria)
                                 @if ($stock->stock_disponible > 0)
                                   <input type="number" style="width: 30%"  name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
                             </td>
@@ -150,7 +150,7 @@
   <table class="table  " style="color:white">
       <thead style="background-color: #c67e06;color: #eff1f4;">
           <tr>
-              <th>Id</th>
+              
               <th>imagen</th>
               <th>nombre</th>
               <th>categoria</th>
@@ -162,8 +162,7 @@
           <tr>
 
             @foreach($productos as $producto)
-            <tr>
-              <td>{{$producto->id_producto}}</td>
+            <tr>              
               <td>
               <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
               </td>
