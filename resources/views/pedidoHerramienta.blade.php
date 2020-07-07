@@ -63,6 +63,86 @@
 
 
 
+
+
+
+
+
+
+
+
+                  {{-- Tabla con todo --}}
+                  <div class="table-responsive table-striped">
+                    <table class="table" style="color:white">
+                        <thead style="background-color: #c67e06;color: #eff1f4;">
+                            <tr >
+                              <th>Id</th>
+                                <th>imagen</th>
+                                <th>nombre</th>
+                                <th>categoria</th>              
+                                <th>Cantidad</th>
+                                <th></th>
+                                  
+                        </thead>
+                        <tbody>
+                          @foreach($herramientas as $herramienta)
+                          <tr id="estado_tr{{$herramienta->id}}">
+                            <td>{{$herramienta->id}}</td>
+                            <td>
+                            <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
+                            </td>
+                            <td>{{$herramienta->nombre}}</td>  
+                            <td>{{$herramienta->categoria}}</td>
+                            
+                            <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
+                              @csrf
+                            <td style="width: 25%"> 
+                              @foreach ($stockHerramientas as $stock)
+                    {{-- <label for="" style="color:white">{{$stock->stock_total}}</label>     --}}
+                            @if ($herramienta->nombre == $stock->nombre)
+                                @if ($stock->stock_disponible > 0)
+                                  <input type="number" style="width: 30%"  name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
+                            </td>
+                            <td>
+                              <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
+                            </td>
+                                @else
+                                  <input type="number" name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="0" disabled> 
+                            </td>
+                            <td>
+                              <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" disabled>Sin stock</button>              
+                            </td>
+                                @endif                
+                            @endif
+                            @endforeach
+                              
+                  
+                          </form>
+                          </tr>
+                          @endforeach
+                           
+                        </tbody>
+                    </table>
+                  </div>
+                  {{-- Tabla con todo --}}
+                  
+                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   
                   
                   <div class="table-responsive table-striped">
@@ -108,92 +188,11 @@
 
 
 
-
-                  {{-- Tabla con todo --}}
-                  <div class="table-responsive table-striped">
-  <table class="table" style="color:white">
-      <thead style="background-color: #c67e06;color: #eff1f4;">
-          <tr >
-            <th>Id</th>
-              <th>imagen</th>
-              <th>nombre</th>
-              <th>categoria</th>              
-              <th>Cantidad</th>
-              <th></th>
-                
-      </thead>
-      <tbody>
-        @foreach($herramientas as $herramienta)
-        <tr id="estado_tr{{$herramienta->id}}">
-          <td>{{$herramienta->id}}</td>
-          <td>
-          <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
-          </td>
-          <td>{{$herramienta->nombre}}</td>  
-          <td>{{$herramienta->categoria}}</td>
-          
-          <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
-            @csrf
-          <td style="width: 25%"> 
-            @foreach ($stockHerramientas as $stock)
-  {{-- <label for="" style="color:white">{{$stock->stock_total}}</label>     --}}
-          @if ($herramienta->nombre == $stock->nombre)
-              @if ($stock->stock_disponible > 0)
-                <input type="number" style="width: 30%"  name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
-          </td>
-          <td>
-            <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
-          </td>
-              @else
-                <input type="number" name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="0" disabled> 
-          </td>
-          <td>
-            <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" disabled>Sin stock</button>              
-          </td>
-              @endif                
-          @endif
-          @endforeach
-            
-
-        </form>
-        </tr>
-        @endforeach
-         
-      </tbody>
-  </table>
-</div>
-{{-- Tabla con todo --}}
-
-
-
           </div>
       </div>
   </div>
 
 
-
-{{-- 
-  <script type="text/javascript">
-    mostrarNotificacion($notificacion,$estado);
-    </script>
-    
-<script type="text/javascript">
- function mostrarNotificacion({{$notificacion}},{{$estado}}){
-  if ({{estado}} == "success") {
-    toastr.success($notificacion,{
-      "progressBar":true,
-      "positionClass": "toast-bottom-right"
-    })
-  } else if ({{estado}} == "fail") {
-    toastr.fail($notificacion,{
-      "progressBar":true,
-      "positionClass": "toast-bottom-right"
-    })
-  }
-
- }
-
-</script> --}}
 
   
   

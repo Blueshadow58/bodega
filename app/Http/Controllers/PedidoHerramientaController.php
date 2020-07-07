@@ -137,16 +137,6 @@ class PedidoHerramientaController extends Controller
 
         //seleccionar el numero de elementos que a ingresado este usuario a el pedido
          $herramietasPorUser = DB::table('table_temporals')->select('*')->where('id_usuario','=',Auth::user()->id)->count();
-
-
-        // if ($herramietasPorUser == 0) {
-        //     return back();
-        //     $estado = "fail";
-        //     $notificacion = "Debe ingresar elementos para generar un pedido";
-        // } else {
-        //     $notificacion = "Pedido Generado correctamente";
-        //     $estado = "success";
-        // }
         
 
             //Crear un pedido
@@ -182,12 +172,23 @@ class PedidoHerramientaController extends Controller
         };
         
 
+        
+
+
+
+
+
         //al generar la lista del pedido eliminar los datos agregados ala tabla_temporal
         table_temporal::where('id_usuario','=',Auth::user()->id)->delete();
         
         return back();
 
     }
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.

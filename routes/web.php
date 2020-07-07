@@ -101,9 +101,15 @@ Route::view('notificaciones','notificaciones');
 Route::view('home-bodega','home-bodega');
 
 
+//Mis-Pedidos----------------------------------------------------------------
+
+
+Route::get('mis-pedidos','MisPedidosController@index');
+
+Route::post('p','MisPedidosController@probar');
+
+
 //----------------------------------------------------------------
-
-
 
 
 

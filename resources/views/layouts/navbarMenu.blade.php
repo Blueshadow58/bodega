@@ -22,9 +22,13 @@
                 <li class="nav-item" role="presentation"><a class="nav-link" href="pedidoHerramienta" style="color: #ffffff;">Generar pedido</a></li>
                 {{-- Solo permirile esta ruta al que tenga el permiso bodeguero --}}
                 @can('bodeguero')
-                <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Registro de ordenes</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Ver pedidos</a></li>
                 @endcan
             
+                @cannot('bodeguero')
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="mis-pedidos" style="color: #ffffff;">Mis pedidos</a></li>    
+                @endcannot
+                
             
             </ul>
             
