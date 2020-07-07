@@ -28,8 +28,27 @@
             
             </ul>
             
-                <span class="nav-item " role="presentation"><a class="nav-link"  style="color: #ffffff;">Bienvenido: <span class="font-weight-bold">{{Auth::user()->name}}</span></a></span>
+            <span class="nav-item dropdown ">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white font-weight-bold" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                   <span>Bienvenido: </span>  {{ Auth::user()->name }} <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </span>
             
-            <span class="navbar-text actions"> </span></div>
+                
+
+            <span class="navbar-text actions"> </span>
+        </div>
     </div>
 </nav>    
