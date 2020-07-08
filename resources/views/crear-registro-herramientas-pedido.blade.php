@@ -34,7 +34,7 @@
         <div class="container-fluid">
         <div class="row">
 
-            <div class="col-4">
+            <div class="col-3">
 
             <div class="form-group">
                 {{-- <a class="btn btn-primary border-light" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Volver</a><a class="btn btn-primary border-light float-right" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Registrar</a> --}}
@@ -111,10 +111,126 @@
 </div></div>
                 </div>
         </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- fin col --}}
+    </div> 
     
+{{-- column-------------------------------------------------------------------------------------------------- --}}
+    <div class="col-4">
 
 
+           {{-- Generar lista de las herramientas que seran registradas en el pedido --}}
+
+           <div class="" style="background-color: transparent;">
+            <div class="">
+                <div class="form-group">
+                    {{-- <a class="btn btn-primary border-light" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Volver</a><a class="btn btn-primary border-light float-right" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Registrar</a> --}}
+                </div>
+                <div
+                    class="card">
+                    <div class="card-body" style="background-color: #002d47;color: rgb(255,255,255);opacity: 1;">
+                        
+                        <div class="container">
+                            <div class="row">
+                            <div class="col text-center">
+                                
+                                <h2>Herramientas Asignadas </h2>
+                            </div>
+                         
+                        </div>
+                        </div>
+    
+                        <div>                        
+                            <div class="table-responsive table-striped">
+        <table class="table" style="color: #eff1f4">
+            <thead style="background-color: #c67e06;">
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>                
+                    <th>Descripcion</th>
+                    <th>Categoria</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              
+
+                 @foreach($herramientasAsignadas as $herramientaAsignada)
+                <tr>
+                    
+                    <td><img src="{{ asset('storage').'/'.$herramientaAsignada->imagen}}" class="img-thumbnail img-fliud" alt="" width="100"></td>
+                    <td>{{$herramientaAsignada->nombre}}</td>  
+                        
+                    <td>{{$herramientaAsignada->descripcion}}</td>        
+                    <td>{{$herramientaAsignada->categoria}}</td>    
+
+
+                    <form action="crear-registro-herramientas-eliminar" method="post">
+                        @csrf
+                        <td><button class="btn btn-danger" name="idHerramienta" value="{{$herramientaAsignada->id}}" type="submit">Eliminar</button></td>    
+                    </form>
+
+                </tr>
+                @endforeach 
+
+
+            </tbody>
+        </table>
+    </div></div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        {{-- Generar lista de las herramientas que seran registradas en el pedido --}}
+
+
+
+
+
+    </div>
+
+{{-- col---------------------------------------------------------------------------------------------------------- --}}
 
 
 
@@ -126,10 +242,11 @@
         {{-- TABLA HERRAMIENTAS---------------------------------------------------------------------- --}}
             <div class="col "  >
 
+
                 {{-- Asignar herramientas de forma automatica --}}
-                <form action="rh-pedido-generar" method="post" style="background-color: transparent;padding-top: 0px">
+                <form action="rh-pedido-generar" class="" method="post" style="background-color: transparent;padding-top: 0px;padding-bottom: 2%">
                     @csrf
-                    <button class="btn btn-primary" type="submit">Asignar herramientas automaticamente </button>
+                    <button class="btn btn-primary" class="" type="submit">Asignar herramientas automaticamente </button>
                 </form>
                 {{-- Asignar herramientas de forma automatica --}}
 
@@ -144,74 +261,6 @@
 
 
 
-                {{-- Generar lista de las herramientas que seran registradas en el pedido --}}
-
-                <div class="" style="background-color: transparent;">
-                    <div class="container">
-                        <div class="form-group">
-                            {{-- <a class="btn btn-primary border-light" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Volver</a><a class="btn btn-primary border-light float-right" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Registrar</a> --}}
-                        </div>
-                        <div
-                            class="card">
-                            <div class="card-body" style="background-color: #002d47;color: rgb(255,255,255);opacity: 1;">
-                                
-                                <div class="container">
-                                    <div class="row">
-                                    <div class="col text-center">
-                                        
-                                        <h2>Asignar Herramientas</h2>
-                                    </div>
-                                 
-                                </div>
-                                </div>
-            
-                                <div>                        
-                                    <div class="table-responsive table-striped">
-                <table class="table" style="color: #eff1f4">
-                    <thead style="background-color: #c67e06;">
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>                
-                            <th>Descripcion</th>
-                            <th>Categoria</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      
-
-                        {{-- @foreach($herramientas as $herramienta)
-                        <tr>
-                            
-                            <td><img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100"></td>
-                            <td>{{$herramienta->nombre}}</td>  
-                                
-                            <td>{{$herramienta->descripcion}}</td>        
-                            <td>{{$herramienta->categoria}}</td>    
-
-
-                            <form action="crear-registro-herramientas-agregar" method="post">
-                                @csrf
-                                <td><button class="btn btn-success" type="submit">Eliminar</button></td>    
-                            </form>
-
-                        </tr>
-                        @endforeach --}}
-
-
-                    </tbody>
-                </table>
-            </div></div>
-                            </div>
-                    </div>
-                </div>
-                </div>
-                {{-- Generar lista de las herramientas que seran registradas en el pedido --}}
-
-
-
-
-
 
 
 
@@ -230,7 +279,7 @@
 
 
                 <div class="" style="background-color: transparent;">
-                    <div class="container">
+                    <div class="">
                         <div class="form-group">
                             {{-- <a class="btn btn-primary border-light" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Volver</a><a class="btn btn-primary border-light float-right" role="button" href="Registro%20Ordenes.html" style="background-color: #002d47;">Registrar</a> --}}
                         </div>
@@ -258,6 +307,7 @@
                             <th>Descripcion</th>
                             <th>Categoria</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -271,11 +321,15 @@
                             <td>{{$herramienta->descripcion}}</td>        
                             <td>{{$herramienta->categoria}}</td>    
 
-
+                            
+                                
                             <form action="crear-registro-herramientas-agregar" method="post">
-                                @csrf
-                                <td><button class="btn btn-success" type="submit">Agregar</button></td>    
+                                @csrf                                
+                                <td><button class="btn btn-success" name="idHerramienta" value="{{$herramienta->id}}" type="submit">Agregar</button></td>    
+                                
+                                {{-- <button class="btn" name="idPedido" value="{{$idPedido}}" type="button" hidden></button> --}}
                             </form>
+                            
 
                         </tr>
                         @endforeach

@@ -122,8 +122,16 @@ Route::post('rh-pedido-crear','RegistrarHerramientasPedidoController@crear');
 
 Route::post('rh-pedido-generar','RegistrarHerramientasPedidoController@generar');
 
-//-------------------------------------------------------------------------------
+//Agergar herramientas a la tabla temporal registros-------------------------------------------------------------------------------
 
+
+Route::post('crear-registro-herramientas-agregar','RegistrarHerramientasPedidoController@agregar');
+
+Route::post('crear-registro-herramientas-eliminar','RegistrarHerramientasPedidoController@eliminar');
+
+
+
+//-------------------------------------------------------------------------------
 
 
 Route::get('/pedidoHerramienta', 'PedidoHerramientaController@index');

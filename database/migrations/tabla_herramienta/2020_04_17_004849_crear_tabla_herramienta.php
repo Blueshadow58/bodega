@@ -19,6 +19,7 @@ class CrearTablaHerramienta extends Migration
             $table->string('descripcion',100);
             $table->string('nombre',100);
             $table->string('categoria');
+            $table->string('estado')->default('disponible');
             $table->timestamps();
         });
     }

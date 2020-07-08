@@ -78,7 +78,7 @@
                             <tr >
                             
                                 <th>imagen</th>
-                                <th>nombre</th>
+                               
                                 <th>categoria</th>              
                                 <th>cantidad</th>
                                 <th></th>
@@ -91,7 +91,7 @@
                             <td>
                             <img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
                             </td>
-                            <td>{{$herramienta->nombre}}</td>  
+                            
                             <td>{{$herramienta->categoria}}</td>
                             
                             <form action="pedidoHerramienta.agregar" method="post" style="background-color: #002d47;padding:10px">
@@ -151,10 +151,10 @@
       <thead style="background-color: #c67e06;color: #eff1f4;">
           <tr>
               
-              <th>imagen</th>
-              <th>nombre</th>
+              <th>imagen</th>             
               <th>categoria</th>
               <th>cantidad</th>
+              <th></th>
               <th></th>
           </tr>
       </thead>
@@ -166,7 +166,7 @@
               <td>
               <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
               </td>
-              <td>{{$producto->nombre}}</td>
+             
               <td>{{$producto->categoria}}</td>
 
               @foreach ($tablaTemporal as $tTemporal)

@@ -27,6 +27,15 @@ class TablaTemporalAsignarHerramientasController extends Controller
         //
     }
 
+
+    public function agregar(Request $request){
+
+       
+
+
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
