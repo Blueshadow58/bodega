@@ -70,8 +70,7 @@
     <table class="table" style="color: #eff1f4">
         <thead style="background-color: #c67e06;">
             <tr>
-                <th>Imagen</th>
-                <th>Nombre</th>
+                <th>Categoria</th>                
                 <th>Cantidad</th>
                 <th>Estado</th>
             </tr>
@@ -81,16 +80,9 @@
             @foreach($pedidoHerramientas as $pedidoHerramienta)
             <tr>
 
-                @foreach ($herramientas as $herramienta)
-                    
-                    @if ($pedidoHerramienta->id_herramienta == $herramienta->id)
-                    
-                    <td><img src="{{ asset('storage').'/'.$herramienta->imagen}}" class="img-thumbnail img-fliud" alt="" width="100"></td>
-                    <td>{{$herramienta->nombre}}</td>
-                    <td>{{$pedidoHerramienta->cantidad}}</td>
-                    @endif    
-                @endforeach
-
+                
+                <td>{{$pedidoHerramienta->categoria}}</td>        
+                <td>{{$pedidoHerramienta->cantidad}}</td>        
                 <td>{{$pedidoHerramienta->estado_herramienta}}</td>    
                 
               {{-- <td>

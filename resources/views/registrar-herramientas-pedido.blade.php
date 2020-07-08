@@ -67,7 +67,7 @@
                       {{-- registrar herramientas pedido crear  --}}
                     <form action="rh-pedido-crear" class="text-center" method="post" style="background-color:transparent;padding:0px!important; box-shadow: none">
                       @csrf
-                      <button class="btn btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnId" value="{{$pedido->id}}"> Editar Pedido</button>
+                      <button class="btn btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnPedidoId" value="{{$pedido->id}}"> Editar Pedido</button>
                     </form>
                   </td>
                 

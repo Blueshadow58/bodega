@@ -16,7 +16,7 @@ class CreatePedidoHerramientasTable extends Migration
         Schema::create('pedido_herramientas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_pedido');
-            $table->integer('id_herramienta');
+            $table->string('categoria');
             $table->integer('cantidad');
             $table->date('fecha_devolucion')->nullable();
             $table->string('estado_herramienta')->default('Por confirmar');

@@ -243,13 +243,17 @@ class PedidoController extends Controller
         $usuario = User::select(array('id', 'name'))->get();
 
         //seleccionar la lista de herramientas del pedido segun la id del pedido
-        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', '=', $request->btnId)->get();
+        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', $request->btnId)->get();
 
         //seleccioar herramientas 
-        $herramientas = Herramientas::select('*')->get();
+        //$herramientas = Herramientas::select('*')->get();
+
+
 
         return view('pedido-detalle')->with('pedidoHerramientas', $pedidoHerramientas)
-            ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas);
+            ->with('pedido', $pedido)->with('usuario', $usuario);
+
+            //->with('herramientas', $herramientas)
     }
 
     /**

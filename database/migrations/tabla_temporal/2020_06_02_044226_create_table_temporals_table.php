@@ -15,7 +15,7 @@ class CreateTableTemporalsTable extends Migration
     {
         Schema::create('table_temporals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('id_producto');
+            $table->string('categoria');
             $table->bigInteger('id_usuario');
             $table->integer('cantidad');
             $table->string('tipo_producto');            

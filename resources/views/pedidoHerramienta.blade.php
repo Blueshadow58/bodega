@@ -104,13 +104,13 @@
                                   <input type="number" style="width: 30%"  name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="1">
                             </td>
                             <td>
-                              <button class="btn-success" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
+                              <button class="btn-success" style="border: 1px solid;" name="btnCategoria" value="{{$herramienta->categoria}}"  onclick="agregar({{$herramienta->id}})" >Agregar</button>            
                             </td>
                                 @else
                                   <input type="number" name="cantidad" id="" max="{{$stock->stock_disponible}}" min="1" value="0" disabled> 
                             </td>
                             <td>
-                              <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$herramienta->id}}"  onclick="agregar({{$herramienta->id}})" disabled>Sin stock</button>              
+                              <button class="btn-danger" style="border: 1px solid;" name="btnCategoria" value="{{$herramienta->categoria}}"  onclick="agregar({{$herramienta->id}})" disabled>Sin stock</button>              
                             </td>
                                 @endif                
                             @endif
@@ -167,12 +167,23 @@
               <img src="{{ asset('storage').'/'.$producto->imagen}}" class="img-thumbnail img-fliud" alt="" width="100">
               </td>
               <td>{{$producto->nombre}}</td>
-              <td>{{$producto->categoria}}</td>    
+              <td>{{$producto->categoria}}</td>
+
+              @foreach ($tablaTemporal as $tTemporal)
+                  
+              @if ($producto->categoria == $tTemporal->categoria)
+              <td>{{$tTemporal->cantidad}}</td>
+              @endif
+
+              @endforeach
+
+
               <td>{{$producto->cantidad}}</td>    
               <td>
+
                 <form action="pedidoHerramienta.eliminar" method="post" style="background-color: #002d47;padding:10px">
                   @csrf
-                  <button class="btn-danger" style="border: 1px solid;" name="btnId" value="{{$producto->id_producto}}"  >Eliminar</button>
+                  <button class="btn-danger" style="border: 1px solid;" name="btnCategoria" value="{{$producto->categoria}}"  >Eliminar</button>
                 </form>
               </td>            
             </tr>

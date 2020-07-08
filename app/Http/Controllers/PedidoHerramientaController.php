@@ -28,15 +28,21 @@ class PedidoHerramientaController extends Controller
         //seleccionar herramientas por grupo nombre sin repetir
         $herramientas = Herramientas::select('*')->groupBy('categoria')->get();
     
-        $stockHerramientas = stock::select('*')->get();
+        $stockHerramientas = stock::all();
 
         //llamar todos los productos
-        $productos = table_temporal::select('*')->join('herramienta','table_temporals.id_producto','=','herramienta.id')->where('id_usuario','=',Auth::user()->id)->get();
+        //$productos = table_temporal::select('*')->join('herramienta','table_temporals.categoria','=','herramienta.categoria')->where('id_usuario','=',Auth::user()->id)->get();
 
 
+        $cateTableTemporal = table_temporal::select('categoria')->where('id_usuario',$usuario)->get('categoria');
+
+        $tablaTemporal = table_temporal::select('*')->where('id_usuario',Auth::user()->id)->get();
+
+        $productos = herramientas::select('*')->whereIn('categoria',$cateTableTemporal)->groupBy('categoria')->get();
 
         return view('pedidoHerramienta')->with('herramientas',$herramientas)->with('usuario',$usuario)
-        ->with('productos',$productos)->with('stockHerramientas',$stockHerramientas);
+        ->with('stockHerramientas',$stockHerramientas)->with('productos',$productos)->with('tablaTemporal',$tablaTemporal);
+
         
         
     }
@@ -55,47 +61,45 @@ class PedidoHerramientaController extends Controller
      */
     public function agregar(Request $request)
     {
-        
-        
-        //llamar a la herramienta que tenga la misma id que estoy trayendo de la request
-        $herramienta = Herramientas::where('id','=',$request->btnId)->get();   
-        
-        //llamar a la categoria cuando la id de la herramienta sea igual a la traida de la request y sacarla como dato en vez de objeto
-        $categoria = DB::table('herramienta')->select('categoria')->where('id', '=', $request->btnId)->value('categoria');
+               
 
+        $categoria = $request->btnCategoria;
+
+         $categoria;
 
 //Disminuir Stock-------------------------------------------------------------------------------------
         
-        //capturar el nombre de la herramienta por la id del item seleccionado por el boton
-        $herramientaCategoria = Herramientas::select('categoria')->where('id','=',$request->btnId)->value('categoria') ; 
+        // //capturar el nombre de la herramienta por la id del item seleccionado por el boton
+        // $herramientaCategoria = Herramientas::select('categoria')->where('id','=',$request->btnId)->value('categoria') ; 
 
         //seleccionar el stock dependiendo de su nombre 
-        $stockDisponible = stock::select('stock_disponible')->where('categoria','=',$herramientaCategoria)->value('stock_disponible');
+         $stockDisponible = stock::select('stock_disponible')->where('categoria',$categoria)->value('stock_disponible');
 
         
         // stock de la herramienta seleccionada menos la cantidad que seleccionamos
-        stock::where('categoria','=',$herramientaCategoria)->update(['stock_disponible'=> $stockDisponible - $request->cantidad]);
+         stock::where('categoria',$categoria)->update(['stock_disponible'=> $stockDisponible - $request->cantidad]);
 
 //
 
 
 //Aumentar stock-----------------------------------------------------------------------------------------
-         //Agrupar la cantidad   
-        $countH = Herramientas::where('categoria','=','martillos')->count();   
+         
+
 
         //verificar si la herramienta que hemos agregado a nuestro pedido existe, sino aumentar la cantidad
-        if (table_temporal::where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->exists()) {
+        if (table_temporal::where('categoria',$categoria)->where('id_usuario',Auth::user()->id)->exists()) {
             //Si existe
             
 
             //cantidad de ese producto
-            $cantidadTableTemporal = table_temporal::select('cantidad')->where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->value('cantidad');
+            $cantidadTableTemporal = table_temporal::select('cantidad')->where('categoria',$categoria)->where('id_usuario',Auth::user()->id)->value('cantidad');
             //actulizar cantidad en table_temporal
-            table_temporal::where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->update(['cantidad'=> $cantidadTableTemporal + $request->cantidad]);
+            table_temporal::where('categoria',$categoria)->where('id_usuario',Auth::user()->id)->update(['cantidad'=> $cantidadTableTemporal + $request->cantidad]);
+
         } else {
             //No existe
             table_temporal::create(
-                ['id_producto' => $request->btnId,
+                ['categoria' => $categoria,
                 'id_usuario' => Auth::user()->id,            
                 'cantidad' => $request->cantidad,
                 'tipo_producto' => $categoria]
@@ -107,29 +111,47 @@ class PedidoHerramientaController extends Controller
 
         
 
-        return back();        
+        return $this->index();        
     }
 
 
 
     public function eliminar(Request $request){
 
-        //seleccionar el nombre de la herramienta segun el id
-        $herramientaCategoria = Herramientas::select('categoria')->where('id','=',$request->btnId)->value('categoria') ; 
+        $categoria = $request->btnCategoria;
 
+       
         //seleccionar la cantidad del producto segun id
-        $cantidadTableTemporal = table_temporal::select('cantidad')->where('id_producto','=',$request->btnId)->where('id_usuario','=',Auth::user()->id)->value('cantidad');
+        $cantidadTableTemporal = table_temporal::select('cantidad')->where('categoria',$categoria)->where('id_usuario',Auth::user()->id)->value('cantidad');
 
         //consulta cantidad en stock disponible en la tabla stock segun el nombre
-        $stockDisponible = stock::select('stock_disponible')->where('categoria','=',$herramientaCategoria)->value('stock_disponible');
+        $stockDisponible = stock::select('stock_disponible')->where('categoria',$categoria)->value('stock_disponible');
         //actualizar la tabla stock agregando la cantidad eliminada en table_temporals
-        stock::where('categoria','=',$herramientaCategoria)->update(['stock_disponible'=>  $stockDisponible + $cantidadTableTemporal]);
+        stock::where('categoria',$categoria)->update(['stock_disponible'=>  $stockDisponible + $cantidadTableTemporal]);
 
         //eliminar el dato de la tabla temporal
-        DB::table('table_temporals')->where('id_producto','=',$request->btnId)->delete();
+        table_temporal::where('categoria',$categoria)->where('id_usuario',Auth::user()->id)->delete();
 
-        return back();       
+        return $this->index();       
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function volcar(Request $request){
 
@@ -148,7 +170,7 @@ class PedidoHerramientaController extends Controller
         );
 
         //seleccioanr todo de la tabla temporal de lo que haya ingresado el usuario
-        $herramietasPorUser = DB::table('table_temporals')->select('*')->where('id_usuario','=',Auth::user()->id)->get();
+        $herramietasPorUser = table_temporal::select('*')->where('id_usuario','=',Auth::user()->id)->get();
 
         //seleccioanr ultima id
         $ultimaId = Pedido::select('select id from pedido')->max('id');
@@ -158,12 +180,12 @@ class PedidoHerramientaController extends Controller
         foreach ($herramietasPorUser as $herramienta){
 
             //seleccionar la cantidad cuando la id del producto sea igual a la id de la herramienta y sacar su cantidad
-            $cantidadHerramienta = table_temporal::select('cantidad')->where('id_producto','=',$herramienta->id_producto)->value('cantidad');
+            $cantidadHerramienta = table_temporal::select('cantidad')->where('categoria','=',$herramienta->categoria)->value('cantidad');
 
             //crear un pedido herramienta por cada ciclo
         PedidoHerramienta::create(
             ['id_pedido' => $ultimaId,
-             'id_herramienta' => $herramienta->id_producto,            
+             'categoria' => $herramienta->categoria,            
              'cantidad' => $cantidadHerramienta,  
             //'fecha_devolución' => $request->fechaEntrega,                               
             //'estado_herramienta' => $request->asunto,            
@@ -181,9 +203,12 @@ class PedidoHerramientaController extends Controller
         //al generar la lista del pedido eliminar los datos agregados ala tabla_temporal
         table_temporal::where('id_usuario','=',Auth::user()->id)->delete();
         
-        return back();
+        return $this->index();
 
     }
+
+
+
 
 
 

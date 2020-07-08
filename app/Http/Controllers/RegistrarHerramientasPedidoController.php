@@ -19,9 +19,11 @@ class RegistrarHerramientasPedidoController extends Controller
     public function index()
     {
 
-
+        //tabla pedido
         $pedidos = Pedido::all()->where('estado_pedido','Por confirmar');
         $usuarios = User::all();
+
+
 
 
         return view('registrar-herramientas-pedido')->with('pedidos',$pedidos)->with('usuarios',$usuarios);
@@ -35,22 +37,34 @@ class RegistrarHerramientasPedidoController extends Controller
     public function crear(Request $request )
     {
 
-        //seleccionar el pedido segun la id
-        $pedido = Pedido::all()->where('id', '=', $request->btnId);
+        //Primera tabla-----------------------------------------------------------------------------
 
+        $idPedido = $request->btnPedidoId;
+        //seleccionar el pedido segun la id
+        $pedido = Pedido::all()->where('id', '=', $idPedido);
         //seleccionar id y nombre de usuario
         $usuario = User::select(array('id', 'name'))->get();
-
         //seleccionar la lista de herramientas del pedido segun la id del pedido
-        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', '=', $request->btnId)->get();
+        $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido',$idPedido)->get();
+
+        
+
+        // Segunda tabla-----------------------------------------------------------------------------
+
 
         //seleccioar herramientas 
-        $herramientas = Herramientas::all();
+
+        $categorias = PedidoHerramienta::select('categoria')->where('id_pedido',$idPedido)->get('categoria');
+
+
+        $herramientas = Herramientas::select('*')->whereIn('categoria',$categorias)->get();
+
+
+
+
 
         return view('crear-registro-herramientas-pedido')->with('pedidoHerramientas', $pedidoHerramientas)
             ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas);
-
-
 
 
     }
