@@ -196,6 +196,15 @@
             <tbody>
               
 
+
+
+              
+
+
+
+
+
+
                  @foreach($herramientasAsignadas as $herramientaAsignada)
                 <tr>
                     
@@ -212,7 +221,7 @@
                     </form>
 
                 </tr>
-                @endforeach 
+                @endforeach  
 
 
             </tbody>
@@ -238,6 +247,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
             
         {{-- TABLA HERRAMIENTAS---------------------------------------------------------------------- --}}
             <div class="col "  >
@@ -246,7 +267,7 @@
                 {{-- Asignar herramientas de forma automatica --}}
                 <form action="rh-pedido-generar" class="" method="post" style="background-color: transparent;padding-top: 0px;padding-bottom: 2%">
                     @csrf
-                    <button class="btn btn-primary" class="" type="submit">Asignar herramientas automaticamente </button>
+                    <button class="btn btn-primary" class="" name="asignarHerramientas" type="submit">Asignar herramientas automaticamente </button>
                 </form>
                 {{-- Asignar herramientas de forma automatica --}}
 
@@ -321,11 +342,20 @@
                             <td>{{$herramienta->descripcion}}</td>        
                             <td>{{$herramienta->categoria}}</td>    
 
-                            
-                                
+
+
                             <form action="crear-registro-herramientas-agregar" method="post">
                                 @csrf                                
-                                <td><button class="btn btn-success" name="idHerramienta" value="{{$herramienta->id}}" type="submit">Agregar</button></td>    
+
+
+                                
+                                
+                                <td><button class="btn btn-success" name="idHerramienta" value="{{$herramienta->id}}" type="submit" >Agregar</button></td>    
+                                
+
+
+
+                                
                                 
                                 {{-- <button class="btn" name="idPedido" value="{{$idPedido}}" type="button" hidden></button> --}}
                             </form>
@@ -357,5 +387,12 @@
 
 
    
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
 </body>
 </html>

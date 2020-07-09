@@ -120,9 +120,13 @@ Route::get('registrar-herramientas-pedido','RegistrarHerramientasPedidoControlle
 
 Route::post('rh-pedido-crear','RegistrarHerramientasPedidoController@crear');
 
-Route::post('rh-pedido-generar','RegistrarHerramientasPedidoController@generar');
+
 
 //Agergar herramientas a la tabla temporal registros-------------------------------------------------------------------------------
+
+
+Route::post('rh-pedido-generar','RegistrarHerramientasPedidoController@generar');
+
 
 
 Route::post('crear-registro-herramientas-agregar','RegistrarHerramientasPedidoController@agregar');

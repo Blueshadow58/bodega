@@ -9,6 +9,7 @@ use App\RegistrarHerramientasPedido;
 use App\tabla_temporal_asignar_herramientas;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class RegistrarHerramientasPedidoController extends Controller
 {
@@ -52,18 +53,127 @@ class RegistrarHerramientasPedidoController extends Controller
         
         // Segunda tabla-----------------------------------------------------------------------------
 
+
+
+        //Herramientas del pedido----------------------------------------------------------------------------------
+
+
+    $idsHerramientasAsignadas = tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
+
+    $herramientasAsignadas = Herramientas::whereIn('id',$idsHerramientasAsignadas)->where('estado','Procesando')->get();
+
+
         //seleccioar herramientas 
         $categorias = PedidoHerramienta::select('categoria')->where('id_pedido',$idPedido)->get('categoria');
         $herramientas = Herramientas::select('*')->whereIn('categoria',$categorias)->where('estado','disponible')->get();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //      $cantidadHerramientas = tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
+
+    //   $cantHerramientasAsignar = Herramientas::select('categoria')->whereIn('id',$cantidadHerramientas)->get('categoria');
+
+        
+     
+
+
+
+
+
+
+       
+
         return view('crear-registro-herramientas-pedido')->with('pedidoHerramientas', $pedidoHerramientas)
-            ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas)->with('idPedido',$idPedido);
+            ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas)
+            ->with('idPedido',$idPedido)->with('herramientasAsignadas',$herramientasAsignadas);
     }
+
+
+
+
+
+
+
+
+
+
 
 
     public function generar(){
-        return $this->index();
+
+        $idPedido = session('idPedido');
+
+
+         $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido',$idPedido)->get();
+
+
+
+        foreach ($pedidoHerramientas as $ph){
+
+            
+            //ingresar herramientas de forma automatica
+            for ($i = 0; $i < $ph->cantidad  ;$i++){
+
+                $herramienta = Herramientas::select('*')->where('categoria',$ph->categoria)->where('estado','disponible')->first();
+               
+                
+                   
+                    //Ingresar herramientas a tabla temporal asignar herramientas
+                    tabla_temporal_asignar_herramientas::create(['id_herramienta' => $herramienta->id]);
+                    //Cambiar estado
+                    Herramientas::where('id', $herramienta->id)->update(['estado' => 'Procesando']);
+                
+
+                
+                  
+                  
+                
+
+
+
+            }
+
+
+        }
+
+          //Cambiar estado
+       //   Herramientas::where('id', $idHerramienta)->update(['estado' => 'Procesando']);
+
+
+        // tabla_temporal_asignar_herramientas::create(
+        //     ['id_herramienta' => $idHerramienta]
+        // );
+
+         return $this->ver($idPedido);
+
+
+
+        
+        // return $idPedido;
+
+
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -74,6 +184,13 @@ class RegistrarHerramientasPedidoController extends Controller
  $idPedido = $idPedido;
 
  session(['idPedido' => $idPedido]);
+
+
+
+
+
+
+//-----------------------------------------------------------------------------
 
  //seleccionar el pedido segun la id
  $pedido = Pedido::all()->where('id', '=', $idPedido);
@@ -117,10 +234,40 @@ class RegistrarHerramientasPedidoController extends Controller
 
 
 
+
+
         $idHerramienta = $request->idHerramienta;
 
         $idPedido = session('idPedido');
         
+
+
+
+
+
+
+
+
+
+        //  $cantidadHerramientas = tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
+
+        // $cantHerramientasAsignar = Herramientas::select('categoria')->whereIn('id',$cantidadHerramientas)->get('categoria');
+    
+    
+        //     $pedidoHerramientasCount = PedidoHerramienta::select('categoria','cantidad')->where('id_pedido',$idPedido)
+        //      ->whereIn('categoria',$cantHerramientasAsignar)->get();
+    
+    
+        //     if (!empty($cantHerramientasAsignar)) {
+                
+        //     } else {
+        //         # code...
+        //     }
+            
+    
+    
+
+
 
         //Cambiar estado
         Herramientas::where('id', $idHerramienta)->update(['estado' => 'Procesando']);
