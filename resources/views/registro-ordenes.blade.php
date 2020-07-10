@@ -42,9 +42,16 @@
                     <form action="filtrarNombre"  method="post" style="background-color: #002d47;padding-top:0px;">
                         @csrf
 
-                        <input type="text" name="filtrarNombre" placeholder="Nombre">
 
-                        <button class="btn-primary"  style="border: 1px solid;border-radius: 5px" name="btnId" value=""  >Filtrar</button>
+
+                        <div class="d-inline d-inline-block">
+                            <input  class="form-control" style="border-radius: 5px" type="text" name="filtrarNombre" placeholder="Nombre">
+                        </div>
+
+                        <div class="d-inline d-inline-block" >
+                            <button class="btn btn-primary  "  style="border: 1px solid;border-radius: 5px;margin-top: 0px" name="btnId" value=""  >Filtrar</button>
+                        </div>
+                        
                         
                     </form>
 
