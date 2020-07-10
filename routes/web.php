@@ -122,20 +122,32 @@ Route::post('rh-pedido-crear','RegistrarHerramientasPedidoController@crear');
 
 
 
-//Agergar herramientas a la tabla temporal registros-------------------------------------------------------------------------------
+//Agregar herramientas a la tabla temporal registros-------------------------------------------------------------------------------
 
 
 Route::post('rh-pedido-generar','RegistrarHerramientasPedidoController@generar');
 
 
-
+//agregar las herramientas a la tabla temporal 
 Route::post('crear-registro-herramientas-agregar','RegistrarHerramientasPedidoController@agregar');
 
+//eliminar las herramientas en la tabla registro de herramientas
 Route::post('crear-registro-herramientas-eliminar','RegistrarHerramientasPedidoController@eliminar');
+
+//editar crear registro herramientas
+Route::post('crear-registro-herramientas-editar','RegistrarHerramientasPedidoController@editar');
+
+//cambiar la herramienta
+Route::post('crear-registro-herramientas-cambiarHerramienta','RegistrarHerramientasPedidoController@cambiarHerramienta');
+
+
+//volcar los datos registrados en el pedido
+Route::post('volcal-registrar-herramientas','RegistrarHerramientasPedidoController@volcarRegistroHerramientas');
 
 
 
 //-------------------------------------------------------------------------------
+
 
 
 Route::get('/pedidoHerramienta', 'PedidoHerramientaController@index');

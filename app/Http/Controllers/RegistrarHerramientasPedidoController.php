@@ -118,6 +118,19 @@ class RegistrarHerramientasPedidoController extends Controller
          $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido',$idPedido)->get();
 
 
+         //cantidad de herramientas 
+
+
+        $cantidad =  tabla_temporal_asignar_herramientas::count();
+
+        //retornar a la pagina sin modificar datos
+        if($cantidad >= 1){
+
+            return $this->ver($idPedido);
+
+        }
+
+
 
         foreach ($pedidoHerramientas as $ph){
 
@@ -125,27 +138,17 @@ class RegistrarHerramientasPedidoController extends Controller
             //ingresar herramientas de forma automatica
             for ($i = 0; $i < $ph->cantidad  ;$i++){
 
-                $herramienta = Herramientas::select('*')->where('categoria',$ph->categoria)->where('estado','disponible')->first();
-               
-                
-                   
+                $herramienta = Herramientas::select('*')->where('categoria',$ph->categoria)->where('estado','disponible')->first();               
+                                   
                     //Ingresar herramientas a tabla temporal asignar herramientas
                     tabla_temporal_asignar_herramientas::create(['id_herramienta' => $herramienta->id]);
                     //Cambiar estado
                     Herramientas::where('id', $herramienta->id)->update(['estado' => 'Procesando']);
                 
-
-                
-                  
-                  
-                
-
-
-
             }
 
-
         }
+
 
           //Cambiar estado
        //   Herramientas::where('id', $idHerramienta)->update(['estado' => 'Procesando']);
@@ -158,13 +161,138 @@ class RegistrarHerramientasPedidoController extends Controller
          return $this->ver($idPedido);
 
 
+    }
+
+
+
+
+
+    public function volcarRegistroHerramientas(){
+
+        //id del pedido
+         $idPedido = session('idPedido');
+
+
+         //cantidad de herramientas 
+        $cantidad =  tabla_temporal_asignar_herramientas::count();
+
+        //retornar a la pagina sin modificar datos
+        if($cantidad < 1 or empty($cantidad)){
+
+            return $this->ver($idPedido);
+        }
+
+
+
+        //seleccionar todas las herramientas de la tabla temporal asignar herramientas
+         $cantidad =  tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
+
+        //seleccionar las herramientas cuando la ids sean las que esten en la tabla temporal de registro de herramientas
+         $herramientasARegistrar = Herramientas::select('*')->whereIn('id',$cantidad)->get();
+
+
 
         
-        // return $idPedido;
+
+         //repetir este ciclo segun la cantidad de herramientas
+         foreach($herramientasARegistrar as $herramientas){
+            
+            //crear un pedido
+            Pedido::create(
+            [
+                'id_pedido' => $idPedido,
+                'id_herramienta' => $herramientas->id,
+                'estado_herramienta' => 'prestado'
+                
+            ]);
+
+
+            
+
+         }
+
+
+
+
 
 
     }
 
+
+
+
+
+
+    public function editar(Request $request){
+
+
+        
+
+        $idHerramienta = $request->idHerramienta;
+
+        session(['idHerramienta' => $idHerramienta]);
+
+        //Herramienta seleccionada para cambiar
+        $herramienta = Herramientas::select('*')->where('id',$idHerramienta)->get();
+
+        $categoria = Herramientas::select('categoria')->where('id',$idHerramienta)->value('categoria');
+
+        $herramientasFiltradas = Herramientas::select('*')->where('categoria',$categoria)->where('estado','!=','Procesando')->get();
+
+
+        return view('cambiar-registro-herramientas-pedido')->with('herramienta',$herramienta)->with('herramientasFiltradas',$herramientasFiltradas);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //cambiar herramienta desde nueva ventana para el cambio de herramientas en el registro al cual sera asignado
+        public function cambiarHerramienta(Request $request){
+
+            //idHerramienta
+            $nuevaHerramienta = $request->idHerramienta;
+
+
+            //herramienta a cambiar
+            $idHerramienta = session('idHerramienta');
+
+            //idPedido
+            $idPedido = session('idPedido');
+
+            //cambiar estado
+            Herramientas::where('id', $idHerramienta)->update(['estado' => 'disponible']);
+
+            //eliminar la herramienta anteriormente asignada
+            tabla_temporal_asignar_herramientas::where('id_herramienta',$idHerramienta)->delete();
+
+
+
+            //Ingresar herramientas a tabla temporal asignar herramientas
+            tabla_temporal_asignar_herramientas::create(['id_herramienta' => $nuevaHerramienta]);
+
+            //Cambiar estado
+            Herramientas::where('id', $nuevaHerramienta)->update(['estado' => 'Procesando']);
+        
+
+
+            
+            
+            return $this->ver($idPedido);
+
+        
+
+
+        }
 
 
 
