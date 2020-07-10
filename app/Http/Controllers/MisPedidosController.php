@@ -30,13 +30,7 @@ class MisPedidosController extends Controller
     public function probar(){
 
 
-        RegistrarHerramientasPedido::create(
-            ['id_pedido' => 1,
-            'id_herramienta' => 1,                        
-            ]
-        );
-
-        return 'asd';
+        return 'contron mis pedidos';
 
     }
 

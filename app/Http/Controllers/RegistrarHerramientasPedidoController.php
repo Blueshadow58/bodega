@@ -191,28 +191,62 @@ class RegistrarHerramientasPedidoController extends Controller
          $herramientasARegistrar = Herramientas::select('*')->whereIn('id',$cantidad)->get();
 
 
+         
 
-        
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
          //repetir este ciclo segun la cantidad de herramientas
          foreach($herramientasARegistrar as $herramientas){
             
             //crear un pedido
-            Pedido::create(
+            tabla_temporal_asignar_herramientas::create(
             [
                 'id_pedido' => $idPedido,
                 'id_herramienta' => $herramientas->id,
-                'estado_herramienta' => 'prestado'
-                
-            ]);
-
-
-            
-
+                'estado_herramienta' => 'prestado'                
+            ]);    
          }
 
 
+//------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+         //Eliminar todos los datos de la tabla_temporal_asignar_herramientas 
+
+         tabla_temporal_asignar_herramientas::truncate();
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //  Cambiar estado de la herramienta
+        foreach($herramientasARegistrar as $herramienta){
+
+            Herramientas::where('id', $herramienta->id)->update(['estado' => 'prestado']);
+        }
+
+        // Cambiar el estado del pedido
+            Pedido::where('id',$idPedido)->update(['estado_pedido' => 'prestado']);
+
+        
+        //seleccioar pedido herramientas segun el pedido
+
+          $pedidoHerramientas =  PedidoHerramienta::select('*')->where('id_pedido',$idPedido)->get();
+
+            foreach($pedidoHerramientas as $PH){
+                PedidoHerramienta::where('id_pedido',$idPedido)->where('id',$PH->id)->update(['estado_herramienta' => 'prestado']);
+            }
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------
+
+         //llamar a todos los pedidos
+        $pedidos = Pedido::all();
+        //generar una consulta de solo id y nombre como array
+        $usuarios = User::select(array('id', 'name'))->get();
+
+        //enviar estos datos a la vista registro-ordenes
+        return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
 
 
 
