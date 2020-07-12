@@ -195,7 +195,7 @@ class PedidoController extends Controller
     public function filtrarNombre(Request $request){
 
         //si al filtrar por nombre esta vacio y = a "todo" retornar lo normal como e index
-        if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo') {            
+        if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo' || $request->filtrarNombre == 'todos') {            
         //vacio
         $pedidos = Pedido::select('*')->get();
         $usuarios = User::select(array('id', 'name'))->get();
@@ -205,11 +205,10 @@ class PedidoController extends Controller
 
             //Si sale bien la consulta (si el usuario escribe en el filtrador algo aparte de "todo")
             //filtrar el usuario con un like y % entre la palabra ingresada por el input para filtrar
-        $idUsuarioFiltro = User::select('id')->where('name','=',$request->filtrarNombre)
-        ->orWhere('name','like','%'.$request->filtrarNombre.'%')->value('id');
+        $idUsuarioFiltro = User::select('id')->where('name','like',$request->filtrarNombre.'%')->value('id');
 
         //llamar a todos los pedidos cuando la id del usuario sea igual a la del usuario filtrado
-        $pedidos = Pedido::select('*')->where('id_usuario','=',$idUsuarioFiltro)->get();
+        $pedidos = Pedido::select('*')->where('id_usuario',$idUsuarioFiltro)->get();
         //llamara los usuarios en forma de un array con las columnas id y nombre
         $usuarios = User::select(array('id', 'name'))->get();
 

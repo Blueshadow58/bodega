@@ -35,13 +35,6 @@
 
 
 
-
-
-
-
-
-
-
     <div class="contact-clean" style="background-color: transparent;">
 
         <div class="container-fluid">
@@ -202,15 +195,21 @@
                                                         <td>{{$herraFilt->descripcion}}</td>
                                                         <td>{{$herraFilt->categoria}}</td>
 
-
+                                                        
 
                                                         <form action="crear-registro-herramientas-cambiarHerramienta"
                                                             method="post">
                                                             @csrf
 
+                                                           
+                                                           
+                                                        
                                                             <td><button class="btn btn-success" name="idHerramienta"
-                                                                    value="{{$herraFilt->id}}"
-                                                                    type="submit">Seleccionar</button></td>
+                                                                value="{{$herraFilt->id}}"
+                                                                type="submit" >Seleccionar</button></td>
+                                                        
+
+
 
 
                                                         </form>
@@ -237,8 +236,6 @@
             </div>
 
         </div>
-
-
 
 
 

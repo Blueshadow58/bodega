@@ -83,10 +83,17 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody>        
 
             @foreach($pedidos as $pedido)
-            <tr>
+
+            <tr class=" @if ($pedido->estado_pedido == 'prestado')
+                bg-secondary
+            @elseif($pedido->estado_pedido == 'Por confirmar')
+                
+            @elseif($pedido->estado_pedido == 'finalizado')
+                bg-dark
+            @endif ">
                 <td>{{$pedido->created_at}}</td>
               
                 {{-- Nombre del usuario de la solicitud   --}}
@@ -101,9 +108,9 @@
                 <td>{{$pedido->asunto}}</td>              
                 <td>{{$pedido->estado_pedido}}</td>
               <td>
-                <form action="pedido.detalle" method="post" style="background-color: #002d47;padding:10px">
+                <form action="pedido.detalle" class="text-center" method="post" style="background-color:transparent;padding: 0px;">
                   @csrf
-                  <button class="btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
+                  <button class="btn btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
                 </form>
               </td>
             

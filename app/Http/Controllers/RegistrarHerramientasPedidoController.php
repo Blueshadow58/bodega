@@ -7,6 +7,7 @@ use App\Pedido;
 use App\PedidoHerramienta;
 use App\RegistrarHerramientasPedido;
 use App\tabla_temporal_asignar_herramientas;
+use App\table_temporal;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -39,7 +40,24 @@ class RegistrarHerramientasPedidoController extends Controller
     public function crear(Request $request)
     {
 
-        //Primera tabla-----------------------------------------------------------------------------
+        
+
+        //Al ingresar limpiar lso daots de la tabla temporal----------------------------------------------------------------------------------------
+
+
+        //Limpiar tabla temporal asignar herramientas al entrar a editar herramientas
+        $idsHerramientasAsignadas = tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
+        
+        //Cambiar el estado de las herramientas al entrar en view de editar las herramientas
+        Herramientas::whereIn('id', $idsHerramientasAsignadas)->update(['estado' => 'disponible']);
+                                      
+        //LImpiar tabla y volver a ids originales
+        tabla_temporal_asignar_herramientas::truncate();
+                                
+
+
+
+        //Primera tabla-------------------------------------------------------------------------------------------------------------------------
 
         $idPedido = $request->btnPedidoId;
         session(['idPedido' => $idPedido]);
@@ -51,30 +69,21 @@ class RegistrarHerramientasPedidoController extends Controller
         //seleccionar la lista de herramientas del pedido segun la id del pedido
         $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', $idPedido)->get();
 
-        // Segunda tabla-----------------------------------------------------------------------------
+        // Segunda tabla-------------------------------------------------------------------------------------------------------------------------
 
 
 
-        //Herramientas del pedido----------------------------------------------------------------------------------
+        //Herramientas del pedido----------------------------------------------------------------------------------------------------------------
 
 
         $idsHerramientasAsignadas = tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
-
+        //llamar a las herramientas que estan dentro de la tabla temporal donde el estado sea igual a procesando
         $herramientasAsignadas = Herramientas::whereIn('id', $idsHerramientasAsignadas)->where('estado', 'Procesando')->get();
 
 
         //seleccioar herramientas 
         $categorias = PedidoHerramienta::select('categoria')->where('id_pedido', $idPedido)->get('categoria');
         $herramientas = Herramientas::select('*')->whereIn('categoria', $categorias)->where('estado', 'disponible')->get();
-
-
-
-
-
-
-
-
-
 
 
 
@@ -98,10 +107,6 @@ class RegistrarHerramientasPedidoController extends Controller
             ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas)
             ->with('idPedido', $idPedido)->with('herramientasAsignadas', $herramientasAsignadas);
     }
-
-
-
-
 
 
 
@@ -174,7 +179,7 @@ class RegistrarHerramientasPedidoController extends Controller
         $cantidad =  tabla_temporal_asignar_herramientas::count();
 
         //retornar a la pagina sin modificar datos
-        if ($cantidad < 1 or empty($cantidad)) {
+        if (empty($cantidad)) {
 
             return $this->ver($idPedido);
         }
@@ -182,10 +187,10 @@ class RegistrarHerramientasPedidoController extends Controller
 
 
         //seleccionar todas las herramientas de la tabla temporal asignar herramientas
-        $cantidad =  tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
+        $ids =  tabla_temporal_asignar_herramientas::select('id_herramienta')->get();
 
         //seleccionar las herramientas cuando la ids sean las que esten en la tabla temporal de registro de herramientas
-        $herramientasARegistrar = Herramientas::select('*')->whereIn('id', $cantidad)->get();
+        $herramientasARegistrar = Herramientas::select('*')->whereIn('id', $ids)->get();
 
 
 
@@ -197,7 +202,7 @@ class RegistrarHerramientasPedidoController extends Controller
         foreach ($herramientasARegistrar as $herramientas) {
 
             //crear un pedido
-            tabla_temporal_asignar_herramientas::create(
+            RegistrarHerramientasPedido::create(
                 [
                     'id_pedido' => $idPedido,
                     'id_herramienta' => $herramientas->id,
@@ -362,7 +367,7 @@ class RegistrarHerramientasPedidoController extends Controller
         $categorias = PedidoHerramienta::select('categoria')->where('id_pedido', $idPedido)->get('categoria');
 
 
-        $herramientas = Herramientas::select('*')->whereIn('categoria', $categorias)->where('estado', 'disponible')->get();
+        $herramientas = Herramientas::select('*')->whereIn('categoria', $categorias)->where('estado','disponible')->get();
 
 
         //Herramientas del pedido----------------------------------------------------------------------------------

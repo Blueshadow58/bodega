@@ -194,6 +194,14 @@
 
 
 
+
+
+
+
+
+
+
+
                     {{-- Generar lista de las herramientas que seran registradas en el pedido --}}
 
                     <div class="" style="background-color: transparent;">
@@ -226,6 +234,8 @@
                                                         <th>Categoria</th>
                                                         <th></th>
                                                         <th></th>
+
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -255,9 +265,75 @@
 
                                                         <form action="crear-registro-herramientas-editar" method="post">
                                                             @csrf
-                                                            <td><button class="btn btn-warning" name="idHerramienta"
+
+
+
+                                                            @if ($herramientas->isEmpty())
+                                                            <td> <button class="btn btn-danger" name="idHerramienta"
+                                                                    value="{{$herramientaAsignada->id}}" type="submit"
+                                                                    disabled>Sin stock</button>
+                                                            </td>
+                                                            @else
+
+
+                                                            @foreach ($herramientas as $h)
+
+                                                            @if ($h->categoria == $herramientaAsignada->categoria)
+                                                            <td> <button class="btn btn-warning" name="idHerramienta"
                                                                     value="{{$herramientaAsignada->id}}"
-                                                                    type="submit">Cambiar</button></td>
+                                                                    type="submit">Cambiar</button>
+                                                            </td>
+                                                            @else
+                                                            <td> <button class="btn btn-danger" name="idHerramienta"
+                                                                    value="{{$herramientaAsignada->id}}" type="submit"
+                                                                    disabled>Sin stock</button>
+                                                            </td>
+                                                            @endif
+
+
+                                                            @endforeach
+
+
+                                                            @endif
+
+
+
+                                                            {{-- 
+
+
+                                                            @if ($herramientas->isEmpty())
+                                                            <td> <button class="btn btn-danger" name="idHerramienta"
+                                                                    value="{{$herramientaAsignada->id}}" type="submit"
+                                                            disabled>Sin herramientas</button>
+                                                            </td>
+                                                            @else
+
+                                                            @foreach ($herramientas as $h)
+
+                                                            @if ($h->categoria == $herramientaAsignada->categoria)
+
+                                                            <td> <button class="btn btn-danger" name="idHerramienta"
+                                                                    value="{{$herramientaAsignada->id}}" type="submit"
+                                                                    disabled>Sin herramientas</button>
+                                                            </td>
+                                                            @else
+
+                                                            <td> <button class="btn btn-warning" name="idHerramienta"
+                                                                    value="{{$herramientaAsignada->id}}"
+                                                                    type="submit">Cambiar</button>
+                                                            </td>
+
+                                                            @endif
+
+                                                            @endforeach
+                                                            @endif --}}
+
+
+
+
+
+
+
                                                         </form>
 
 
@@ -285,16 +361,6 @@
                 </div>
 
                 {{-- col---------------------------------------------------------------------------------------------------------- --}}
-
-
-
-
-
-
-
-
-
-
 
 
 
