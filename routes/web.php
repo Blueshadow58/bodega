@@ -170,14 +170,19 @@ Route::post('/pedidoHerramienta.volcar', 'PedidoHerramientaController@volcar');
 
 
 
+//Retorno herramientas---------------------------------------------------------------------------------------------------------------------------------------------------
+
+//index
+Route::get('/retorno-herramientas', 'RetornoHerramientasController@index');
+
+
+Route::post('/actualizar-estado-retorno', 'RetornoHerramientasController@actualizarEstado');
 
 
 
 
 
-
-
-
+//---------------------------------------------------------------------------------------------------------------------------------------------------
 
 //Route::view('newlogin','/auth/newlogin');
 

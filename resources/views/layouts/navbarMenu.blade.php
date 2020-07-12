@@ -1,13 +1,11 @@
 
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button" style="background-color: @can('bodeguero') #343a40 @else() #c67e06 @endcan ;color: rgb(255,255,255);">
-    <div class="container"><a class="navbar-brand" href="#">Nombre</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="background-color: #ffffff;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="container"><a class="navbar-brand" href="#">Adout</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1" style="background-color: #ffffff;"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div
             class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,255,255);">
             <ul class="nav navbar-nav mr-auto">
                 <li class="nav-item" role="presentation"><a class="nav-link" href="home-bodega" style="color: #ffffff;">Inicio</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="perfil" style="color: #ffffff;">Perfil</a></li>
-
-
 
 
 {{-- Mensajes --}}
@@ -17,14 +15,13 @@
 {{-- Mensajes --}}
 
 
-
-
                 <li class="nav-item" role="presentation"><a class="nav-link" href="pedidoHerramienta" style="color: #ffffff;">Generar pedido</a></li>
                 {{-- Solo permirile esta ruta al que tenga el permiso bodeguero --}}
                 @can('bodeguero')
                 <li class="nav-item" role="presentation"><a class="nav-link" href="registro-ordenes" style="color: #ffffff;">Ver pedidos</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="registrar-herramientas-pedido" style="color: #ffffff;">Registrar Pedidos</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="barcode" style="color: #ffffff;">Codigos de barra</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="retorno-herramientas" style="color: #ffffff;">Retorno herramienta</a></li>
                 @endcan
             
                 @cannot('bodeguero')

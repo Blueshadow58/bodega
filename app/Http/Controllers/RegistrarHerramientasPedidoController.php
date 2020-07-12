@@ -97,12 +97,6 @@ class RegistrarHerramientasPedidoController extends Controller
 
 
 
-
-
-
-
-
-
         return view('crear-registro-herramientas-pedido')->with('pedidoHerramientas', $pedidoHerramientas)
             ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas)
             ->with('idPedido', $idPedido)->with('herramientasAsignadas', $herramientasAsignadas);

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <title></title>
 </head>
-<body>
+<body style="background-color: #d5d5d5">
     <header >
         {{-- Llamando la navbar de carpeta --}}
         @include('layouts.navbarMenu')
