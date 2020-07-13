@@ -6,6 +6,7 @@ use App\Exports\PedidosExport;
 use App\Herramientas;
 use App\Pedido;
 use App\PedidoHerramienta;
+use App\RegistrarHerramientasPedido;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -63,7 +64,7 @@ class PedidoController extends Controller
     public function dataPedidoAHTML()
     {
 
-        $pedidos = Pedido::select('*')->get();
+        $pedidos = Pedido::select('*')->where('estado_pedido', "finalizado")->get();
         $usuarios = User::select(array('id', 'name'))->get();
 
         $output = ' <table class="table table-striped" >
@@ -96,6 +97,23 @@ class PedidoController extends Controller
         return $output;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //generar un pdf de el detalle de un pedido
     public function detallePDF(Request $request)
     {
@@ -106,8 +124,14 @@ class PedidoController extends Controller
         $usuario = User::select(array('id', 'name'))->get();
         //seleccionar la lista de herramientas del pedido segun la id del pedido
         $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', '=', $request->idPedido)->get();
+
+
+        //ids de las herramientas segun el pedido
+        $idsHerramientas = RegistrarHerramientasPedido::select('id_herramienta')->where('id_pedido',$request->idPedido)->get();
+
+
         //seleccioar herramientas 
-        $herramientas = Herramientas::select('*')->get();
+        $herramientas = Herramientas::select('*')->whereIn('id',$idsHerramientas)->get();
 
 
         $output = ' <div class="container">
@@ -127,48 +151,75 @@ class PedidoController extends Controller
     </div>
     </div>';
 
-    // <th>Imagen</th>
-    $output .=' <div class="table-responsive table-striped">
+        // <th>Imagen</th>
+        $output .= ' <div class="table-responsive table-striped">
     <table class="table" >
         <thead style="background-color: #c67e06;">
             <tr>
                 
                 <th>Nombre</th>
                 <th>Cantidad</th>
-                <th>Estado</th>
+                
             </tr>
         </thead>
         <tbody>';
-          
 
         // F
         // <td><img src="'.asset('storage').'/'.$herramienta->imagen.'" class="img-thumbnail img-fliud" alt="" width="100"></td>
 
-            foreach($pedidoHerramientas as $pedidoHerramienta){
+        foreach ($pedidoHerramientas as $pedidoHerramienta) {
 
-           $output.= '<tr>';
-                foreach ($herramientas as $herramienta){
-                    
-                    if ($pedidoHerramienta->id_herramienta == $herramienta->id){
-                        $output .= '
-                            
-                            <td>'.$herramienta->nombre.'</td>
-                            <td>'.$pedidoHerramienta->cantidad.'</td>';
-                    }
-                }
+            $output .= '<tr>';
+            $output .= '                            
+                            <td>' . $pedidoHerramienta->categoria . '</td>
+                            <td>' . $pedidoHerramienta->cantidad . '</td>';
 
-           $output .= '<td>'.$pedidoHerramienta->estado_herramienta.'</td>                  
-             
-            </tr>';
-
-              }
-
-           $output .= '   
+            $output .=   '</tr>';
+        }
+        $output .= '   
         </tbody>
     </table>
 </div>';
 
 
+        // Inicio segunda tabla con las herramientas
+
+
+
+        $output .= ' <div class="table-responsive table-striped">
+<table class="table" >
+    <thead style="background-color: #c67e06;">
+        <tr>
+            
+            <th>Descripcion</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            
+        </tr>
+    </thead>
+    <tbody>';
+
+        // F
+        // <td><img src="'.asset('storage').'/'.$herramienta->imagen.'" class="img-thumbnail img-fliud" alt="" width="100"></td>
+
+        foreach ($herramientas as $herramienta) {
+
+            $output .= '<tr>';
+            $output .= '                            
+                        <td>' . $herramienta->nombre . '</td>
+                        <td>' . $herramienta->descripcion . '</td>
+                        <td>' . $herramienta->categoria . '</td>';
+
+            $output .=   '</tr>';
+        }
+        $output .= '   
+    </tbody>
+</table>
+</div>';
+
+
+
+        // Fin segunda tabla con las herramientas
 
 
 
@@ -182,40 +233,38 @@ class PedidoController extends Controller
     }
 
 
-    public function descargarExcelPedidos(){
+    public function descargarExcelPedidos()
+    {
         //generando el Excel
         $pedidoExport = new PedidosExport;
         //retornar la descarga
         return $pedidoExport->download('pedido.xlsx');
-
     }
 
-    
+
     //Filtrar pedidos segun nombre de usuario
-    public function filtrarNombre(Request $request){
+    public function filtrarNombre(Request $request)
+    {
 
         //si al filtrar por nombre esta vacio y = a "todo" retornar lo normal como e index
-        if ($request->filtrarNombre== '' || $request->filtrarNombre == 'todo' || $request->filtrarNombre == 'todos') {            
-        //vacio
-        $pedidos = Pedido::select('*')->get();
-        $usuarios = User::select(array('id', 'name'))->get();
-        return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
-
-        }else{
+        if ($request->filtrarNombre == '' || $request->filtrarNombre == 'todo' || $request->filtrarNombre == 'todos') {
+            //vacio
+            $pedidos = Pedido::select('*')->get();
+            $usuarios = User::select(array('id', 'name'))->get();
+            return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
+        } else {
 
             //Si sale bien la consulta (si el usuario escribe en el filtrador algo aparte de "todo")
             //filtrar el usuario con un like y % entre la palabra ingresada por el input para filtrar
-        $idUsuarioFiltro = User::select('id')->where('name','like',$request->filtrarNombre.'%')->value('id');
+            $idUsuarioFiltro = User::select('id')->where('name', 'like', $request->filtrarNombre . '%')->value('id');
 
-        //llamar a todos los pedidos cuando la id del usuario sea igual a la del usuario filtrado
-        $pedidos = Pedido::select('*')->where('id_usuario',$idUsuarioFiltro)->get();
-        //llamara los usuarios en forma de un array con las columnas id y nombre
-        $usuarios = User::select(array('id', 'name'))->get();
+            //llamar a todos los pedidos cuando la id del usuario sea igual a la del usuario filtrado
+            $pedidos = Pedido::select('*')->where('id_usuario', $idUsuarioFiltro)->get();
+            //llamara los usuarios en forma de un array con las columnas id y nombre
+            $usuarios = User::select(array('id', 'name'))->get();
 
-        return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
-
+            return view('registro-ordenes')->with('pedidos', $pedidos)->with('usuarios', $usuarios);
         }
-
     }
 
 
@@ -244,15 +293,22 @@ class PedidoController extends Controller
         //seleccionar la lista de herramientas del pedido segun la id del pedido
         $pedidoHerramientas = PedidoHerramienta::select('*')->where('id_pedido', $request->btnId)->get();
 
+
+        $idsH = RegistrarHerramientasPedido::select('id_herramienta')->where('id_pedido', $request->btnId)->get();
+
+
+        $herramientas = Herramientas::select('*')->whereIn('id', $idsH)->get();
+
+
         //seleccioar herramientas 
         //$herramientas = Herramientas::select('*')->get();
 
 
 
         return view('pedido-detalle')->with('pedidoHerramientas', $pedidoHerramientas)
-            ->with('pedido', $pedido)->with('usuario', $usuario);
+            ->with('pedido', $pedido)->with('usuario', $usuario)->with('herramientas', $herramientas);
 
-            //->with('herramientas', $herramientas)
+        //->with('herramientas', $herramientas)
     }
 
     /**

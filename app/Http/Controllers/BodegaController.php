@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Herramientas;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 
@@ -24,10 +26,66 @@ class BodegaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function view()
     {
-        //
+
+        $herramientas = Herramientas::all();
+
+
+        return view('home-bodega')->with('herramientas',$herramientas);
     }
+
+
+
+    public function filtro(Request $request){
+
+         
+         $bool = Herramientas::select('*')->where('nombre','like',$request->inputFiltro.'%')->exists();
+
+
+        if (!$bool) {
+            return $this->view();
+        }
+
+
+        $herramientas = Herramientas::select('*')->where('nombre','like',$request->inputFiltro.'%')->get();
+
+
+        return view('home-bodega')->with('herramientas',$herramientas);
+
+    }
+
+
+public function herramientasPDF(Request $request){
+
+     //  //todas las herramientas
+     $herramientas = array($request->btnHerramientas);    
+            
+    //  // guardar las ids en una variable
+    //  foreach ($herramientas as $herramienta){
+    //      $ids[] = $herramienta->id;
+    //  }
+
+    //   $herramientas = Herramientas::whereIn('id',$ids)->get();
+
+        $largo = $request->herramientas->count();
+
+
+    
+
+    $data = [
+        'largo' => $largo,        
+        'herramientas' => $herramientas
+    ];
+
+
+    $pdf = PDF::loadView('herraFiltro',compact('herramientas',$data));
+    //return $pdf->stream();
+    return $pdf->download('herramientas.pdf');
+
+}
+
+
 
     /**
      * Store a newly created resource in storage.

@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    
+    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Data-Table-1.css">
     <link rel="stylesheet" href="assets/css/Data-Table.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Footer-Clean.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-    
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -28,10 +28,6 @@
 
 
 
-    <form action="p" method="post">
-        @csrf
-        <button type="submit">sdfsdf</button>
-    </form>
 
 
     <div class="contact-clean mt-5" style="background-color: transparent;">
@@ -52,7 +48,13 @@
         <tbody>
 
             @foreach($pedidos as $pedido)
-            <tr>
+            <tr class=" @if ($pedido->estado_pedido == 'prestado')
+                bg-secondary
+            @elseif($pedido->estado_pedido == 'Por confirmar')
+                
+            @elseif($pedido->estado_pedido == 'finalizado')
+                bg-dark
+            @endif ">
                 <td>{{$pedido->created_at}}</td>
              
                     <td>{{$nombre}}</td>
@@ -62,9 +64,9 @@
                 
                 {{--  --}}
               <td>
-                <form action="pedido.detalle" method="post" style="background-color: #002d47;padding:10px">
+                <form action="detalle-mis-pedidos" method="post" style="background-color: transparent;padding:10px">
                   @csrf
-                  <button class="btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
+                  <button class="btn btn-primary " style="border: 1px solid;border-radius: 5px;" name="btnId" value="{{$pedido->id}}"  >Ver detalle</button>
                 </form>
               </td>
             {{--  --}}
@@ -86,6 +88,10 @@
 
 
 
-    
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/smart-forms.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 </body>
 </html>

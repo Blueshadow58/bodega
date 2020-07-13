@@ -109,6 +109,9 @@ Route::get('mis-pedidos','MisPedidosController@index');
 Route::post('p','MisPedidosController@probar');
 
 
+Route::post('/detalle-mis-pedidos', 'MisPedidosController@detalleMisPedidos');
+
+
 //----------------------------------------------------------------
 
 
@@ -182,7 +185,19 @@ Route::post('/actualizar-estado-retorno', 'RetornoHerramientasController@actuali
 
 
 
+// home bodega---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Route::get('/home-bodega', 'BodegaController@view');
+
+
+Route::post('/home-bodega-filtrar', 'BodegaController@filtro');
+
+
+Route::post('/home-bodega-filtrar-pdf', 'BodegaController@herramientasPDF');
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 //Route::view('newlogin','/auth/newlogin');
 

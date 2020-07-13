@@ -1,31 +1,39 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Detalle pedido</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+    
     <link rel="stylesheet" href="assets/css/Data-Table-1.css">
     <link rel="stylesheet" href="assets/css/Data-Table.css">
     <link rel="stylesheet" href="assets/css/Footer-Basic.css">
     <link rel="stylesheet" href="assets/css/Footer-Clean.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+    
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-
-<body style="background-color: #002d47;color: rgb(255,255,255);">
+<body style="background-color: #002d47;">
     <header style="background-color: #ffffff;color: rgb(255,255,255);">
         {{-- Llamando la navbar de carpeta --}}
         @include('layouts.navbarMenu')
     </header>
+
+
+
+
+
+
+
+
+
     <div class="contact-clean" style="background-color: transparent;">
         <div class="container">
             <div class="form-group">
@@ -38,19 +46,15 @@
                         <div class="row">
                             <div class="col ">
 
-                                @foreach($pedido as $pedido)
-                                <h4 class="card-title">Asunto: {{$pedido->asunto}}</h4>
-                                <div class="form-group"><span>Fecha entrega: {{$pedido->fecha_entrega}}</span></div>
-                                @foreach ($usuario as $usuario)
-                                @if ($pedido->id_usuario == $usuario->id)
-                                <div class="form-group"><span>Nombre: {{$usuario->name}}</span></div>
-                                @endif
-                                @endforeach
+                                @foreach($pedido as $p)
+                                <h4 class="card-title">Asunto: {{$p->asunto}}</h4>
+                                <div class="form-group"><span>Fecha entrega: {{$p->fecha_entrega}}</span></div>                                                                
+                                <div class="form-group"><span>Nombre: {{Auth::user()->name}}</span></div>                                                                
                                 @endforeach
                             </div>
-                            <div class="col text-right">
-                                {{-- <a href="{{url('descargarDetallePDF')}}" style="border: 1px solid;" class="btn
-                                btn-success">Imprimir PDF</a> --}}
+                            {{-- <div class="col text-right">
+                                 <a href="{{url('descargarDetallePDF')}}" style="border: 1px solid;" class="btn
+                                btn-success">Imprimir PDF</a>
 
 
                                 <form action="detallePDF" method="post"
@@ -62,7 +66,7 @@
 
                                 </form>
 
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -97,13 +101,6 @@
                         </table>
                     </div>
                     {{-- Fin tabla con el pedido --}}
-
-
-
-
-
-
-
 
 
 
@@ -148,34 +145,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/smart-forms.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-</body>
 
+
+
+</body>
 </html>

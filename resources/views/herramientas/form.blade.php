@@ -1,5 +1,19 @@
 
 
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+<link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+<link rel="stylesheet" href="assets/css/Data-Table-1.css">
+<link rel="stylesheet" href="assets/css/Data-Table.css">
+<link rel="stylesheet" href="assets/css/Footer-Basic.css">
+<link rel="stylesheet" href="assets/css/Footer-Clean.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+<link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+<link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
+<link rel="stylesheet" href="assets/css/styles.css">
 <div class="form-group">
 <label for="imagen" class="control-label">{{'imagen'}}</label>
 @if(isset($herramienta->imagen))

@@ -12,7 +12,11 @@
 
 @endif
 
-<a href="{{url('herramientas/create')}}" class="btn btn-success">Agregar Herramienta</a>
+
+  <a href="{{url('herramientas/create')}}" class="btn btn-success">Agregar Herramienta</a>
+
+
+
 <br>
 <br>
 <table class="table table-hover" style="background-color: #002d47;color:white">

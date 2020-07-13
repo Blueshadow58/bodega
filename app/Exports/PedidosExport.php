@@ -17,6 +17,6 @@ class PedidosExport implements FromCollection
     */
     public function collection()
     {
-        return Pedido::all();
+        return Pedido::all()->where('estado_pedido',"finalizado");
     }
 }

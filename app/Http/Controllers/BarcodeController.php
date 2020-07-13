@@ -80,7 +80,7 @@ class BarcodeController extends Controller
 
    
 
-    //Generar un pdf de html
+    //Generar un pdf de blade
     public function PDFBarcode( Request $request )
     {
        
@@ -109,6 +109,7 @@ class BarcodeController extends Controller
             'herramientas' => $herramientas
         ];
     
+
         $pdf = PDF::loadView('select-barcode', $data);
         //return $pdf->stream();
         return $pdf->download('barcode.pdf');

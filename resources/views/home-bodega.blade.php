@@ -33,40 +33,42 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form class="border rounded border-white" method="post" style="background-color: #c67e06;">
+                    <form class="border rounded border-white" method="POST" action="home-bodega-filtrar" style="background-color: #c67e06;">
+                        @csrf
                         <h2 class="text-center" style="color: rgb(255,255,255);padding: 15px;">Filtrar</h2>
-                        <div class="form-group"><input class="border rounded form-control" type="text" name="name" placeholder="Buscar" style="background-color: #002d47;color: #ffffff;border-color: #002d47!important;"></div>
-                        <div class="form-group">
-                            <div class="dropdown"><button class="btn btn-primary btn-block dropdown-toggle border-white" data-toggle="dropdown" aria-expanded="false" type="button" style="background-color: #002d47;">Tipo</button>
-                                <div class="dropdown-menu" role="menu" style="background-color: #002d47;color: rgb(255,255,255);"><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Herramientas</a><a class="dropdown-item" role="presentation" href="#" style="background-color: #002d47;color: rgb(255,255,255);">Materiales</a></div>
-                            </div>
-                        </div>
-                        <div class="form-group"><button class="btn btn-primary btn-block border-white" type="button" style="background-color: #002d47;">Buscar</button></div>
+                        <div class="form-group"><input class="border rounded form-control" type="text" name="inputFiltro" placeholder="Buscar" style="background-color: #002d47;color: #ffffff;border-color: #002d47!important;"></div>
+                        
+                        <div class="form-group"><button class="btn btn-primary btn-block border-white" type="submit"  style="background-color: #002d47;">Buscar</button></div>
                     </form>
                 </div>
                 <div class="col"><div class="table-responsive table-striped">
-    <table class="table" style="color:#ffffff">
-        <thead style="background-color: #c67e06;color: #ffffff;">
-            <tr>
-                <th><strong>Nombre</strong></th>
-                <th>Tipo</th>
-                <th>Estado</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Taladro GBM 13 RE 750 W Bosch</td>
-                <td>Taladros eléctricos</td>
-                <td>Nuevo, sin detalles</td>                
-            </tr>
-            <tr>
-                <td>Sierra circular eléctrica 9&quot; 2200 W</td>
-                <td>Sierra Circular</td>
-                <td>Usada, rotura del material protector e...</td>                
-            </tr>
-        </tbody>
-    </table>
+
+
+
+                    {{-- <div class="text-right">
+                        <form action="home-bodega-filtrar-pdf" method="post" style="padding: 0px;background-color: transparent">
+                            @csrf
+                            <button type="submit" class="btn btn-success bg-success" name="btnHerramientas" value="{{$herramientas}}">Generar PDF</button>
+                        </form>
+                        
+                    </div>
+                    <br> --}}
+
+
+
+
+                    @if ($herramientas->isEmpty())
+                    <h4>No se han encontrado registros</h4>
+                @else
+                   
+
+                    @include('herraFiltro')
+
+                @endif
+
+
+
+
 </div></div>
             </div>
         </div>
