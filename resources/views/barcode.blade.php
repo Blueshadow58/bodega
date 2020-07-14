@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <title></title>
+    <title>Barcode</title>
 </head>
 <body style="background-color: #d5d5d5">
     <header >

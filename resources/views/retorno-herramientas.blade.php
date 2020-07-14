@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
     <link rel="stylesheet" href="assets/css/Newsletter-Subscription-Form.css">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <title>Document</title>
+    <title>Retorno-herramientas</title>
 </head>
 
 <body style="background-color: #002d47;">
